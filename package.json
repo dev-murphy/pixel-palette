@@ -1,8 +1,22 @@
 {
   "name": "pixel-palette",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/pixel-palette.umd.cjs",
+  "module": "./dist/pixel-palette.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/pixel-palette.js",
+      "require": "./dist/pixel-palette.umd.cjs"
+    },
+    "./style": "./dist/pixel-palette.css"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
@@ -10,12 +24,13 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
-    "@types/tinycolor2": "^1.4.6",
     "tailwindcss": "^4.1.12",
     "tinycolor2": "^1.6.0",
     "vue": "^3.5.18"
   },
   "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/tinycolor2": "^1.4.6",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
     "typescript": "~5.8.3",
