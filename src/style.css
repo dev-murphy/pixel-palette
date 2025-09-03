@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+/* HUE SLIDER STYLES */
+.current-hue {
+  background-color: hsl(var(--hue), 100%, 50%);
+}
+
+.hue-slider {
+  background: linear-gradient(
+    to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  );
+}
+
+.hue-slider-knob::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  border: 3px solid white;
+  border-radius: 99px;
+}
+
+/* ALPHA SLIDER STYLES */
+.checker::before {
+  position: absolute;
+  content: "";
+  inset: 4px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    hsl(var(--hue), 100%, 50%)
+  );
+}
+
+.checker {
+  --size: 20px; /* tile size */
+  --c1: #f2f2f2; /* light color */
+  --c2: #cccccc; /* dark color */
+
+  background: conic-gradient(
+      from 90deg,
+      var(--c1) 25%,
+      var(--c2) 0 50%,
+      var(--c1) 0 75%,
+      var(--c2) 0
+    )
+    0 0 / var(--size) var(--size);
+}
+.hue-slider-knob::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  border: 3px solid white;
+  border-radius: 99px;
+}
+
+/* COLOR SPACE STYLES */
+.current-hue-gradient {
+  background: linear-gradient(
+    to right,
+    transparent,
+    hsl(var(--hue), 100%, 50%)
+  );
+}
+
+.current-hue-gradient::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, black);
+}
+
+/* TOOLTIP ANIMATION */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(4px);
+}

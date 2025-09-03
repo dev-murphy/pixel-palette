@@ -121,21 +121,3 @@ watch(
     ></div>
   </div>
 </template>
-
-<style scoped>
-.current-hue-gradient {
-  background: linear-gradient(
-    to right,
-    transparent,
-    hsl(var(--hue), 100%, 50%)
-  );
-}
-
-.current-hue-gradient::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent, black);
-}
-</style>

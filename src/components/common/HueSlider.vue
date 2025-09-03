@@ -63,33 +63,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-.current-hue {
-  background-color: hsl(var(--hue), 100%, 50%);
-}
-
-.hue-slider {
-  background: linear-gradient(
-    to right,
-    hsl(0, 100%, 50%),
-    hsl(60, 100%, 50%),
-    hsl(120, 100%, 50%),
-    hsl(180, 100%, 50%),
-    hsl(240, 100%, 50%),
-    hsl(300, 100%, 50%),
-    hsl(360, 100%, 50%)
-  );
-}
-
-.hue-slider-knob::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-  border: 3px solid white;
-  border-radius: 99px;
-}
-</style>
