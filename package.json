@@ -17,6 +17,9 @@
     },
     "./style": "./dist/pixel-palette.css"
   },
+  "description": "A modern, customizable color picker component for Vue 3.",
+  "author": "Murphy Facey<https://github.com/dev-murphy>",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
