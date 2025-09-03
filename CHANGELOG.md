@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.1.0](https://github.com/dev-murphy/pixel-palette/compare/v1.0.0...v1.1.0) (2025-09-03)
+
+
+### Features
+
+* update config to make pixel palette lib ([8eb511e](https://github.com/dev-murphy/pixel-palette/commit/8eb511e6e702bc15f2e79b5027623eec9a6268b0))
+
+
+### Miscellaneous
+
+* add example app ([5963f85](https://github.com/dev-murphy/pixel-palette/commit/5963f850d4d2a01f5968cd30d6922f5e9a02e5e5))
+* add MIT license ([071dab3](https://github.com/dev-murphy/pixel-palette/commit/071dab338cd42ed47431dfa1510ad4c00cd9b29a))
+* move all scoped to global styles file ([f1af299](https://github.com/dev-murphy/pixel-palette/commit/f1af299035368912aa9091fb666c73be2e127e41))
+* remove usused files ([16bc2ba](https://github.com/dev-murphy/pixel-palette/commit/16bc2ba3d7f9be0366e8fa8aa7f39b80e824a2e5))
+* update package with project info ([2e1365c](https://github.com/dev-murphy/pixel-palette/commit/2e1365c36869af275d2f1da86e45c9ea812db7df))
+
+
+### Documentation
+
+* update README.md ([2f7bc56](https://github.com/dev-murphy/pixel-palette/commit/2f7bc56024c8537fc77d2c7b81da58ee80a3df55))
+
+
+### Code Refactors
+
+* remove unnecessary heading ([cb9b870](https://github.com/dev-murphy/pixel-palette/commit/cb9b8705613f7b4bb43d3967230c88e4242fb7ad))
+
 ## 1.0.0 (2025-09-03)
 
 
