@@ -52,17 +52,38 @@ function emitColor() {
 </script>
 
 <template>
-  <div class="flex items-center py-0.5">
-    <label for="code" class="flex-shrink-0 font-bold uppercase"
-      >hex <span class="text-neutral-500">#</span></label
-    >
+  <div class="hex_input__wrapper">
+    <label for="code">hex <span>#</span></label>
     <input
       type="text"
       id="code"
       v-model="firstValue"
       @input="handleInput"
       @blur="emitColor"
-      class="w-full uppercase"
     />
   </div>
 </template>
+
+<style scoped>
+.hex_input__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.125rem 0;
+}
+
+.hex_input__wrapper label {
+  flex-shrink: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hex_input__wrapper label span {
+  color: #737373;
+}
+
+.hex_input__wrapper input {
+  width: 100%;
+  text-transform: uppercase;
+}
+</style>

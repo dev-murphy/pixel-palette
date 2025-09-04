@@ -18,15 +18,33 @@ watch(
 </script>
 
 <template>
-  <div class="relative">
+  <div class="tooltip__container">
     <slot></slot>
+
     <transition name="fade">
-      <div
-        v-if="modelValue"
-        class="absolute left-1/2 -translate-x-1/2 -top-[120%] whitespace-nowrap text-sm bg-neutral-900 text-white font-bold px-2 py-1 rounded shadow"
-      >
-        {{ text }} Copied!
-      </div>
+      <div v-if="modelValue" class="tooltip__text">{{ text }} Copied!</div>
     </transition>
   </div>
 </template>
+
+<style scoped>
+.tooltip__container {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip__text {
+  position: absolute;
+  top: -120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--neutral-900);
+  color: white;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+</style>

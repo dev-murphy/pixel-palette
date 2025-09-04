@@ -135,75 +135,134 @@ function pickRandomColor() {
 </script>
 
 <template>
-  <div class="w-[300px] bg-white border-2 border-neutral-700 rounded-2xl">
-    <h2
-      v-if="props.title"
-      class="pt-1 px-4 border-b-2 border-neutral-900 text-lg font-medium"
-    >
+  <div class="color-picker__container border-primary">
+    <h2 v-if="props.title" class="color-picker__title border-primary">
       {{ props.title }}
     </h2>
 
-    <div class="flex flex-col gap-y-2 pt-4 pb-2 px-3">
+    <div class="color-picker-colors__container">
       <ColorSpace
         :hue="hue"
         :alpha="alpha"
         :color="hslColor"
         @set-color="setColor"
       />
+
       <ColorInput
         :color="hslColor"
         :mode="colorMode"
         @set-color="setColor"
         @set-color-mode="setColorMode"
       />
-      <div class="flex flex-col gap-2">
-        <HueSlider :hue="hue" @set-hue="setHue" />
-        <AlphaSlider :alpha="alpha" @set-alpha="setAlpha" />
-      </div>
+
+      <HueSlider :hue="hue" @set-hue="setHue" />
+      <AlphaSlider :alpha="alpha" @set-alpha="setAlpha" />
     </div>
 
-    <div
-      class="relative flex items-center gap-x-2 p-2 border-t-2 border-neutral-900"
-    >
+    <div class="color-picker-options__container border-primary">
       <button
-        class="flex items-center gap-1 px-2 h-7 rounded text-neutral-900 font-medium hover:bg-neutral-200 hover:cursor-pointer transition"
+        class="color-picker-options__toggle-btn color-picker-options__btn text-primary"
         @click="toggleMode"
       >
         {{ colorMode.toUpperCase() }}
-        <Switch class="w-5 h-5" />
+        <Switch class="icon" />
       </button>
 
       <button
         v-if="isEyeDropperSupported"
-        class="ml-auto px-1 h-7 rounded text-neutral-900 font-medium hover:bg-neutral-200 hover:cursor-pointer transition"
+        class="color-picker-options__btn text-primary hover-secondary"
         @click="pickWithEyeDropper"
       >
-        <Picker class="w-5 h-5" />
+        <Picker class="icon" />
       </button>
 
       <button
-        class="px-1 h-7 rounded text-neutral-900 font-medium hover:bg-neutral-200 hover:cursor-pointer transition"
+        class="color-picker-options__btn text-primary hover-secondary"
         @click="pickRandomColor"
       >
-        <Random class="w-5 h-5" />
+        <Random class="icon" />
       </button>
 
       <Tooltip
         :text="colorMode.toUpperCase()"
         v-model="showCopiedTooltip"
-        class="h-7"
+        class="color-picker-options__tooltip"
       >
         <button
-          class="px-1 h-full rounded text-neutral-900 font-medium hover:bg-neutral-200 hover:cursor-pointer transition"
+          class="color-picker-options__btn text-primary hover-secondary"
           @click="
             () => {
               showCopiedTooltip = copyColor(extractColor());
             }
           "
         >
-          <Copy class="w-5 h-5" />
+          <Copy class="icon" />
         </button>
       </Tooltip>
     </div>
   </div>
 </template>
+
+<style scoped>
+.color-picker__container {
+  width: 300px;
+  background-color: white;
+
+  border: 2px solid;
+  border-radius: 0.125rem;
+}
+
+.color-picker__title {
+  padding: 0.25rem 1rem 0 1rem;
+  border-bottom: 0.125rem solid;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.color-picker-colors__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 0.5rem;
+}
+
+.color-picker-colors__container:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.color-picker-options__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-top: 0.125rem solid;
+}
+
+.color-picker-options__btn {
+  padding: 0 0.5rem;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.color-picker-options__btn:hover {
+  background-color: var(--neutral-200);
+}
+
+.color-picker-options__toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: auto;
+}
+
+.color-picker-options__tooltip {
+  height: 1.75rem;
+}
+</style>

@@ -43,19 +43,15 @@ useClickOutside(colorPicker, () => {
 </script>
 
 <template>
-  <div ref="colorPicker" class="relative">
-    <button
-      class="min- w-[300px] flex items-center gap-2 border-2 border-neutral-900"
-      @click="togglePicker"
-    >
-      <Color class="w-9 h-9" :color="currentColor" />
+  <div ref="colorPicker" class="color-picker">
+    <button class="color-btn" @click="togglePicker">
+      <Color class="color-icon" :color="currentColor" />
 
-      <div class="flex flex-grow items-center gap-x-2 pr-1">
-        <p class="mx-auto text-sm uppercase">{{ currentColor }}</p>
+      <div class="color-info">
+        <p class="color-text">{{ currentColor }}</p>
         <Tooltip
           :text="currentColorMode.toUpperCase()"
           v-model="showCopiedTooltip"
-          class="cursor-pointer"
         >
           <div
             @click.stop="
@@ -64,7 +60,7 @@ useClickOutside(colorPicker, () => {
               }
             "
           >
-            <Copy class="w-6 h-6" />
+            <Copy class="icon" />
           </div>
         </Tooltip>
       </div>
@@ -76,9 +72,51 @@ useClickOutside(colorPicker, () => {
       :initial-color="currentColor"
       :show-alpha
       :color-mode="currentColorMode"
-      class="absolute top-full translate-y-2 right-0 z-10"
+      class="picker-popup"
       @set-color="showColor"
       @set-color-mode="setColorMode"
     />
   </div>
 </template>
+
+<style scoped>
+.color-picker {
+  position: relative;
+}
+
+.color-btn {
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* same as gap-2 */
+  border: 2px solid #171717; /* neutral-900 */
+}
+
+.color-icon {
+  width: 2.25rem; /* w-9 */
+  height: 2.25rem; /* h-9 */
+}
+
+.color-info {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  gap: 0.5rem; /* gap-x-2 */
+  padding-right: 0.25rem; /* pr-1 */
+}
+
+.color-text {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.875rem; /* text-sm */
+  text-transform: uppercase;
+}
+
+.picker-popup {
+  position: absolute;
+  top: 100%; /* top-full */
+  right: 0;
+  transform: translateY(0.5rem); /* translate-y-2 */
+  z-index: 10;
+}
+</style>

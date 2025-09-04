@@ -193,9 +193,9 @@ function handleKeydown(
 </script>
 
 <template>
-  <div class="flex divide-x-2 divide-neutral-900">
-    <div class="flex w-1/3 items-center gap-x-2 py-0.5">
-      <label for="first" class="text-neutral-900 font-bold select-none">{{
+  <div class="color_channel-input__container border-primary">
+    <div class="color_channel-input__wrapper">
+      <label for="first" class="text-primary">{{
         mode === "rgb" ? "R" : mode === "hsl" ? "H" : "Hex"
       }}</label>
 
@@ -206,12 +206,11 @@ function handleKeydown(
         @input="(e) => handleInput('first', e)"
         @keydown="(e) => handleKeydown('first', e)"
         @blur="handleBlur"
-        class="w-full text-center"
       />
     </div>
 
-    <div class="w-1/3 flex items-center gap-2 px-2">
-      <label for="second" class="text-neutral-900 font-bold select-none">{{
+    <div class="color_channel-input__wrapper">
+      <label for="second" class="text-primary">{{
         mode === "rgb" ? "G" : "S"
       }}</label>
       <input
@@ -221,12 +220,11 @@ function handleKeydown(
         @input="(e) => handleInput('second', e)"
         @keydown="(e) => handleKeydown('second', e)"
         @blur="handleBlur"
-        class="w-full text-center"
       />
     </div>
 
-    <div class="w-1/3 flex items-center gap-2 px-2">
-      <label for="third" class="text-neutral-900 font-bold select-none">{{
+    <div class="color_channel-input__wrapper">
+      <label for="third" class="text-primary">{{
         mode === "rgb" ? "B" : "L"
       }}</label>
       <input
@@ -236,8 +234,40 @@ function handleKeydown(
         @input="(e) => handleInput('third', e)"
         @keydown="(e) => handleKeydown('third', e)"
         @blur="handleBlur"
-        class="w-full text-center"
       />
     </div>
   </div>
 </template>
+
+<style scoped>
+.color_channel-input__container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.color_channel-input__container > :not(:last-child) {
+  border-right: 2px solid;
+}
+
+.color_channel-input__wrapper {
+  width: 33.3333%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color_channel-input__wrapper:first {
+  padding: 0 0.5rem;
+}
+
+.color_channel-input__wrapper label {
+  text-align: center;
+  font-weight: 700;
+  user-select: none;
+}
+
+.color_channel-input__wrapper input {
+  width: 100%;
+  text-align: center;
+}
+</style>

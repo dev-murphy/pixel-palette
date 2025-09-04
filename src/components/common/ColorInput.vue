@@ -12,10 +12,8 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <div
-    class="flex items-center gap-x-2 border-2 border-neutral-900 rounded-lg overflow-hidden"
-  >
-    <Color class="w-12 h-7 flex-shrink-0 rounded-md" :color="color" />
+  <div class="color-input-wrapper">
+    <Color class="color-box" :color="color" />
 
     <HEXInput
       v-if="props.mode === 'hex'"
@@ -31,3 +29,21 @@ const emits = defineEmits<{
     />
   </div>
 </template>
+
+<style scoped>
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-x-2 */
+  border: 2px solid #171717; /* border-neutral-900 */
+  border-radius: 0.5rem; /* rounded-lg */
+  overflow: hidden;
+}
+
+.color-box {
+  width: 3rem; /* w-12 */
+  height: 1.75rem; /* h-7 */
+  flex-shrink: 0; /* flex-shrink-0 */
+  border-radius: 0.375rem; /* rounded-md */
+}
+</style>

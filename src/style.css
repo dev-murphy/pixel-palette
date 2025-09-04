@@ -1,4 +1,102 @@
-@import "tailwindcss";
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove default body spacing */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; /* optional: set a base font */
+}
+
+/* Reset headings and paragraphs */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+/* Reset lists */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Reset links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset buttons */
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit; /* inherit font styles from parent */
+  color: inherit; /* inherit text color */
+  cursor: pointer;
+}
+
+/* Inputs & form elements */
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* GENERAL STYLES */
+:root {
+  --neutral-700: #404040;
+  --neutral-900: #171717;
+  --neutral-200: #e5e5e5;
+}
+
+.text-primary {
+  color: var(--neutral-900);
+}
+
+.border-primary {
+  border-color: var(--neutral-700);
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider__container {
+  position: relative;
+  width: 100%;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  border: 2px solid;
+}
 
 /* HUE SLIDER STYLES */
 .current-hue {
@@ -18,16 +116,15 @@
   );
 }
 
-.hue-slider-knob::before {
-  content: "";
+.hue-slider-knob {
   position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-  border: 3px solid white;
+  top: 50%;
+  left: 100%;
+  transform: translate(0%, -50%);
+  width: 1rem;
+  height: 125%;
   border-radius: 99px;
+  border: 2px solid;
 }
 
 /* ALPHA SLIDER STYLES */
@@ -41,6 +138,13 @@
     transparent,
     hsl(var(--hue), 100%, 50%)
   );
+}
+
+.checker,
+.hue-slider {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
 }
 
 .checker,
@@ -61,17 +165,20 @@
 .hue-slider-knob::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
+  inset: 0;
   border: 3px solid white;
   border-radius: 99px;
 }
 
 /* COLOR SPACE STYLES */
 .current-hue-gradient {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: crosshair;
+
   background: linear-gradient(
     to right,
     transparent,
