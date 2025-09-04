@@ -1,4 +1,12 @@
-import { ref, onUnmounted, type ShallowRef, watchEffect } from "vue";
+import {
+  ref,
+  onUnmounted,
+  type ShallowRef,
+  watchEffect,
+  computed,
+  type MaybeRef,
+  unref,
+} from "vue";
 
 type Position = {
   x: number;
@@ -11,8 +19,8 @@ interface ContainerBounds {
 }
 
 interface DraggableOptions {
-  elementSize?: number;
-  offset?: number;
+  elementSize?: MaybeRef<number>;
+  offset?: MaybeRef<number>;
   initialPosition?: Position;
   constrainToParent?: boolean;
   onDragStart?: (event: MouseEvent, position: Position) => void;
@@ -27,10 +35,12 @@ export const useDraggable = (
   const isDragging = ref(false);
   const position = ref<Position>({ x: 0, y: 0 });
 
-  // Destructure options with defaults
+  // Make reactive computeds for elementSize and offset
+  const elementSize = computed(() => unref(options.elementSize) || 0);
+  const offset = computed(() => unref(options.offset) || 0);
+
+  // Other options (these don't need to be reactive typically)
   const {
-    elementSize = 0,
-    offset = 0,
     constrainToParent = true,
     initialPosition,
     onDragStart,
@@ -50,16 +60,16 @@ export const useDraggable = (
     };
 
     const currentElementSize =
-      elementRef.value.getBoundingClientRect().width || elementSize;
+      elementRef.value.getBoundingClientRect().width || elementSize.value;
 
     return {
       x: Math.max(
         0,
-        Math.min(pos.x, bounds.width - currentElementSize + offset)
+        Math.min(pos.x, bounds.width - currentElementSize + offset.value)
       ),
       y: Math.max(
         0,
-        Math.min(pos.y, bounds.height - currentElementSize + offset)
+        Math.min(pos.y, bounds.height - currentElementSize + offset.value)
       ),
     };
   };
@@ -88,6 +98,7 @@ export const useDraggable = (
 
     position.value = constrainPosition(updated);
   };
+
   const startDrag = (event: MouseEvent) => {
     event.preventDefault();
     isDragging.value = true;
@@ -145,16 +156,24 @@ export const useDraggable = (
 
     // Calculate position relative to parent
     const rect = parentElement.getBoundingClientRect();
-    const x = event.clientX - rect.left - currentElementSize / 2 + offset / 2;
-    const y = event.clientY - rect.top - currentElementSize / 2 + offset / 2;
+    const x =
+      event.clientX - rect.left - currentElementSize / 2 + offset.value / 2;
+    const y =
+      event.clientY - rect.top - currentElementSize / 2 + offset.value / 2;
 
     // Constrain to bounds if provided
     position.value = {
-      x: Math.max(0, Math.min(x, bounds.width - currentElementSize + offset)),
-      y: Math.max(0, Math.min(y, bounds.height - currentElementSize + offset)),
+      x: Math.max(
+        0,
+        Math.min(x, bounds.width - currentElementSize + offset.value)
+      ),
+      y: Math.max(
+        0,
+        Math.min(y, bounds.height - currentElementSize + offset.value)
+      ),
     };
   };
-  
+
   // Get current position as percentage
   const getPositionPercent = (): Position => {
     const bounds = {
@@ -163,8 +182,8 @@ export const useDraggable = (
     };
 
     return {
-      x: (position.value.x / (bounds.width - elementSize)) * 100,
-      y: (position.value.y / (bounds.height - elementSize)) * 100,
+      x: (position.value.x / (bounds.width - elementSize.value)) * 100,
+      y: (position.value.y / (bounds.height - elementSize.value)) * 100,
     };
   };
 
@@ -178,10 +197,10 @@ export const useDraggable = (
     const newPosition: Partial<Position> = {};
 
     if (percent.x !== undefined) {
-      newPosition.x = (percent.x / 100) * (bounds.width - elementSize);
+      newPosition.x = (percent.x / 100) * (bounds.width - elementSize.value);
     }
     if (percent.y !== undefined) {
-      newPosition.y = (percent.y / 100) * (bounds.height - elementSize);
+      newPosition.y = (percent.y / 100) * (bounds.height - elementSize.value);
     }
 
     setPosition(newPosition);

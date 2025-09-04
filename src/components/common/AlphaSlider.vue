@@ -6,10 +6,18 @@ const props = defineProps<{ alpha?: number }>();
 const emits = defineEmits<{ (e: "set-alpha", val: number): void }>();
 
 const knob = useTemplateRef<HTMLElement>("knob");
-const offset = 8;
 
 const elementSize = computed(() => {
-  return knob.value?.getBoundingClientRect().width || 20; // fallback to 20
+  if (!knob.value) return 20;
+
+  const rect = knob.value.getBoundingClientRect();
+  const width = rect.width;
+  return width || knob.value.offsetWidth || knob.value.clientWidth || 20;
+});
+
+const offset = computed(() => {
+  const size = elementSize.value;
+  return size / 2;
 });
 
 const initialPosition = computed(() => {
@@ -20,7 +28,7 @@ const initialPosition = computed(() => {
 });
 
 const { startDrag, position, setPosition } = useDraggable(knob, {
-  elementSize: elementSize.value,
+  elementSize,
   offset,
 });
 
@@ -28,7 +36,7 @@ const currentAlpha = computed(() => {
   if (!knob.value || !knob.value.parentElement) return 0;
 
   const bounds = knob.value.parentElement.getBoundingClientRect();
-  return position.value.x / (bounds.width - offset);
+  return position.value.x / (bounds.width - offset.value);
 });
 
 watch(
@@ -41,7 +49,7 @@ watch(
 
 onMounted(() => {
   const boundsWidth = initialPosition.value.width || 0;
-  const initial = (props.alpha ?? 1) * Math.max(0, boundsWidth - offset);
+  const initial = (props.alpha ?? 1) * Math.max(0, boundsWidth - offset.value);
   setPosition({ x: initial });
 });
 
@@ -50,7 +58,8 @@ watch(
   (newAlpha) => {
     if (!knob.value || !knob.value.parentElement) return;
     const bounds = knob.value.parentElement.getBoundingClientRect();
-    const x = Math.max(0, Math.min(1, newAlpha ?? 0)) * (bounds.width - offset);
+    const x =
+      Math.max(0, Math.min(1, newAlpha ?? 0)) * (bounds.width - offset.value);
     setPosition({ x });
   },
   { immediate: true }
@@ -58,11 +67,11 @@ watch(
 </script>
 
 <template>
-  <div class="relative w-full h-7 border-2 border-neutral-900 p-1 rounded-lg">
-    <div class="checker w-full h-full rounded" @mousedown="startDrag">
+  <div class="slider__container border-primary">
+    <div class="checker" @mousedown="startDrag">
       <div
         ref="knob"
-        class="hue-slider-knob current-hue absolute w-4 h-[125%] top-1/2 left-full -translate-y-1/2 -transalte-x-1/2 border-2 border-neutral-900 rounded-full"
+        class="hue-slider-knob current-hue border-primary"
         :style="{
           left: `${position.x}px`,
         }"

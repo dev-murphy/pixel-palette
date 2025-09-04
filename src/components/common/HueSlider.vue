@@ -5,22 +5,30 @@ import { useDraggable } from "../../composables/useDraggable";
 const props = defineProps<{ hue?: number }>();
 const emits = defineEmits<{ (e: "set-hue", val: number): void }>();
 const knob = useTemplateRef<HTMLElement>("knob");
-const offset = 8;
 
 const elementSize = computed(() => {
-  return knob.value?.getBoundingClientRect().width || 20;
+  if (!knob.value) return 20;
+  
+  const rect = knob.value.getBoundingClientRect();
+  const width = rect.width;
+  return width || knob.value.offsetWidth || knob.value.clientWidth || 20;
 });
 
-const { startDrag, position, setPosition } = useDraggable(knob, {
-  elementSize: elementSize.value,
-  offset,
+const offset = computed(() => {
+  const size = elementSize.value;
+  return size / 2;
 });
 
 const currentHue = computed(() => {
   if (!knob.value || !knob.value.parentElement) return 0;
 
   const bounds = knob.value.parentElement.getBoundingClientRect();
-  return Math.round((position.value.x / (bounds.width - offset)) * 360);
+  return Math.round((position.value.x / (bounds.width - offset.value)) * 360);
+});
+
+const { startDrag, position, setPosition } = useDraggable(knob, {
+  elementSize,
+  offset,
 });
 
 watch(currentHue, (colorValue) => {
@@ -34,7 +42,7 @@ watch(
     if (newHue === undefined || !knob.value || !knob.value.parentElement)
       return;
     const bounds = knob.value.parentElement.getBoundingClientRect();
-    const x = (newHue / 360) * (bounds.width - offset);
+    const x = (newHue / 360) * (bounds.width - offset.value);
     setPosition({ x });
   },
   { immediate: true }
@@ -44,17 +52,17 @@ onMounted(() => {
   if (props.hue === undefined || !knob.value || !knob.value.parentElement)
     return;
   const bounds = knob.value.parentElement.getBoundingClientRect();
-  const x = (props.hue / 360) * (bounds.width - offset);
+  const x = (props.hue / 360) * (bounds.width - offset.value);
   setPosition({ x });
 });
 </script>
 
 <template>
-  <div class="relative w-full h-7 border-2 border-neutral-900 p-1 rounded-lg">
-    <div class="hue-slider w-full h-full rounded" @mousedown="startDrag">
+  <div class="slider__container border-primary">
+    <div class="hue-slider" @mousedown="startDrag">
       <div
         ref="knob"
-        class="hue-slider-knob current-hue absolute w-4 h-[125%] top-1/2 left-0 -translate-y-1/2 -transalte-x-1/2 border-2 border-neutral-900 rounded-full"
+        class="hue-slider-knob current-hue border-primary"
         :style="{
           left: `${position.x}px`,
         }"
