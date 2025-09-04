@@ -2,6 +2,7 @@
 import type { ColorMode } from "../../types";
 import HEXInput from "./inputs/HEXInput.vue";
 import RGBInput from "./inputs/ColorChannelInput.vue";
+import Color from "../common/Color.vue";
 
 const props = defineProps<{ color: string; mode: ColorMode }>();
 const emits = defineEmits<{
@@ -11,13 +12,11 @@ const emits = defineEmits<{
 </script>
 
 <template>
-  <div class="flex items-center gap-x-2 border-2 border-neutral-900 rounded-lg">
-    <div
-      class="w-12 h-7 flex-shrink-0 ml-1.5 rounded-md"
-      :style="{
-        background: props.color,
-      }"
-    ></div>
+  <div
+    class="flex items-center gap-x-2 border-2 border-neutral-900 rounded-lg overflow-hidden"
+  >
+    <Color class="w-12 h-7 flex-shrink-0 rounded-md" :color="color" />
+
     <HEXInput
       v-if="props.mode === 'hex'"
       :color="props.color"

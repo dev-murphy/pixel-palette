@@ -43,8 +43,9 @@
   );
 }
 
-.checker {
-  --size: 20px; /* tile size */
+.checker,
+.checkered {
+  --size: 16px; /* tile size */
   --c1: #f2f2f2; /* light color */
   --c2: #cccccc; /* dark color */
 
