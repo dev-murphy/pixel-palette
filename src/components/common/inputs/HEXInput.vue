@@ -29,7 +29,6 @@ const firstValue = computed<string>({
   set: (newValue: string) => {
     if (!colorRef.value) return;
     colorRef.value.hex = newValue;
-    emitColorDebounced();
   },
 });
 
@@ -43,32 +42,27 @@ function handleInput(event: Event) {
   firstValue.value = sanitized;
 }
 
-let debounceTimer: number | undefined;
-function emitColorDebounced(delay = 250) {
-  if (debounceTimer) window.clearTimeout(debounceTimer);
-  debounceTimer = window.setTimeout(() => {
-    const value = firstValue.value || "";
-    const tc = tinycolor(`#${value}`);
-    if (tc.isValid()) {
-      emits("set-color", tc.toHslString());
-    }
-  }, delay);
+function emitColor() {
+  const value = firstValue.value || "";
+  const tc = tinycolor(`#${value}`);
+  if (tc.isValid()) {
+    emits("set-color", tc.toHslString());
+  }
 }
 </script>
 
 <template>
-  <div class="flex divide-x-2 divide-neutral-200">
-    <div class="flex items-center p-2">
-      <label for="code" class="flex-shrink-0 font-bold uppercase"
-        >hex <span class="text-neutral-500">#</span></label
-      >
-      <input
-        type="text"
-        name="code"
-        v-model="firstValue"
-        @input="handleInput"
-        class="w-full uppercase"
-      />
-    </div>
+  <div class="flex items-center py-0.5">
+    <label for="code" class="flex-shrink-0 font-bold uppercase"
+      >hex <span class="text-neutral-500">#</span></label
+    >
+    <input
+      type="text"
+      id="code"
+      v-model="firstValue"
+      @input="handleInput"
+      @blur="emitColor"
+      class="w-full uppercase"
+    />
   </div>
 </template>
