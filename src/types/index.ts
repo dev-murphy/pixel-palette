@@ -5,4 +5,17 @@ export type ColorMap = {
 };
 
 export type ColorMode = keyof ColorMap;
-export type Color<T extends keyof ColorMap> = ColorMap[T];
+
+// Prop Types
+export interface ColorPickerProps {
+  title?: string;
+  initialColor?: string;
+  colorMode?: ColorMode;
+  showAlpha?: boolean;
+}
+
+// Emit types
+export interface ColorPickerEmits {
+  (e: "set-color", color: string): void;
+  (e: "set-color-mode", colorMode: ColorMode): void;
+}
