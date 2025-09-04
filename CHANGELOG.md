@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.2.0](https://github.com/dev-murphy/pixel-palette/compare/v1.1.0...v1.2.0) (2025-09-04)
+
+
+### Features
+
+* move core picker component to a new component, and make button to open picker component ([2bf14dd](https://github.com/dev-murphy/pixel-palette/commit/2bf14ddffdca9939d0531c0b4512f70068e69f35))
+
+
+### Miscellaneous
+
+* create useCLickOutside composable ([a8ac295](https://github.com/dev-murphy/pixel-palette/commit/a8ac2951ab18c8948ffd3f3562ffa50ef9ea32a7))
+* started adding props and emits type defs ([edacf55](https://github.com/dev-murphy/pixel-palette/commit/edacf551e524282e8b61f4d8bc83e9d1cf8c0413))
+
+
+### Code Refactors
+
+* create a component to accurate show current color ([8ad57b2](https://github.com/dev-murphy/pixel-palette/commit/8ad57b2f98cf4398164008a39cfc5f5ed7b2a1fc))
+* move copy and tooltip into their own util and component respectively ([62a235c](https://github.com/dev-murphy/pixel-palette/commit/62a235caef058aa20ee640c1c9d3ba1780919e47))
+* remove debounce and trigger color update on input blur ([a66dedb](https://github.com/dev-murphy/pixel-palette/commit/a66dedb0ad2b998d13a27d6c3d8c32bd4fa2f8ec))
+
+
+### UI Updates
+
+* reduce height of hue and alpha sliders ([a33754b](https://github.com/dev-murphy/pixel-palette/commit/a33754b08209f4aaa9ba1d2595af5c353fa92a4d))
+
 ## [1.1.0](https://github.com/dev-murphy/pixel-palette/compare/v1.0.0...v1.1.0) (2025-09-03)
 
 
