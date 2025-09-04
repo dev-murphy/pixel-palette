@@ -11,7 +11,6 @@ A modern, customizable color picker component for Vue 3.
 - 📋 Copy to clipboard with tooltip feedback
 - 🎛️ Alpha channel support
 - 📱 Responsive design
-- 🎨 Tailwind CSS styling
 
 ## Installation
 
@@ -29,11 +28,7 @@ yarn add pixel-palette
 
 ```vue
 <template>
-  <ColorPicker
-    title="Choose Color"
-    :initialColor="'hsl(210, 100%, 50%)'"
-    @set-color="handleColorChange"
-  />
+  <ColorPicker @set-color="handleColorChange" />
 </template>
 
 <script setup>
@@ -52,7 +47,9 @@ function handleColorChange(color) {
 <template>
   <ColorPicker
     title="Primary Color"
-    :initialColor="'hsla(210, 100%, 50%, 0.8)'"
+    :initial-color="'hsla(210, 100%, 50%, 0.8)'"
+    color-mode="hex"
+    :show-alpha="trye"
     @set-color="updateColor"
   />
 </template>
@@ -69,10 +66,12 @@ const updateColor = (color) => {
 
 ## Props
 
-| Prop           | Type     | Default               | Description                         |
-| -------------- | -------- | --------------------- | ----------------------------------- |
-| `title`        | `string` | -                     | Optional title displayed at the top |
-| `initialColor` | `string` | `"hsl(0, 100%, 50%)"` | Initial color value                 |
+| Prop           | Type                    | Default               | Description                         |
+| -------------- | ----------------------- | --------------------- | ----------------------------------- |
+| `title`        | `string`                | -                     | Optional title displayed at the top |
+| `initialColor` | `string`                | `"hsl(0, 100%, 50%)"` | Initial color value                 |
+| `colorMode`    | `hex` or `rgb` or `hsl` | `hex` `               | Initial color mode value            |
+| `showAlpha`    | `boolean`               | false                 | Option to show alpha channel        |
 
 ## Events
 
@@ -88,4 +87,4 @@ const updateColor = (color) => {
 
 ## License
 
-MIT
+[MIT](/LICENSE)
