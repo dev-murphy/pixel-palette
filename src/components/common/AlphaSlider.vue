@@ -58,7 +58,7 @@ watch(
 </script>
 
 <template>
-  <div class="relative w-full h-10 border-2 border-neutral-900 p-1 rounded-lg">
+  <div class="relative w-full h-7 border-2 border-neutral-900 p-1 rounded-lg">
     <div class="checker w-full h-full rounded" @mousedown="startDrag">
       <div
         ref="knob"
