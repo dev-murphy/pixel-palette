@@ -174,38 +174,6 @@ export const useDraggable = (
     };
   };
 
-  // Get current position as percentage
-  const getPositionPercent = (): Position => {
-    const bounds = {
-      width: elementRef.value?.parentElement?.offsetWidth || 100,
-      height: elementRef.value?.parentElement?.offsetHeight || 100,
-    };
-
-    return {
-      x: (position.value.x / (bounds.width - elementSize.value)) * 100,
-      y: (position.value.y / (bounds.height - elementSize.value)) * 100,
-    };
-  };
-
-  // Set position by percentage
-  const setPositionPercent = (percent: Partial<Position>) => {
-    const bounds = {
-      width: elementRef.value?.parentElement?.offsetWidth || 100,
-      height: elementRef.value?.parentElement?.offsetHeight || 100,
-    };
-
-    const newPosition: Partial<Position> = {};
-
-    if (percent.x !== undefined) {
-      newPosition.x = (percent.x / 100) * (bounds.width - elementSize.value);
-    }
-    if (percent.y !== undefined) {
-      newPosition.y = (percent.y / 100) * (bounds.height - elementSize.value);
-    }
-
-    setPosition(newPosition);
-  };
-
   // Cleanup on unmount
   onUnmounted(() => {
     document.removeEventListener("mousemove", handleMouseMove);
@@ -213,14 +181,11 @@ export const useDraggable = (
   });
 
   return {
-    // State
     isDragging,
     position,
 
     // Methods
     startDrag,
     setPosition,
-    getPositionPercent,
-    setPositionPercent,
   };
 };
