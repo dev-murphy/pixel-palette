@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.1](https://github.com/dev-murphy/pixel-palette/compare/v1.3.0...v1.3.1) (2025-09-05)
+
+
+### Miscellaneous
+
+* update package with new type defs and css path ([8087f0c](https://github.com/dev-murphy/pixel-palette/commit/8087f0c378c44c29a8659da768361ed71a091568))
+* update style location in example app ([d0fcb77](https://github.com/dev-murphy/pixel-palette/commit/d0fcb7794a5e8f254c0a4561e4da0429ed86cede))
+
+
+### Documentation
+
+* update README to reflect new locations for styles ([5dc6202](https://github.com/dev-murphy/pixel-palette/commit/5dc6202253dfe8e64b60c9e82bb15f0a485ac149))
+
+
+### UI Updates
+
+* fix border and text color issues ([9c11a72](https://github.com/dev-murphy/pixel-palette/commit/9c11a7223f655c6f84c1d13da982ee4f31083cd4))
+
 ## [1.3.0](https://github.com/dev-murphy/pixel-palette/compare/v1.2.0...v1.3.0) (2025-09-05)
 
 
