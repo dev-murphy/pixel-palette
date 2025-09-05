@@ -49,7 +49,7 @@ function handleColorChange(color) {
     title="Primary Color"
     :initial-color="'hsla(210, 100%, 50%, 0.8)'"
     color-mode="hex"
-    :show-alpha="trye"
+    :show-alpha="true"
     @set-color="updateColor"
   />
 </template>
