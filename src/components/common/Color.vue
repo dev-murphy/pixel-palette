@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-defineProps<{ color: string }>();
+import { useColors } from "../../composables/useColors";
+
+const { exportColor } = useColors();
 </script>
 
 <template>
@@ -7,7 +9,7 @@ defineProps<{ color: string }>();
     <div
       class="color"
       :style="{
-        background: color,
+        background: exportColor,
       }"
     ></div>
   </div>

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref, useTemplateRef } from "vue";
-import type { ColorMode, ColorPickerEmits, ColorPickerProps } from "../types";
+import { onMounted, ref, useTemplateRef, watch } from "vue";
 import { copyColor } from "../utils";
 import { useClickOutside } from "../composables/useClickOutside";
 
@@ -8,28 +7,26 @@ import Picker from "./common/Picker.vue";
 import Color from "./common/Color.vue";
 import Tooltip from "./common/Tooltip.vue";
 import Copy from "./common/icons/Copy.vue";
+import { useColors } from "../composables/useColors";
 
-const props = withDefaults(defineProps<ColorPickerProps>(), {
-  initialColor: "#ff0000",
-  colorMode: "hex",
-  showAlpha: true,
-});
+const props = withDefaults(
+  defineProps<{
+    title?: string;
+    initialColor?: string;
+    colorMode?: "hex" | "rgb" | "hsl";
+    showAlpha?: boolean;
+  }>(),
+  {
+    initialColor: "#ff0000",
+    colorMode: "hex",
+    showAlpha: true,
+  }
+);
 
-const emits = defineEmits<ColorPickerEmits>();
+const { exportColor, colorMode, setColorFromString } = useColors();
+const emits = defineEmits<{ (e: "set-color", color: string): void }>();
 
 const showCopiedTooltip = ref(false);
-
-const currentColor = ref(props.initialColor);
-const showColor = (color: string) => {
-  currentColor.value = color;
-  emits("set-color", color);
-};
-
-const currentColorMode = ref(props.colorMode);
-const setColorMode = (mode: ColorMode) => {
-  currentColorMode.value = mode;
-  emits("set-color-mode", mode);
-};
 
 const isPickerOpen = ref(false);
 const togglePicker = () => {
@@ -40,23 +37,32 @@ const colorPicker = useTemplateRef<HTMLElement>("colorPicker");
 useClickOutside(colorPicker, () => {
   isPickerOpen.value = false;
 });
+
+watch(
+  () => exportColor.value,
+  (newColor) => {
+    emits("set-color", newColor);
+  }
+);
+
+onMounted(() => {
+  setColorFromString(props.initialColor);
+  colorMode.value = props.colorMode;
+});
 </script>
 
 <template>
   <div ref="colorPicker" class="color-picker">
     <button class="color-btn" @click="togglePicker">
-      <Color class="color-icon" :color="currentColor" />
+      <Color class="color-icon" />
 
       <div class="color-info">
-        <p class="color-text">{{ currentColor }}</p>
-        <Tooltip
-          :text="currentColorMode.toUpperCase()"
-          v-model="showCopiedTooltip"
-        >
+        <p class="color-text">{{ exportColor }}</p>
+        <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
           <div
             @click.stop="
               () => {
-                showCopiedTooltip = copyColor(currentColor);
+                showCopiedTooltip = copyColor(exportColor);
               }
             "
           >
@@ -69,12 +75,8 @@ useClickOutside(colorPicker, () => {
     <Picker
       v-if="isPickerOpen"
       :title="title"
-      :initial-color="currentColor"
       :show-alpha
-      :color-mode="currentColorMode"
       class="picker-popup"
-      @set-color="showColor"
-      @set-color-mode="setColorMode"
     />
   </div>
 </template>

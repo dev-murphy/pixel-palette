@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
-import tinycolor from "tinycolor2";
-import type {
-  ColorMode,
-  ColorPickerEmits,
-  ColorPickerProps,
-} from "../../types";
+import { ref, onMounted } from "vue";
 import { copyColor } from "../../utils";
+import { useColors } from "../../composables/useColors";
 
 import ColorSpace from "../common/ColorSpace.vue";
 import HueSlider from "../common/HueSlider.vue";
@@ -19,93 +14,15 @@ import Random from "../common/icons/Random.vue";
 import Switch from "../common/icons/Switch.vue";
 import Tooltip from "../common/Tooltip.vue";
 
-const props = withDefaults(defineProps<ColorPickerProps>(), {
-  initialColor: "hsl(0, 100%, 50%)",
-});
+const props = defineProps<{
+  title?: string;
+}>();
 
-const emits = defineEmits<ColorPickerEmits>();
-
-const hue = ref(0);
-const alpha = ref(1);
-const colorMode = ref<ColorMode>(props.colorMode || "hex");
-const modes: ColorMode[] = ["rgb", "hsl", "hex"];
-const hslColor = ref(props.initialColor);
+const { exportColor, colorMode, toggleMode, randomColor, setColorFromString } =
+  useColors();
 
 const isEyeDropperSupported = ref(false);
 const showCopiedTooltip = ref(false);
-
-const setHue = (colorHue: number) => {
-  hue.value = colorHue;
-};
-
-const setAlpha = (colorAlpha: number) => {
-  alpha.value = colorAlpha;
-};
-
-const setColor = (color: string) => {
-  hslColor.value = color;
-};
-
-const setColorMode = (mode: ColorMode) => {
-  colorMode.value = mode;
-  emits("set-color-mode", mode);
-};
-
-// Watch for external colorMode changes
-watch(
-  () => props.colorMode,
-  (newMode) => {
-    if (newMode && newMode !== colorMode.value) {
-      colorMode.value = newMode;
-    }
-  },
-  { immediate: true }
-);
-
-// Watch for colorMode changes and emit color in new format
-watch(colorMode, () => {
-  emits("set-color", extractColor());
-});
-
-function toggleMode() {
-  const currentIndex = modes.indexOf(colorMode.value);
-  const nextIndex = (currentIndex + 1) % modes.length;
-  const newMode = modes[nextIndex];
-  colorMode.value = newMode;
-  emits("set-color-mode", newMode);
-}
-
-function extractColor() {
-  let color = "";
-  if (colorMode.value === "hsl") {
-    color = tinycolor(hslColor.value).toHslString();
-  } else if (colorMode.value === "rgb") {
-    color = tinycolor(hslColor.value).toRgbString();
-  } else if (colorMode.value === "hex") {
-    if (alpha.value !== 1) {
-      color = tinycolor(hslColor.value).toHex8String();
-    } else {
-      color = tinycolor(hslColor.value).toHexString();
-    }
-  }
-  return color;
-}
-
-watch(
-  hslColor,
-  (val) => {
-    const t = tinycolor(val);
-    if (!t.isValid()) return;
-
-    const hsv = t.toHsv();
-    hue.value = Math.round(hsv.h);
-    alpha.value = hsv.a ?? 1;
-
-    emits("set-color", extractColor());
-    document.body.style.setProperty("--hue", hue.value.toString());
-  },
-  { immediate: true }
-);
 
 onMounted(() => {
   isEyeDropperSupported.value =
@@ -118,19 +35,13 @@ async function pickWithEyeDropper() {
     if (!EyeDropperCtor) return;
     const ed = new EyeDropperCtor();
     const result = await ed.open();
+
     if (result?.sRGBHex) {
-      const tc = tinycolor(result.sRGBHex);
-      if (tc.isValid()) setColor(tc.toHslString());
+      setColorFromString(result.sRGBHex);
     }
   } catch (err) {
     // Silently ignore (e.g., user cancels or not secure context)
   }
-}
-
-function pickRandomColor() {
-  alpha.value = 1;
-  const randomColor = tinycolor.random();
-  setColor(randomColor.toHslString());
 }
 </script>
 
@@ -141,22 +52,10 @@ function pickRandomColor() {
     </h2>
 
     <div class="color-picker-colors__container">
-      <ColorSpace
-        :hue="hue"
-        :alpha="alpha"
-        :color="hslColor"
-        @set-color="setColor"
-      />
-
-      <ColorInput
-        :color="hslColor"
-        :mode="colorMode"
-        @set-color="setColor"
-        @set-color-mode="setColorMode"
-      />
-
-      <HueSlider :hue="hue" @set-hue="setHue" />
-      <AlphaSlider :alpha="alpha" @set-alpha="setAlpha" />
+      <ColorSpace />
+      <ColorInput />
+      <HueSlider />
+      <AlphaSlider />
     </div>
 
     <div class="color-picker-options__container border-primary">
@@ -178,7 +77,7 @@ function pickRandomColor() {
 
       <button
         class="color-picker-options__btn text-primary hover-secondary"
-        @click="pickRandomColor"
+        @click="randomColor()"
       >
         <Random class="icon" />
       </button>
@@ -192,7 +91,7 @@ function pickRandomColor() {
           class="color-picker-options__btn text-primary hover-secondary"
           @click="
             () => {
-              showCopiedTooltip = copyColor(extractColor());
+              showCopiedTooltip = copyColor(exportColor);
             }
           "
         >
@@ -237,13 +136,16 @@ function pickRandomColor() {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   padding: 0.5rem;
   border-top: 0.125rem solid;
 }
 
 .color-picker-options__btn {
-  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.25rem;
   height: 1.75rem;
   border-radius: 0.375rem;
   font-weight: 500;
@@ -259,6 +161,7 @@ function pickRandomColor() {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  padding: 0 0.5rem;
   margin-right: auto;
 }
 

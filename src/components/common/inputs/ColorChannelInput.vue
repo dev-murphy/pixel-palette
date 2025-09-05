@@ -1,204 +1,142 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import tinycolor from "tinycolor2";
+import { useColors } from "../../../composables/useColors";
 
-import type { ColorMode, ColorMap } from "../../../types";
+const { colorMode, rgbR, rgbG, rgbB, hslH, hslS, hslL } = useColors();
 
-const props = defineProps<{ color: string; mode: ColorMode }>();
-const emits = defineEmits<{ (e: "set-color", val: string): void }>();
-
+// Input strings
 const firstValue = ref<string>("");
 const secondValue = ref<string>("");
 const thirdValue = ref<string>("");
 
-function getColorCodes(color: string, mode: ColorMode) {
-  const t = tinycolor(color);
-  if (mode === "rgb") return t.toRgb();
-  if (mode === "hsl") return t.toHsl();
-}
+// Map refs for convenience
+const channelRefs = {
+  rgb: [rgbR, rgbG, rgbB],
+  hsl: [hslH, hslS, hslL],
+};
 
-function updateInputsFromProps() {
-  const colorCodes = getColorCodes(props.color, props.mode);
-  if (!colorCodes) return;
+// Min/Max values for each mode
+const channelLimits = {
+  rgb: [
+    { min: 0, max: 255 },
+    { min: 0, max: 255 },
+    { min: 0, max: 255 },
+  ],
+  hsl: [
+    { min: 0, max: 360 },
+    { min: 0, max: 100 },
+    { min: 0, max: 100 },
+  ],
+};
 
-  if (props.mode === "rgb") {
-    const { r, g, b } = colorCodes as ColorMap["rgb"];
-    firstValue.value = Math.round(r).toString();
-    secondValue.value = Math.round(g).toString();
-    thirdValue.value = Math.round(b).toString();
-  }
-
-  if (props.mode === "hsl") {
-    const { h, s, l } = colorCodes as ColorMap["hsl"];
-    firstValue.value = Math.round(h).toString();
-    secondValue.value = Math.round(s * 100).toString();
-    thirdValue.value = Math.round(l * 100).toString();
-  }
-}
-
-// Only sync from props when the color prop actually changes
-// Don't sync when we're the ones emitting the change
-let isInternalUpdate = false;
-watch(
-  () => [props.color, props.mode],
-  () => {
-    if (!isInternalUpdate) {
-      updateInputsFromProps();
-    }
-    isInternalUpdate = false;
-  },
-  { immediate: true }
-);
-
-// sanitize numeric input and clamp
-function sanitizeNumeric(raw: string, min: number, max: number): number {
-  const numeric = raw.replace(/[^0-9.-]/g, "");
-  const n = Number(numeric || "0");
-  if (Number.isNaN(n)) return min;
-  return Math.max(min, Math.min(max, n));
-}
-
-function emitColor() {
-  const first = Number(firstValue.value || 0);
-  const second = Number(secondValue.value || 0);
-  const third = Number(thirdValue.value || 0);
-
-  let tc;
-  if (props.mode === "rgb") {
-    tc = tinycolor({ r: first, g: second, b: third });
-  } else if (props.mode === "hsl") {
-    tc = tinycolor({ h: first, s: second / 100, l: third / 100 });
-  }
-
-  if (tc && tc.isValid()) {
-    isInternalUpdate = true;
-    emits("set-color", tc.toHslString());
+// Initialize input values from channels
+function updateInputsFromChannels() {
+  const mode = colorMode.value as "rgb" | "hsl";
+  const channels = channelRefs[mode];
+  if (mode === "rgb") {
+    firstValue.value = Math.round(channels[0].value).toString();
+    secondValue.value = Math.round(channels[1].value).toString();
+    thirdValue.value = Math.round(channels[2].value).toString();
+  } else {
+    // HSL: scale S/L to 0–100
+    firstValue.value = Math.round(channels[0].value).toString();
+    secondValue.value = Math.round(channels[1].value * 100).toString();
+    thirdValue.value = Math.round(channels[2].value * 100).toString();
   }
 }
 
-function handleBlur() {
-  emitColor();
+// Watch for mode changes
+watch(colorMode, () => {
+  updateInputsFromChannels();
+});
+
+// Sanitize input
+function sanitizeNumeric(raw: string, min: number, max: number) {
+  const n = parseInt(raw.replace(/\D/g, ""), 10) || min;
+  return Math.min(Math.max(n, min), max);
 }
 
+// Update channel from input
+function updateChannelFromInput() {
+  const mode = colorMode.value as "rgb" | "hsl";
+  const limits = channelLimits[mode];
+  const channels = channelRefs[mode];
+
+  const values = [firstValue.value, secondValue.value, thirdValue.value].map(
+    (v, i) => sanitizeNumeric(v, limits[i].min, limits[i].max)
+  );
+
+  if (mode === "rgb") {
+    channels.forEach((c, i) => (c.value = values[i]));
+  } else {
+    channels[0].value = values[0];
+    channels[1].value = values[1] / 100;
+    channels[2].value = values[2] / 100;
+  }
+
+  // Update inputs in case sanitization changed them
+  updateInputsFromChannels();
+}
+
+// Handle input events
 function handleInput(which: "first" | "second" | "third", event: Event) {
   const target = event.target as HTMLInputElement;
-  const rawValue = target.value;
+  let val = target.value;
 
-  if (props.mode === "rgb") {
-    const min = 0;
-    const max = 255;
-    const sanitized = sanitizeNumeric(rawValue, min, max);
+  const mode = colorMode.value as "rgb" | "hsl";
+  const index = which === "first" ? 0 : which === "second" ? 1 : 2;
+  const limits = channelLimits[mode][index];
 
-    // Update the appropriate ref directly
-    if (which === "first") firstValue.value = sanitized.toString();
-    if (which === "second") secondValue.value = sanitized.toString();
-    if (which === "third") thirdValue.value = sanitized.toString();
+  const sanitized = sanitizeNumeric(val, limits.min, limits.max);
+  if (index === 0) firstValue.value = sanitized.toString();
+  if (index === 1) secondValue.value = sanitized.toString();
+  if (index === 2) thirdValue.value = sanitized.toString();
 
-    // Only update input value if it was actually sanitized
-    if (sanitized.toString() !== rawValue) {
-      target.value = sanitized.toString();
-    }
-
-    return;
-  }
-
-  // HSL: H 0-360, S/L 0-100 (percent inputs)
-  if (which === "first") {
-    const sanitized = sanitizeNumeric(rawValue, 0, 360);
-    firstValue.value = sanitized.toString();
-    if (sanitized.toString() !== rawValue) {
-      target.value = sanitized.toString();
-    }
-  } else {
-    const sanitized = sanitizeNumeric(rawValue, 0, 100);
-    if (which === "second") secondValue.value = sanitized.toString();
-    if (which === "third") thirdValue.value = sanitized.toString();
-    if (sanitized.toString() !== rawValue) {
-      target.value = sanitized.toString();
-    }
-  }
+  if (sanitized.toString() !== val) target.value = sanitized.toString();
 }
 
+// Handle blur
+function handleBlur() {
+  updateChannelFromInput();
+}
+
+// Arrow key stepping
 function stepValue(which: "first" | "second" | "third", direction: 1 | -1) {
-  if (props.mode === "rgb") {
-    const min = 0;
-    const max = 255;
-    const step = 1;
-    if (which === "first")
-      firstValue.value = String(
-        Math.max(
-          min,
-          Math.min(max, Number(firstValue.value || 0) + step * direction)
-        )
-      );
-    if (which === "second")
-      secondValue.value = String(
-        Math.max(
-          min,
-          Math.min(max, Number(secondValue.value || 0) + step * direction)
-        )
-      );
-    if (which === "third")
-      thirdValue.value = String(
-        Math.max(
-          min,
-          Math.min(max, Number(thirdValue.value || 0) + step * direction)
-        )
-      );
-    return;
-  }
+  const mode = colorMode.value as "rgb" | "hsl";
+  const index = which === "first" ? 0 : which === "second" ? 1 : 2;
+  const limits = channelLimits[mode][index];
 
-  if (which === "first") {
-    const min = 0,
-      max = 360,
-      step = 1;
-    firstValue.value = String(
-      Math.max(
-        min,
-        Math.min(max, Number(firstValue.value || 0) + step * direction)
-      )
-    );
-  } else {
-    const min = 0,
-      max = 100,
-      step = 1;
-    if (which === "second")
-      secondValue.value = String(
-        Math.max(
-          min,
-          Math.min(max, Number(secondValue.value || 0) + step * direction)
-        )
-      );
-    if (which === "third")
-      thirdValue.value = String(
-        Math.max(
-          min,
-          Math.min(max, Number(thirdValue.value || 0) + step * direction)
-        )
-      );
-  }
+  const refMap = [firstValue, secondValue, thirdValue];
+  const val = parseInt(refMap[index].value) || limits.min;
+  const stepped = Math.min(Math.max(val + direction, limits.min), limits.max);
+  refMap[index].value = stepped.toString();
 
-  // Emit color change immediately for arrow key interactions
-  emitColor();
+  updateChannelFromInput();
 }
 
 function handleKeydown(
   which: "first" | "second" | "third",
   event: KeyboardEvent
 ) {
-  if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
-  event.preventDefault();
-  stepValue(which, event.key === "ArrowUp" ? 1 : -1);
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    stepValue(which, 1);
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault();
+    stepValue(which, -1);
+  }
 }
+
+// Initialize
+updateInputsFromChannels();
 </script>
 
 <template>
   <div class="color_channel-input__container border-primary">
     <div class="color_channel-input__wrapper">
-      <label for="first" class="text-primary">{{
-        mode === "rgb" ? "R" : mode === "hsl" ? "H" : "Hex"
-      }}</label>
-
+      <label for="first" class="text-primary">
+        {{ colorMode === "rgb" ? "R" : "H" }}
+      </label>
       <input
         type="text"
         id="first"
@@ -210,9 +148,9 @@ function handleKeydown(
     </div>
 
     <div class="color_channel-input__wrapper">
-      <label for="second" class="text-primary">{{
-        mode === "rgb" ? "G" : "S"
-      }}</label>
+      <label for="second" class="text-primary">
+        {{ colorMode === "rgb" ? "G" : "S" }}
+      </label>
       <input
         type="text"
         id="second"
@@ -224,9 +162,9 @@ function handleKeydown(
     </div>
 
     <div class="color_channel-input__wrapper">
-      <label for="third" class="text-primary">{{
-        mode === "rgb" ? "B" : "L"
-      }}</label>
+      <label for="third" class="text-primary">
+        {{ colorMode === "rgb" ? "B" : "L" }}
+      </label>
       <input
         type="text"
         id="third"
@@ -256,7 +194,7 @@ function handleKeydown(
   gap: 0.5rem;
 }
 
-.color_channel-input__wrapper:first {
+.color_channel-input__wrapper:first-child {
   padding: 0 0.5rem;
 }
 

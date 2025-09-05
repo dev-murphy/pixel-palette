@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import tinycolor from "tinycolor2";
-import { ref, useTemplateRef, onMounted, watch, computed } from "vue";
+import { ref, useTemplateRef, onMounted, watch, computed, nextTick } from "vue";
 import { useDraggable } from "../../composables/useDraggable";
-
-const props = defineProps<{ hue: number; alpha: number; color?: string }>();
-const emits = defineEmits<{ (e: "set-color", val: string): void }>();
+import { useColors } from "../../composables/useColors";
 
 const knob = useTemplateRef<HTMLElement>("space-knob");
 const containerRef = useTemplateRef<HTMLElement>("container");
@@ -21,92 +18,76 @@ const { startDrag, position, setPosition } = useDraggable(knob, {
   elementSize,
 });
 
-const containerBounds = ref({
-  width: 0,
-  height: 0,
+const finalSize = computed(() => {
+  if (!containerRef.value)
+    return {
+      height: 0,
+      width: 0,
+    };
+
+  const rect = containerRef.value;
+
+  return {
+    height: rect.offsetHeight - elementSize.value,
+    width: rect.offsetWidth - elementSize.value,
+  };
 });
 
-// Function to get HSL color based on knob position
-const getColorFromPosition = (x: number, y: number) => {
-  // Calculate lightness (0-100%) based on x position
-  // Left edge = 0% lightness, right edge = 100% lightness
-  const saturation = Math.round(
-    (x / (containerBounds.value.width - elementSize.value)) * 100
-  );
+const { color, setColor } = useColors();
 
-  // Calculate saturation (100% to 0%) based on y position
-  // Top edge = 100% saturation, bottom edge = 0% saturation
-  const value = Math.round(
-    100 - (y / (containerBounds.value.height - elementSize.value)) * 100
-  );
+const getColorFromPosition = (x: number, y: number) => {
+  const xPercentage = x / finalSize.value.width;
+  const yPercentage = y / finalSize.value.height;
+
+  const saturation = Math.round(xPercentage * 100);
+  const value = Math.round(100 - yPercentage * 100);
 
   // Clamp values to valid ranges
   const clampedSaturation = Math.max(0, Math.min(100, saturation));
   const clampedValue = Math.max(0, Math.min(100, value));
 
-  const color = tinycolor({
-    h: props.hue,
-    s: clampedSaturation / 100,
-    v: clampedValue / 100,
-    a: props.alpha,
-  }).toHslString();
-
   if (isReady.value) {
-    emits("set-color", color);
+    setColor({ s: clampedSaturation / 100, v: clampedValue / 100 }); // Fixed: normalize to 0-1
   }
 };
 
-function setPositionFromHSV(_unusedHue: number, s: number, v: number) {
-  const x = (s / 100) * (containerBounds.value.width - elementSize.value);
-  const y =
-    ((100 - v) / 100) * (containerBounds.value.height - elementSize.value);
+function setPositionFromSV(s: number, v: number) {
+  const x = s * finalSize.value.width; // Fixed: removed /100 multiplication
+  const y = (1 - v) * finalSize.value.height; // Fixed: use (1 - v) and removed /100
   setPosition({ x, y });
 }
 
 const isReady = ref(false);
+const isInternalUpdate = ref(false);
 
-onMounted(() => {
-  if (!containerRef.value) return;
-
-  containerBounds.value.width = containerRef.value.offsetWidth;
-  containerBounds.value.height = containerRef.value.offsetHeight;
-
-  // If an external color is provided, the watcher below will set the position.
-  // Only set a default position if no valid color prop was passed.
-  const hasExternalColor = !!props.color && tinycolor(props.color).isValid();
-  if (!hasExternalColor) {
-    const posX = containerRef.value.clientWidth;
-    setPosition({ x: posX });
-    getColorFromPosition(posX, 0);
-  } else {
-    // Apply initial color now that bounds are available
-    const t = tinycolor(props.color as string);
-    const { h, s, v } = t.toHsv();
-    setPositionFromHSV(h, s * 100, v * 100);
-  }
-  // mark ready after initial positioning
+onMounted(async () => {
+  await nextTick(); // Ensure DOM is ready
+  setPositionFromSV(color.value.s, color.value.v); // Fixed: use direct values
   isReady.value = true;
 });
 
 watch(
-  () => [position, props],
-  () => {
-    getColorFromPosition(position.value.x, position.value.y);
+  () => position.value,
+  ({ x, y }) => {
+    if (!isInternalUpdate.value) {
+      getColorFromPosition(x, y);
+    }
   },
   { deep: true }
 );
 
-// respond to external color changes
 watch(
-  () => props.color,
-  (newColor) => {
-    if (!newColor) return;
-    const t = tinycolor(newColor);
-    if (!t.isValid()) return;
-    const { h, s, v } = t.toHsv();
-    setPositionFromHSV(h, s * 100, v * 100);
+  () => [color.value.s, color.value.v],
+  ([s, v]) => {
+    if (!isReady.value || s === undefined || v === undefined) return;
+
+    isInternalUpdate.value = true;
+    setPositionFromSV(s, v); // Fixed: use direct values
+    nextTick(() => {
+      isInternalUpdate.value = false;
+    });
   },
-  { immediate: true }
+  { immediate: false } // Fixed: changed to false to avoid issues during setup
 );
 </script>
 

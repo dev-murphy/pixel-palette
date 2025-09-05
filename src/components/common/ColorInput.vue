@@ -1,32 +1,19 @@
 <script lang="ts" setup>
-import type { ColorMode } from "../../types";
 import HEXInput from "./inputs/HEXInput.vue";
 import RGBInput from "./inputs/ColorChannelInput.vue";
 import Color from "../common/Color.vue";
 
-const props = defineProps<{ color: string; mode: ColorMode }>();
-const emits = defineEmits<{
-  (e: "set-color-mode", val: ColorMode): void;
-  (e: "set-color", val: string): void;
-}>();
+import { useColors } from "../../composables/useColors";
+
+const { colorMode } = useColors();
 </script>
 
 <template>
   <div class="color-input-wrapper">
-    <Color class="color-box" :color="color" />
+    <Color class="color-box" />
 
-    <HEXInput
-      v-if="props.mode === 'hex'"
-      :color="props.color"
-      @set-color="(val) => emits('set-color', val)"
-    />
-
-    <RGBInput
-      v-else
-      :color="props.color"
-      :mode="props.mode"
-      @set-color="(val) => emits('set-color', val)"
-    />
+    <HEXInput v-if="colorMode === 'hex'" />
+    <RGBInput v-else />
   </div>
 </template>
 
