@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.3.0](https://github.com/dev-murphy/pixel-palette/compare/v1.2.0...v1.3.0) (2025-09-05)
+
+
+### Features
+
+* create useColors composable to maintain one source of truth ([b1a25e4](https://github.com/dev-murphy/pixel-palette/commit/b1a25e4a8641897ce7297829c1433f4b0389b3c3))
+
+
+### Miscellaneous
+
+* remove type def import for entry file ([f6aba29](https://github.com/dev-murphy/pixel-palette/commit/f6aba29c3f700aeced0074db5f8369d6681c59f1))
+* remove unused code from useDraggable composable ([d7ae4db](https://github.com/dev-murphy/pixel-palette/commit/d7ae4dbe75eafc563967d9a34d2226606dc86be3))
+* remove unused type defs ([848ff7a](https://github.com/dev-murphy/pixel-palette/commit/848ff7a87fe9a368478cacd330a497b3f886f2f8))
+* update deps in example app ([72c13ad](https://github.com/dev-murphy/pixel-palette/commit/72c13ad1dc4f7e647d1e035092317843f832b82e))
+* update package-lock.json for example app ([2e1d7c1](https://github.com/dev-murphy/pixel-palette/commit/2e1d7c1b8f0b98863ae4f774a236b2d479cb433b))
+* update package.json, remove tailwindcss deps ([2c07c2a](https://github.com/dev-murphy/pixel-palette/commit/2c07c2a9fe3d932a593eb87e235d376895c07eb6))
+
+
+### Documentation
+
+* update README to remove tailwindcss feature, refactor usage section ([6ca407a](https://github.com/dev-murphy/pixel-palette/commit/6ca407a7846e8e0f320a07da2f736d628046c38f))
+
+
+### Code Refactors
+
+* made offset and element reactive and update useDraggable to handle those reactive options ([bdbdf6b](https://github.com/dev-murphy/pixel-palette/commit/bdbdf6bdec17d309dd92af844d0bdba6b05ac476))
+* replace props and emits with useColors composable ([b238b40](https://github.com/dev-murphy/pixel-palette/commit/b238b4050bd2046c9f07c3080838e70da7519520))
+* replace props and emits with useColors composable and make element size and offset reactive values ([ef222e8](https://github.com/dev-murphy/pixel-palette/commit/ef222e84bbe2eab8c1b822ecc07bae88007ab799))
+
+
+### UI Updates
+
+* replace all tailwindcss with regular css ([6b2ad4f](https://github.com/dev-murphy/pixel-palette/commit/6b2ad4fa2fe93532992efe5e2a1843220e3edb06))
+
 ## [1.2.0](https://github.com/dev-murphy/pixel-palette/compare/v1.1.0...v1.2.0) (2025-09-04)
 
 
