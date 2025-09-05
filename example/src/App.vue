@@ -22,7 +22,7 @@
 <script setup>
 import { ref } from "vue";
 import { ColorPicker } from "pixel-palette";
-import "pixel-palette/style";
+import "pixel-palette/style.css";
 
 const currentColor = ref("hsl(210, 100%, 50%)");
 
