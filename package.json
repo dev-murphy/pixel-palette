@@ -8,10 +8,8 @@
   ],
   "main": "./dist/pixel-palette.umd.cjs",
   "module": "./dist/pixel-palette.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/pixel-palette.js",
       "require": "./dist/pixel-palette.umd.cjs"
     },
