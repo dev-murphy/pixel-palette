@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/dev-murphy/pixel-palette/compare/v1.3.1...v1.3.2) (2025-09-05)
+
+
+### Miscellaneous
+
+* remove all type-related props from package ([7c46c67](https://github.com/dev-murphy/pixel-palette/commit/7c46c67d5df3e0e813325033569e2affe66d8130))
+
 ## [1.3.1](https://github.com/dev-murphy/pixel-palette/compare/v1.3.0...v1.3.1) (2025-09-05)
 
 
