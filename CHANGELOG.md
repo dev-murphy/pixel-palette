@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.3](https://github.com/dev-murphy/pixel-palette/compare/v1.3.2...v1.3.3) (2025-09-05)
+
+
+### Bug Fixes
+
+* add `#` symbol to hex code ([661ad4e](https://github.com/dev-murphy/pixel-palette/commit/661ad4e7f114af677e3629c6d346569e228fd335))
+
+
+### Miscellaneous
+
+* add style compatibility ([287bf3e](https://github.com/dev-murphy/pixel-palette/commit/287bf3e9b4dc19b15c769459b78fe9eb6a9dccff))
+* re-install pixel-palette package ([2a5f896](https://github.com/dev-murphy/pixel-palette/commit/2a5f896ef51fecb7367d992b226bf2e7c44907c3))
+* update type defs ([76732c6](https://github.com/dev-murphy/pixel-palette/commit/76732c626967355762de5356eb3800420e113acc))
+
+
+### Documentation
+
+* fix typo error ([dc4fab3](https://github.com/dev-murphy/pixel-palette/commit/dc4fab3f01050164c741774a1be254d0f2e69da1))
+
 ## [1.3.2](https://github.com/dev-murphy/pixel-palette/compare/v1.3.1...v1.3.2) (2025-09-05)
 
 
