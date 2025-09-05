@@ -15,7 +15,8 @@
       "import": "./dist/pixel-palette.js",
       "require": "./dist/pixel-palette.umd.cjs"
     },
-    "./style.css": "./dist/pixel-palette.css"
+    "./style.css": "./dist/pixel-palette.css",
+    "./style": "./dist/pixel-palette.css"
   },
   "description": "A modern, customizable color picker component for Vue 3.",
   "author": "Murphy Facey<https://github.com/dev-murphy>",
