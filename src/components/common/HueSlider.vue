@@ -1,59 +1,64 @@
 <script lang="ts" setup>
-import { useTemplateRef, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useDraggable } from "../../composables/useDraggable";
+import { useColors } from "../../composables/useColors";
 
-const props = defineProps<{ hue?: number }>();
-const emits = defineEmits<{ (e: "set-hue", val: number): void }>();
-const knob = useTemplateRef<HTMLElement>("knob");
+// knob element
+const knob = ref<HTMLElement | null>(null);
 
+// size of knob
 const elementSize = computed(() => {
   if (!knob.value) return 20;
-  
   const rect = knob.value.getBoundingClientRect();
-  const width = rect.width;
-  return width || knob.value.offsetWidth || knob.value.clientWidth || 20;
+  return rect.width || knob.value.offsetWidth || knob.value.clientWidth || 20;
 });
 
-const offset = computed(() => {
-  const size = elementSize.value;
-  return size / 2;
+// offset for centering knob
+const offset = computed(() => elementSize.value / 2);
+
+// usable width of slider track
+const finalWidth = computed(() => {
+  if (!knob.value?.parentElement) return 0;
+  return knob.value.parentElement.getBoundingClientRect().width - offset.value;
 });
 
-const currentHue = computed(() => {
-  if (!knob.value || !knob.value.parentElement) return 0;
+// colors composable
+const { hue, setHue } = useColors();
 
-  const bounds = knob.value.parentElement.getBoundingClientRect();
-  return Math.round((position.value.x / (bounds.width - offset.value)) * 360);
-});
-
-const { startDrag, position, setPosition } = useDraggable(knob, {
+// draggable composable
+const { startDrag, position, setPosition, isDragging } = useDraggable(knob, {
   elementSize,
   offset,
 });
 
-watch(currentHue, (colorValue) => {
-  emits("set-hue", colorValue);
-  document.body.style.setProperty("--hue", colorValue.toString());
-});
+// sync hue -> position and emit
+function updatePositionFromHue(newHue: number) {
+  if (!knob.value?.parentElement || finalWidth.value <= 0) return;
+  const x = (newHue / 360) * finalWidth.value;
+  setPosition({ x });
+}
 
 watch(
-  () => props.hue,
+  () => position.value.x,
+  (x) => {
+    if (isDragging.value && finalWidth.value > 0) {
+      const percentage = x / finalWidth.value;
+      setHue(Math.round(percentage * 360));
+    }
+  }
+);
+
+watch(
+  () => hue.value,
   (newHue) => {
-    if (newHue === undefined || !knob.value || !knob.value.parentElement)
-      return;
-    const bounds = knob.value.parentElement.getBoundingClientRect();
-    const x = (newHue / 360) * (bounds.width - offset.value);
-    setPosition({ x });
+    document.body.style.setProperty("--hue", newHue.toString());
+    updatePositionFromHue(newHue);
   },
   { immediate: true }
 );
 
 onMounted(() => {
-  if (props.hue === undefined || !knob.value || !knob.value.parentElement)
-    return;
-  const bounds = knob.value.parentElement.getBoundingClientRect();
-  const x = (props.hue / 360) * (bounds.width - offset.value);
-  setPosition({ x });
+  updatePositionFromHue(hue.value);
 });
 </script>
 
@@ -63,9 +68,7 @@ onMounted(() => {
       <div
         ref="knob"
         class="hue-slider-knob current-hue border-primary"
-        :style="{
-          left: `${position.x}px`,
-        }"
+        :style="{ left: `${position.x}px` }"
       ></div>
     </div>
   </div>

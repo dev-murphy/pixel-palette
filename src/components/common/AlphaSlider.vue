@@ -1,69 +1,70 @@
 <script lang="ts" setup>
-import { useTemplateRef, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, nextTick } from "vue";
 import { useDraggable } from "../../composables/useDraggable";
+import { useColors } from "../../composables/useColors";
 
-const props = defineProps<{ alpha?: number }>();
-const emits = defineEmits<{ (e: "set-alpha", val: number): void }>();
-
-const knob = useTemplateRef<HTMLElement>("knob");
+const knob = ref<HTMLElement | null>(null);
 
 const elementSize = computed(() => {
-  if (!knob.value) return 20;
-
-  const rect = knob.value.getBoundingClientRect();
-  const width = rect.width;
-  return width || knob.value.offsetWidth || knob.value.clientWidth || 20;
+  const el = knob.value;
+  if (!el) return 20;
+  const rect = el.getBoundingClientRect();
+  return rect.width || el.offsetWidth || el.clientWidth || 20;
 });
 
-const offset = computed(() => {
-  const size = elementSize.value;
-  return size / 2;
+const offset = computed(() => elementSize.value / 2);
+
+const finalWidth = computed(() => {
+  const el = knob.value?.parentElement;
+  if (!el) return 0;
+  return el.getBoundingClientRect().width - offset.value;
 });
 
-const initialPosition = computed(() => {
-  if (!knob.value || !knob.value.parentElement) {
-    return { width: 0 };
-  }
-  return knob.value?.parentElement.getBoundingClientRect();
-});
-
-const { startDrag, position, setPosition } = useDraggable(knob, {
+const { startDrag, position, setPosition, isDragging } = useDraggable(knob, {
   elementSize,
   offset,
 });
 
-const currentAlpha = computed(() => {
-  if (!knob.value || !knob.value.parentElement) return 0;
+const { alpha, setAlpha } = useColors();
 
-  const bounds = knob.value.parentElement.getBoundingClientRect();
-  return position.value.x / (bounds.width - offset.value);
-});
+/**
+ * Sync knob position to alpha
+ */
+const updatePositionFromAlpha = (newAlpha: number) => {
+  if (!knob.value?.parentElement || finalWidth.value <= 0) return;
+  const x = Math.max(0, Math.min(1, newAlpha)) * finalWidth.value;
+  setPosition({ x });
+};
 
+/**
+ * When alpha changes, update knob position
+ */
 watch(
-  currentAlpha,
-  (value) => {
-    emits("set-alpha", value);
-  },
-  { immediate: false }
-);
-
-onMounted(() => {
-  const boundsWidth = initialPosition.value.width || 0;
-  const initial = (props.alpha ?? 1) * Math.max(0, boundsWidth - offset.value);
-  setPosition({ x: initial });
-});
-
-watch(
-  () => props.alpha,
+  () => alpha.value,
   (newAlpha) => {
-    if (!knob.value || !knob.value.parentElement) return;
-    const bounds = knob.value.parentElement.getBoundingClientRect();
-    const x =
-      Math.max(0, Math.min(1, newAlpha ?? 0)) * (bounds.width - offset.value);
-    setPosition({ x });
+    if (!isDragging.value) {
+      updatePositionFromAlpha(newAlpha);
+    }
   },
   { immediate: true }
 );
+
+/**
+ * When dragging, update alpha
+ */
+watch(
+  () => position.value.x,
+  (x) => {
+    if (isDragging.value && finalWidth.value > 0) {
+      setAlpha(x / finalWidth.value);
+    }
+  }
+);
+
+onMounted(async () => {
+  await nextTick();
+  updatePositionFromAlpha(alpha.value);
+});
 </script>
 
 <template>
@@ -72,9 +73,7 @@ watch(
       <div
         ref="knob"
         class="hue-slider-knob current-hue border-primary"
-        :style="{
-          left: `${position.x}px`,
-        }"
+        :style="{ left: `${position.x}px` }"
       ></div>
     </div>
   </div>
