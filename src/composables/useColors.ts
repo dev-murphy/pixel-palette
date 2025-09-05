@@ -152,7 +152,7 @@ export const useColors = () => {
     if (color.value.a === 1) {
       return tc.toHexString();
     } else {
-      return tc.toHex8String().slice(1);
+      return tc.toHex8String();
     }
   });
 
