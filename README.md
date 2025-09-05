@@ -33,7 +33,7 @@ yarn add pixel-palette
 
 <script setup>
 import { ColorPicker } from "pixel-palette";
-import "pixel-palette/style";
+import "pixel-palette/style.css";
 
 function handleColorChange(color) {
   console.log("Selected color:", color);
@@ -56,6 +56,7 @@ function handleColorChange(color) {
 
 <script setup>
 import { ColorPicker } from "pixel-palette";
+import "pixel-palette/style.css";
 
 const updateColor = (color) => {
   // color will be in the current format (HEX, RGB, or HSL)
@@ -70,7 +71,7 @@ const updateColor = (color) => {
 | -------------- | ----------------------- | --------------------- | ----------------------------------- |
 | `title`        | `string`                | -                     | Optional title displayed at the top |
 | `initialColor` | `string`                | `"hsl(0, 100%, 50%)"` | Initial color value                 |
-| `colorMode`    | `hex` or `rgb` or `hsl` | `hex` `               | Initial color mode value            |
+| `colorMode`    | `hex` or `rgb` or `hsl` | `hex`               | Initial color mode value            |
 | `showAlpha`    | `boolean`               | false                 | Option to show alpha channel        |
 
 ## Events
