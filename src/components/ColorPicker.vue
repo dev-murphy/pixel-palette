@@ -60,6 +60,7 @@ onMounted(() => {
         <p class="color-text">{{ exportColor }}</p>
         <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
           <div
+            class="picker-copy-btn"
             @click.stop="
               () => {
                 showCopiedTooltip = copyColor(exportColor);
@@ -84,6 +85,7 @@ onMounted(() => {
 <style scoped>
 .color-picker {
   position: relative;
+  width: fit-content;
 }
 
 .color-btn {
@@ -91,7 +93,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem; /* same as gap-2 */
-  border: 2px solid #171717; /* neutral-900 */
+  border-width: 0.125rem;
+  border-style: solid;
+  border-color: #171717;
 }
 
 .color-icon {
@@ -117,8 +121,13 @@ onMounted(() => {
 .picker-popup {
   position: absolute;
   top: 100%; /* top-full */
-  right: 0;
   transform: translateY(0.5rem); /* translate-y-2 */
   z-index: 10;
+}
+
+.picker-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

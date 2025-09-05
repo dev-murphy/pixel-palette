@@ -19,7 +19,7 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <div class="hex_input__wrapper">
+  <div class="hex_input__wrapper text-primary">
     <label for="code">hex <span>#</span></label>
     <input
       type="text"

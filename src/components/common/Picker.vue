@@ -107,13 +107,16 @@ async function pickWithEyeDropper() {
   width: 300px;
   background-color: white;
 
-  border: 2px solid;
+  border-width: 0.125rem;
+  border-style: solid;
   border-radius: 0.125rem;
 }
 
 .color-picker__title {
   padding: 0.25rem 1rem 0 1rem;
-  border-bottom: 0.125rem solid;
+  border-bottom-width: 0.125rem;
+  border-bottom-style: solid;
+
   font-size: 1.125rem;
   font-weight: 500;
   line-height: 1.55;
@@ -138,7 +141,8 @@ async function pickWithEyeDropper() {
   align-items: center;
   gap: 0.25rem;
   padding: 0.5rem;
-  border-top: 0.125rem solid;
+  border-top-width: 0.125rem;
+  border-top-style: solid;
 }
 
 .color-picker-options__btn {

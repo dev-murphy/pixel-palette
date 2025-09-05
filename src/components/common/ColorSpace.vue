@@ -114,7 +114,8 @@ watch(
   background-color: white;
 
   border-radius: 999px;
-  border: 0.125rem solid;
+  border-width: 0.125rem;
+  border-style: solid;
   pointer-events: none;
 }
 </style>

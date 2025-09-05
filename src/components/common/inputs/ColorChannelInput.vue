@@ -144,6 +144,7 @@ updateInputsFromChannels();
         @input="(e) => handleInput('first', e)"
         @keydown="(e) => handleKeydown('first', e)"
         @blur="handleBlur"
+        class="text-primary"
       />
     </div>
 
@@ -158,6 +159,7 @@ updateInputsFromChannels();
         @input="(e) => handleInput('second', e)"
         @keydown="(e) => handleKeydown('second', e)"
         @blur="handleBlur"
+        class="text-primary"
       />
     </div>
 
@@ -172,6 +174,7 @@ updateInputsFromChannels();
         @input="(e) => handleInput('third', e)"
         @keydown="(e) => handleKeydown('third', e)"
         @blur="handleBlur"
+        class="text-primary"
       />
     </div>
   </div>
@@ -184,7 +187,8 @@ updateInputsFromChannels();
 }
 
 .color_channel-input__container > :not(:last-child) {
-  border-right: 2px solid;
+  border-right-width: 0.125rem;
+  border-right-style: solid;
 }
 
 .color_channel-input__wrapper {

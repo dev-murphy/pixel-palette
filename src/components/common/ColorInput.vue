@@ -9,7 +9,7 @@ const { colorMode } = useColors();
 </script>
 
 <template>
-  <div class="color-input-wrapper">
+  <div class="color-input-wrapper border-primary">
     <Color class="color-box" />
 
     <HEXInput v-if="colorMode === 'hex'" />
@@ -22,7 +22,8 @@ const { colorMode } = useColors();
   display: flex;
   align-items: center;
   gap: 0.5rem; /* gap-x-2 */
-  border: 2px solid #171717; /* border-neutral-900 */
+  border-width: 0.125rem;
+  border-style: solid;
   border-radius: 0.5rem; /* rounded-lg */
   overflow: hidden;
 }
