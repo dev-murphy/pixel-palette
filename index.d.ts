@@ -1,25 +1,14 @@
-import { DefineComponent } from "vue";
+declare module "pixel-palette" {
+  import { DefineComponent } from "vue";
 
-interface ColorPickerProps {
-  title?: string;
-  initialColor?: string;
-  colorMode?: "hex" | "rgb" | "hsl";
-  showAlpha?: boolean;
+  interface ColorPickerProps {
+    title?: string;
+    initialColor?: string;
+    colorMode?: "hex" | "rgb" | "hsl";
+    showAlpha?: boolean;
+  }
+
+  const ColorPicker: DefineComponent<ColorPickerProps>;
+
+  export default ColorPicker;
 }
-
-type ColorPickerEmits = {
-  "set-color": (value: string) => void;
-};
-
-declare const ColorPicker: DefineComponent<
-  ColorPickerProps,
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  ColorPickerEmits
->;
-
-export default ColorPicker;
