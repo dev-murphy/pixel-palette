@@ -1,5 +1,11 @@
-import tinycolor from "tinycolor2";
 import { ref, computed } from "vue";
+import {
+  hsvToRgb,
+  rgbToHex,
+  hexToRgb,
+  rgbToHsl,
+  rgbToHsv,
+} from "../utils/color-utils"; // adjust path as needed
 
 interface Color {
   h: number;
@@ -19,17 +25,15 @@ const colorMode = ref<"hex" | "rgb" | "hsl">("hex");
 const modes = ["hex", "rgb", "hsl"] as const;
 
 export const useColors = () => {
-  // Cache tinycolor instance to avoid recreating it constantly
-  const tinyColorInstance = computed(() => tinycolor(color.value));
-
-  // Cache RGB values to avoid repeated conversions
-  const rgbValues = computed(() => tinyColorInstance.value.toRgb());
+  // Cache RGB values from HSV
+  const rgbValues = computed(() =>
+    hsvToRgb(color.value.h, color.value.s, color.value.v)
+  );
 
   function toggleMode() {
     const currentIndex = modes.indexOf(colorMode.value);
     const nextIndex = (currentIndex + 1) % modes.length;
-    const newMode = modes[nextIndex];
-    colorMode.value = newMode;
+    colorMode.value = modes[nextIndex];
   }
 
   function setColor(newColor: Partial<Color>) {
@@ -37,13 +41,20 @@ export const useColors = () => {
   }
 
   function setColorFromString(colorString: string) {
-    const tc = tinycolor(colorString);
-    if (tc.isValid()) {
-      color.value = tc.toHsv();
+    // Very simple HEX input only (you can extend this with regex parsing for rgb()/hsl())
+    try {
+      if (colorString.startsWith("#")) {
+        const { r, g, b } = hexToRgb(colorString);
+        // Convert RGB → HSV manually
+        const { h, s, v } = rgbToHsv(r, g, b);
+        color.value = { h, s, v, a: 1 };
+      }
+    } catch {
+      console.warn("Invalid color string:", colorString);
     }
   }
 
-  // Direct HSV access (no tinycolor needed)
+  // Direct HSV access
   const hue = computed(() => color.value.h);
   const alpha = computed(() => color.value.a);
 
@@ -57,39 +68,40 @@ export const useColors = () => {
 
   const hex = computed({
     get: () => {
-      return tinyColorInstance.value.toHexString().slice(1);
+      const { r, g, b } = rgbValues.value;
+      return rgbToHex(r, g, b).slice(1); // drop leading "#"
     },
     set: (newHex: string) => {
-      const tc = tinycolor(newHex);
-      if (tc.isValid()) {
-        color.value = tc.toHsv();
-      }
+      const { r, g, b } = hexToRgb(newHex);
+      const { h, s, v } = rgbToHsv(r, g, b);
+      color.value = { h, s, v, a: 1 };
     },
   });
 
-  // HSL Channel computeds (direct access, no tinycolor needed)
+  // HSL Channel computeds
+  const hslValues = computed(() => {
+    const { r, g, b } = rgbValues.value;
+    return rgbToHsl(r, g, b);
+  });
+
   const hslH = computed({
-    get: () => color.value.h,
+    get: () => hslValues.value.h,
     set: (newH: number) => {
       color.value.h = newH;
     },
   });
 
   const hslS = computed({
-    get: () => color.value.s,
+    get: () => hslValues.value.s / 100,
     set: (newS: number) => {
       color.value.s = newS;
     },
   });
 
   const hslL = computed({
-    get: () => {
-      // Convert HSV to HSL lightness using math formula
-      const { s, v } = color.value;
-      return v * (1 - s / 2);
-    },
+    get: () => hslValues.value.l / 100,
     set: (newL: number) => {
-      // Convert HSL lightness back to HSV
+      // convert HSL L → HSV V (approximate)
       const { s } = color.value;
       const denominator = 1 - s / 2;
       const newV = denominator !== 0 ? newL / denominator : newL;
@@ -97,68 +109,57 @@ export const useColors = () => {
     },
   });
 
-  // RGB Channel computeds (use cached RGB values)
+  // RGB Channels
   const rgbR = computed({
     get: () => rgbValues.value.r,
     set: (newR: number) => {
-      const currentRgb = rgbValues.value;
-      const updatedColor = tinycolor({
-        r: newR,
-        g: currentRgb.g,
-        b: currentRgb.b,
-        a: currentRgb.a,
-      });
-      color.value = updatedColor.toHsv();
+      const { g, b } = rgbValues.value;
+      const { h, s, v } = rgbToHsv(newR, g, b);
+      color.value = { h, s, v, a: color.value.a };
     },
   });
 
   const rgbG = computed({
     get: () => rgbValues.value.g,
     set: (newG: number) => {
-      const currentRgb = rgbValues.value;
-      const updatedColor = tinycolor({
-        r: currentRgb.r,
-        g: newG,
-        b: currentRgb.b,
-        a: currentRgb.a,
-      });
-      color.value = updatedColor.toHsv();
+      const { r, b } = rgbValues.value;
+      const { h, s, v } = rgbToHsv(r, newG, b);
+      color.value = { h, s, v, a: color.value.a };
     },
   });
 
   const rgbB = computed({
     get: () => rgbValues.value.b,
     set: (newB: number) => {
-      const currentRgb = rgbValues.value;
-      const updatedColor = tinycolor({
-        r: currentRgb.r,
-        g: currentRgb.g,
-        b: newB,
-        a: currentRgb.a,
-      });
-      color.value = updatedColor.toHsv();
+      const { r, g } = rgbValues.value;
+      const { h, s, v } = rgbToHsv(r, g, newB);
+      color.value = { h, s, v, a: color.value.a };
     },
   });
 
   const exportColor = computed(() => {
-    const tc = tinyColorInstance.value;
+    const { r, g, b } = rgbValues.value;
 
     if (colorMode.value === "rgb") {
-      return tc.toRgbString();
+      return `rgb(${r}, ${g}, ${b})`;
     } else if (colorMode.value === "hsl") {
-      return tc.toHslString();
+      const { h, s, l } = rgbToHsl(r, g, b);
+      return `hsl(${h}, ${s}%, ${l}%)`;
     }
 
-    if (color.value.a === 1) {
-      return tc.toHexString();
-    } else {
-      return tc.toHex8String();
-    }
+    // default hex
+    return color.value.a === 1
+      ? rgbToHex(r, g, b)
+      : `${rgbToHex(r, g, b)}${Math.round(color.value.a * 255)
+          .toString(16)
+          .padStart(2, "0")}`;
   });
 
   function randomColor() {
-    const tc = tinycolor.random();
-    color.value = tc.toHsv();
+    const h = Math.floor(Math.random() * 360);
+    const s = Math.random();
+    const v = Math.random();
+    color.value = { h, s, v, a: 1 };
   }
 
   return {
@@ -167,17 +168,14 @@ export const useColors = () => {
     color,
     setColor,
     setColorFromString,
-    // hue and alpha (direct access)
     hue,
     setHue,
     alpha,
     setAlpha,
     hex,
-    // HSL channels (direct access)
     hslH,
     hslS,
     hslL,
-    // RGB channels (cached)
     rgbR,
     rgbG,
     rgbB,
