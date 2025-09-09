@@ -5,9 +5,9 @@
   "type": "module",
   "files": [
     "dist",
-    "index.d.ts"
+    "src/types/index.d.ts"
   ],
-  "types": "./index.d.ts",
+  "types": "./src/types/index.d.ts",
   "main": "./dist/pixel-palette.umd.cjs",
   "module": "./dist/pixel-palette.js",
   "exports": {
@@ -28,6 +28,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly",
     "preview": "vite preview"
   },
   "peerDependencies": {
