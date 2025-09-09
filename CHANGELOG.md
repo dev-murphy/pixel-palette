@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.3.5](https://github.com/dev-murphy/pixel-palette/compare/v1.3.4...v1.3.5) (2025-09-09)
+
+
+### Bug Fixes
+
+* add working directory to pnpm steps ([07eb9d3](https://github.com/dev-murphy/pixel-palette/commit/07eb9d3826ee0125a86d5a80523d6b3f4e7a4bcc))
+* update exports and type defs for color picker component ([1cc412d](https://github.com/dev-murphy/pixel-palette/commit/1cc412dd7ad0add45cf1f718b93fe7fe17be0d51))
+
+
+### Miscellaneous
+
+* rename `example` folder to `demo` ([e7d66ce](https://github.com/dev-murphy/pixel-palette/commit/e7d66ce3dc3944d37d455d71577929e7fef464df))
+* replace index.js with index.ts file ([034d217](https://github.com/dev-murphy/pixel-palette/commit/034d217a64a5f9a0f00c51036d2da80aa1071543))
+
+
+### Documentation
+
+* create general issue template ([6523f9e](https://github.com/dev-murphy/pixel-palette/commit/6523f9eba1056fd5c1ae00d8e92d8fd940faa909))
+
+
+### Code Refactors
+
+* update base url in vite config ([c1e8075](https://github.com/dev-murphy/pixel-palette/commit/c1e80758029a78cdbaebe3dc85aa45c978850868))
+
+
+### CI/CD
+
+* add demo app to github pages ([e47f1ce](https://github.com/dev-murphy/pixel-palette/commit/e47f1cebb7658c6d979dc21fd50706ace54b682a))
+
 ## [1.3.4](https://github.com/dev-murphy/pixel-palette/compare/v1.3.3...v1.3.4) (2025-09-05)
 
 
