@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/dev-murphy/pixel-palette/compare/v1.3.6...v1.4.0) (2025-09-10)
+
+
+### Features
+
+* fix type declaration errors (hopefully) ([9fb7cbc](https://github.com/dev-murphy/pixel-palette/commit/9fb7cbc1bdc17a456b48eac5cd1091d55c120a61))
+
 ## [1.3.6](https://github.com/dev-murphy/pixel-palette/compare/v1.3.5...v1.3.6) (2025-09-10)
 
 
