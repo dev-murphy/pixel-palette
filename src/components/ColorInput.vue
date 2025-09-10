@@ -22,8 +22,6 @@ const { colorMode } = useColors();
 <style scoped>
 .color-input-wrapper {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
   border-width: 0.125rem;
   border-style: solid;
   border-radius: 0.5rem;
@@ -31,7 +29,7 @@ const { colorMode } = useColors();
 }
 
 .color-box {
-  width: 2.5rem;
+  width: 3.5rem;
   height: 2.125rem;
   flex-shrink: 0;
   border-radius: 0.375rem;

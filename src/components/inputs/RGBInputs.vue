@@ -139,37 +139,3 @@ updateInputsFromChannels();
     </div>
   </div>
 </template>
-
-<style scoped>
-.color_channel-input__container {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.color_channel-input__container > :not(:last-child) {
-  border-right-width: 0.125rem;
-  border-right-style: solid;
-}
-
-.color_channel-input__wrapper {
-  width: 33.3333%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.color_channel-input__wrapper:first-child {
-  padding: 0 0.5rem;
-}
-
-.color_channel-input__wrapper label {
-  text-align: center;
-  font-weight: 700;
-  user-select: none;
-}
-
-.color_channel-input__wrapper input {
-  width: 100%;
-  text-align: center;
-}
-</style>

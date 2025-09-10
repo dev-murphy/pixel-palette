@@ -35,6 +35,7 @@ function handleInput(event: Event) {
   display: flex;
   align-items: center;
   padding: 0.5rem 0;
+  margin-left: 0.5rem;
 }
 
 .hex_input__wrapper label {
@@ -42,6 +43,7 @@ function handleInput(event: Event) {
   font-weight: 700;
   text-transform: uppercase;
   user-select: none;
+  padding-right: 0.125rem;
 }
 
 .hex_input__wrapper label span {

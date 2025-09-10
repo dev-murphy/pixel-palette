@@ -104,6 +104,7 @@ onMounted(() => {
 }
 
 .color-info {
+  background-color: white;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -129,5 +130,15 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 0.25rem;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.picker-copy-btn:hover {
+  background-color: #cccccc;
 }
 </style>
