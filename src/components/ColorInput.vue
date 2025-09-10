@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import HEXInput from "./inputs/HEXInput.vue";
-import RGBInput from "./inputs/ColorChannelInput.vue";
+import RGBInputs from "./inputs/RGBInputs.vue";
+import HSLInputs from "./inputs/HSLInputs.vue";
 import Color from "./Color.vue";
 
 import { useColors } from "../composables/useColors";
@@ -13,7 +14,8 @@ const { colorMode } = useColors();
     <Color class="color-box" />
 
     <HEXInput v-if="colorMode === 'hex'" />
-    <RGBInput v-else />
+    <RGBInputs v-if="colorMode === 'rgb'" />
+    <HSLInputs v-if="colorMode === 'hsl'" />
   </div>
 </template>
 
@@ -21,17 +23,17 @@ const { colorMode } = useColors();
 .color-input-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-x-2 */
+  gap: 0.5rem;
   border-width: 0.125rem;
   border-style: solid;
-  border-radius: 0.5rem; /* rounded-lg */
+  border-radius: 0.5rem;
   overflow: hidden;
 }
 
 .color-box {
-  width: 3rem; /* w-12 */
-  height: 1.75rem; /* h-7 */
-  flex-shrink: 0; /* flex-shrink-0 */
-  border-radius: 0.375rem; /* rounded-md */
+  width: 2.5rem;
+  height: 2.125rem;
+  flex-shrink: 0;
+  border-radius: 0.375rem;
 }
 </style>

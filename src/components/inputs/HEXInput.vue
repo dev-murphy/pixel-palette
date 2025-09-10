@@ -8,12 +8,10 @@ function handleInput(event: Event) {
   const raw = target.value || "";
   const sanitized = raw.replace(/[^0-9a-fA-F]/g, "").slice(0, 6);
 
-  // Update the input value with sanitized content
   if (sanitized !== raw) {
     target.value = sanitized;
   }
 
-  // Update the hex computed prop
   hex.value = sanitized;
 }
 </script>
@@ -36,7 +34,7 @@ function handleInput(event: Event) {
 .hex_input__wrapper {
   display: flex;
   align-items: center;
-  padding: 0.125rem 0;
+  padding: 0.5rem 0;
 }
 
 .hex_input__wrapper label {
