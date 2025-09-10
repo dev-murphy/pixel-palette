@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.6](https://github.com/dev-murphy/pixel-palette/compare/v1.3.5...v1.3.6) (2025-09-10)
+
+
+### Bug Fixes
+
+* **#14:** added declaration file missing ([d7da797](https://github.com/dev-murphy/pixel-palette/commit/d7da7979e2e5d8cde04b0a0eb7add5e9825c09bd))
+
 ## [1.3.5](https://github.com/dev-murphy/pixel-palette/compare/v1.3.4...v1.3.5) (2025-09-09)
 
 
