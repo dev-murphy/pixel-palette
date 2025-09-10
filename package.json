@@ -18,6 +18,7 @@
     "./style.css": "./dist/pixel-palette.css",
     "./style": "./dist/pixel-palette.css"
   },
+  "homepage": "https://dev-murphy.github.io/pixel-palette/",
   "description": "A modern, customizable color picker component for Vue 3.",
   "author": "Murphy Facey<https://github.com/dev-murphy>",
   "license": "MIT",
