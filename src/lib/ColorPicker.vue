@@ -70,12 +70,14 @@ onMounted(() => {
       </Tooltip>
     </button>
 
-    <Picker
-      v-if="isPickerOpen"
-      :title="title"
-      :show-alpha
-      class="picker-popup"
-    />
+    <Transition name="fade">
+      <Picker
+        v-if="isPickerOpen"
+        :title="title"
+        :show-alpha
+        class="picker-popup"
+      />
+    </Transition>
   </div>
 </template>
 
