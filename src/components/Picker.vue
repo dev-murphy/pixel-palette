@@ -12,10 +12,13 @@ import Picker from "./icons/Picker.vue";
 import Copy from "./icons/Copy.vue";
 import Random from "./icons/Random.vue";
 import Switch from "./icons/Switch.vue";
+import ArrowDown from "./icons/ArrowDown.vue";
 import Tooltip from "./Tooltip.vue";
 
 const props = defineProps<{
   title?: string;
+  enableAlpha: boolean;
+  openAlphaByDefault: boolean;
 }>();
 
 const { exportColor, colorMode, toggleMode, randomColor, setColorFromString } =
@@ -23,10 +26,17 @@ const { exportColor, colorMode, toggleMode, randomColor, setColorFromString } =
 
 const isEyeDropperSupported = ref(false);
 const showCopiedTooltip = ref(false);
+const showAlphaChannel = ref(false);
+
+const toogleShowAlpha = () => {
+  showAlphaChannel.value = !showAlphaChannel.value;
+};
 
 onMounted(() => {
   isEyeDropperSupported.value =
     typeof (window as any).EyeDropper === "function";
+
+  showAlphaChannel.value = props.openAlphaByDefault;
 });
 
 async function pickWithEyeDropper() {
@@ -52,8 +62,20 @@ async function pickWithEyeDropper() {
     <div class="color-picker-colors__container">
       <ColorSpace />
       <ColorInput />
-      <HueSlider />
-      <AlphaSlider />
+      <div class="hue-slider_and_alpha-toogle">
+        <HueSlider />
+        <button
+          v-if="enableAlpha"
+          class="alpha-toogle border-primary"
+          :class="{
+            rotate: showAlphaChannel,
+          }"
+          @click="toogleShowAlpha"
+        >
+          <ArrowDown class="icon text-primary" />
+        </button>
+      </div>
+      <AlphaSlider v-if="showAlphaChannel && enableAlpha" />
     </div>
 
     <div class="color-picker-options__container border-primary">
@@ -131,6 +153,34 @@ async function pickWithEyeDropper() {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.hue-slider_and_alpha-toogle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alpha-toogle {
+  width: 1.85rem;
+  height: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-width: 0.125rem;
+  border-style: solid;
+  border-radius: 0.5rem;
+}
+
+.alpha-toogle .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.alpha-toogle.rotate .icon {
+  transform: rotateX(180deg);
 }
 
 .color-picker-options__container {

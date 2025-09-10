@@ -14,12 +14,14 @@ const props = withDefaults(
     title?: string;
     initialColor?: string;
     colorMode?: "hex" | "rgb" | "hsl";
-    showAlpha?: boolean;
+    enableAlpha?: boolean;
+    openAlphaByDefault: boolean;
   }>(),
   {
     initialColor: "#ff0000",
     colorMode: "hex",
-    showAlpha: true,
+    enableAlpha: true,
+    openAlphaByDefault: false,
   }
 );
 
@@ -74,7 +76,8 @@ onMounted(() => {
       <Picker
         v-if="isPickerOpen"
         :title="title"
-        :show-alpha
+        :enable-alpha="enableAlpha"
+        :open-alpha-by-default="openAlphaByDefault"
         class="picker-popup"
       />
     </Transition>
