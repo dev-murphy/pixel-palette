@@ -1,95 +1,95 @@
-/* Basic Reset */
-* {
+/* ===============================
+   PIXEL PALETTE LIBRARY STYLES
+   =============================== */
+
+.pixel-palette,
+.pixel-palette * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Remove default body spacing */
-body {
-  margin: 0;
-  padding: 0;
+/* Scoped body styles */
+.pixel-palette {
   font-family: sans-serif; /* optional: set a base font */
 }
 
 /* Reset headings and paragraphs */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
+.pixel-palette h1,
+.pixel-palette h2,
+.pixel-palette h3,
+.pixel-palette h4,
+.pixel-palette h5,
+.pixel-palette h6,
+.pixel-palette p {
   margin: 0;
   padding: 0;
   font-weight: normal;
 }
 
 /* Reset lists */
-ul,
-ol {
+.pixel-palette ul,
+.pixel-palette ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 /* Reset links */
-a {
+.pixel-palette a {
   text-decoration: none;
   color: inherit;
 }
 
 /* Reset buttons */
-button {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit; /* inherit font styles from parent */
-  color: inherit; /* inherit text color */
+.pixel-palette button {
+  all: unset;
   cursor: pointer;
+  font: inherit;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Inputs & form elements */
-input,
-textarea,
-select {
-  margin: 0;
-  padding: 0;
+.pixel-palette input,
+.pixel-palette textarea,
+.pixel-palette select {
+  all: unset;
   font: inherit;
   color: inherit;
-  border: none;
-  background: none;
-  outline: none;
 }
 
-/* GENERAL STYLES */
-:root {
+/* ===============================
+   GENERAL STYLES
+   =============================== */
+.pixel-palette {
   --neutral-700: #404040;
   --neutral-900: #171717;
   --neutral-200: #e5e5e5;
 }
 
-.text-primary {
+.pixel-palette .text-primary {
   color: var(--neutral-900);
 }
 
-.border-primary {
+.pixel-palette .border-primary {
   border-color: var(--neutral-700);
 }
 
-.icon {
+.pixel-palette .icon {
   width: 1.25rem;
   height: 1.25rem;
 }
 
-.btn {
+.pixel-palette .btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.slider__container {
+.pixel-palette .slider__container {
   position: relative;
   width: 100%;
   height: 1.75rem;
@@ -99,12 +99,14 @@ select {
   border-style: solid;
 }
 
-/* HUE SLIDER STYLES */
-.current-hue {
+/* ===============================
+   HUE SLIDER STYLES
+   =============================== */
+.pixel-palette .current-hue {
   background-color: hsl(var(--hue), 100%, 50%);
 }
 
-.hue-slider {
+.pixel-palette .hue-slider {
   background: linear-gradient(
     to right,
     hsl(0, 100%, 50%),
@@ -117,7 +119,7 @@ select {
   );
 }
 
-.hue-slider-knob {
+.pixel-palette .hue-slider-knob {
   position: absolute;
   top: 50%;
   left: 100%;
@@ -129,8 +131,18 @@ select {
   border-style: solid;
 }
 
-/* ALPHA SLIDER STYLES */
-.checker::before {
+.pixel-palette .hue-slider-knob::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 3px solid white;
+  border-radius: 99px;
+}
+
+/* ===============================
+   ALPHA SLIDER STYLES
+   =============================== */
+.pixel-palette .checker::before {
   position: absolute;
   content: "";
   inset: 4px;
@@ -142,15 +154,15 @@ select {
   );
 }
 
-.checker,
-.hue-slider {
+.pixel-palette .checker,
+.pixel-palette .hue-slider {
   width: 100%;
   height: 100%;
   border-radius: 0.25rem;
 }
 
-.checker,
-.checkered {
+.pixel-palette .checker,
+.pixel-palette .checkered {
   --size: 16px; /* tile size */
   --c1: #f2f2f2; /* light color */
   --c2: #cccccc; /* dark color */
@@ -164,16 +176,11 @@ select {
     )
     0 0 / var(--size) var(--size);
 }
-.hue-slider-knob::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 3px solid white;
-  border-radius: 99px;
-}
 
-/* COLOR SPACE STYLES */
-.current-hue-gradient {
+/* ===============================
+   COLOR SPACE STYLES
+   =============================== */
+.pixel-palette .current-hue-gradient {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -188,7 +195,7 @@ select {
   );
 }
 
-.current-hue-gradient::before {
+.pixel-palette .current-hue-gradient::before {
   content: "";
   position: absolute;
   left: 0;
@@ -197,13 +204,15 @@ select {
   background: linear-gradient(to bottom, transparent, black);
 }
 
-/* TOOLTIP ANIMATION */
-.fade-enter-active,
-.fade-leave-active {
+/* ===============================
+   TOOLTIP ANIMATION
+   =============================== */
+.pixel-palette .fade-enter-active,
+.pixel-palette .fade-leave-active {
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.pixel-palette .fade-enter-from,
+.pixel-palette .fade-leave-to {
   opacity: 0;
   transform: translateY(4px);
 }

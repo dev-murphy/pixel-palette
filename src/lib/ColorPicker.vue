@@ -52,7 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="colorPicker" class="color-picker">
+  <div ref="colorPicker" class="pixel-palette color-picker">
     <button class="color-btn" @click="togglePicker">
       <Color class="color-icon" />
 
@@ -92,36 +92,36 @@ onMounted(() => {
   min-width: 300px;
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* same as gap-2 */
+  gap: 0.5rem;
   border-width: 0.125rem;
   border-style: solid;
   border-color: #171717;
 }
 
 .color-icon {
-  width: 2.25rem; /* w-9 */
-  height: 2.25rem; /* h-9 */
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .color-info {
   display: flex;
   flex-grow: 1;
   align-items: center;
-  gap: 0.5rem; /* gap-x-2 */
-  padding-right: 0.25rem; /* pr-1 */
+  gap: 0.5rem;
+  padding-right: 0.25rem;
 }
 
 .color-text {
   margin-left: auto;
   margin-right: auto;
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem;
   text-transform: uppercase;
 }
 
 .picker-popup {
   position: absolute;
-  top: 100%; /* top-full */
-  transform: translateY(0.5rem); /* translate-y-2 */
+  top: 100%;
+  transform: translateY(0.5rem);
   z-index: 10;
 }
 
