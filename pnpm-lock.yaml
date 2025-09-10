@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      tinycolor2:
-        specifier: ^1.6.0
-        version: 1.6.0
       vue:
         specifier: ^3.0.0
         version: 3.5.21(typescript@5.8.3)
@@ -544,9 +541,6 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  tinycolor2@1.6.0:
-    resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
-
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
     engines: {node: '>=12.0.0'}
@@ -1027,8 +1021,6 @@ snapshots:
       fsevents: 2.3.3
 
   source-map-js@1.2.1: {}
-
-  tinycolor2@1.6.0: {}
 
   tinyglobby@0.2.14:
     dependencies:
