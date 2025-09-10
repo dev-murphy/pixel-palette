@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, useTemplateRef, onMounted, watch, computed, nextTick } from "vue";
-import { useDraggable } from "../../composables/useDraggable";
-import { useColors } from "../../composables/useColors";
+import { useDraggable } from "../composables/useDraggable";
+import { useColors } from "../composables/useColors";
 
 const knob = useTemplateRef<HTMLElement>("space-knob");
 const containerRef = useTemplateRef<HTMLElement>("container");

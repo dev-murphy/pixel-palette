@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from "vue";
-import { useDraggable } from "../../composables/useDraggable";
-import { useColors } from "../../composables/useColors";
+import { useDraggable } from "../composables/useDraggable";
+import { useColors } from "../composables/useColors";
 
 // knob element
 const knob = ref<HTMLElement | null>(null);
