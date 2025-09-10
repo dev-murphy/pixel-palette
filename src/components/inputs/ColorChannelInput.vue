@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
-import { useColors } from "../../../composables/useColors";
+import { useColors } from "../../composables/useColors";
 
 const { colorMode, rgbR, rgbG, rgbB, hslH, hslS, hslL } = useColors();
 

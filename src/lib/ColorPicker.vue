@@ -3,10 +3,10 @@ import { onMounted, ref, useTemplateRef, watch } from "vue";
 import { copyColor } from "../utils";
 import { useClickOutside } from "../composables/useClickOutside";
 
-import Picker from "./common/Picker.vue";
-import Color from "./common/Color.vue";
-import Tooltip from "./common/Tooltip.vue";
-import Copy from "./common/icons/Copy.vue";
+import Picker from "../components/Picker.vue";
+import Color from "../components/Color.vue";
+import Tooltip from "../components/Tooltip.vue";
+import Copy from "../components/icons/Copy.vue";
 import { useColors } from "../composables/useColors";
 
 const props = withDefaults(

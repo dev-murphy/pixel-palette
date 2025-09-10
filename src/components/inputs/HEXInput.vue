@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useColors } from "../../../composables/useColors";
+import { useColors } from "../../composables/useColors";
 
 const { hex } = useColors();
 

@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { copyColor } from "../../utils";
-import { useColors } from "../../composables/useColors";
+import { copyColor } from "../utils";
+import { useColors } from "../composables/useColors";
 
-import ColorSpace from "../common/ColorSpace.vue";
-import HueSlider from "../common/HueSlider.vue";
-import AlphaSlider from "../common/AlphaSlider.vue";
-import ColorInput from "../common/ColorInput.vue";
+import ColorSpace from "./ColorSpace.vue";
+import HueSlider from "./HueSlider.vue";
+import AlphaSlider from "./AlphaSlider.vue";
+import ColorInput from "./ColorInput.vue";
 
-import Picker from "../common/icons/Picker.vue";
-import Copy from "../common/icons/Copy.vue";
-import Random from "../common/icons/Random.vue";
-import Switch from "../common/icons/Switch.vue";
-import Tooltip from "../common/Tooltip.vue";
+import Picker from "./icons/Picker.vue";
+import Copy from "./icons/Copy.vue";
+import Random from "./icons/Random.vue";
+import Switch from "./icons/Switch.vue";
+import Tooltip from "./Tooltip.vue";
 
 const props = defineProps<{
   title?: string;
