@@ -2,16 +2,10 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 
 import Vue from "@vitejs/plugin-vue";
-import DTS from "vite-plugin-dts";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    Vue(),
-    DTS({
-      insertTypesEntry: true,
-    }),
-  ],
+  plugins: [Vue()],
   build: {
     lib: {
       entry: resolve(__dirname, "src/lib/index.ts"),

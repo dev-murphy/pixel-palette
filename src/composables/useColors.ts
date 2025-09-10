@@ -1,3 +1,4 @@
+// @ts-ignore
 import tinycolor from "tinycolor2";
 import { ref, computed } from "vue";
 
