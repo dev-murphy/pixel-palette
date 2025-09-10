@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.1](https://github.com/dev-murphy/pixel-palette/compare/v1.4.0...v1.4.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* ensure color inputs are updated when the color changes ([f1da7bc](https://github.com/dev-murphy/pixel-palette/commit/f1da7bc82c9a2da684e014c5a11902084349c846))
+
+
+### Code Refactors
+
+* added scoped styles ([0f96dfb](https://github.com/dev-murphy/pixel-palette/commit/0f96dfbc61f6e8a768e7a4280a94982c47617265))
+* create custom color conversion and remove tinycolor2 deps ([e028b22](https://github.com/dev-murphy/pixel-palette/commit/e028b22a5454ab407576b974ccaa7ae0d3a774ad))
+
+
+### UI Updates
+
+* adjust the position of tooltip ([f0d96e4](https://github.com/dev-murphy/pixel-palette/commit/f0d96e4918c3c025c63977a3b5b9fa2cbad85380))
+* improve the UI for color inputs and color picker button ([f464f6c](https://github.com/dev-murphy/pixel-palette/commit/f464f6c1fe6ee2d171e5adfc3439067c3aaa4127))
+
 ## [1.4.0](https://github.com/dev-murphy/pixel-palette/compare/v1.3.6...v1.4.0) (2025-09-10)
 
 
