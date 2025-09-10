@@ -55,22 +55,19 @@ onMounted(() => {
   <div ref="colorPicker" class="pixel-palette color-picker">
     <button class="color-btn" @click="togglePicker">
       <Color class="color-icon" />
-
-      <div class="color-info">
-        <p class="color-text">{{ exportColor }}</p>
-        <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
-          <div
-            class="picker-copy-btn"
-            @click.stop="
-              () => {
-                showCopiedTooltip = copyColor(exportColor);
-              }
-            "
-          >
-            <Copy class="icon" />
-          </div>
-        </Tooltip>
-      </div>
+      <p class="color-text">{{ exportColor }}</p>
+      <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
+        <div
+          class="picker-copy-btn"
+          @click.stop="
+            () => {
+              showCopiedTooltip = copyColor(exportColor);
+            }
+          "
+        >
+          <Copy class="icon" />
+        </div>
+      </Tooltip>
     </button>
 
     <Picker
@@ -89,34 +86,51 @@ onMounted(() => {
 }
 
 .color-btn {
-  min-width: 300px;
+  width: 320px;
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  padding: 0.375rem;
+
   border-width: 0.125rem;
   border-style: solid;
   border-color: #171717;
+  border-radius: 0.625rem;
 }
 
 .color-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2rem;
+
+  border-radius: 0.25rem;
+  overflow: hidden;
 }
 
 .color-info {
   background-color: white;
+
   display: flex;
-  flex-grow: 1;
   align-items: center;
+  flex-grow: 1;
   gap: 0.5rem;
+
   padding-right: 0.25rem;
 }
 
 .color-text {
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
-  font-size: 0.875rem;
+
+  font-size: 1rem;
+  font-weight: 600;
   text-transform: uppercase;
+  text-align: center;
+
+  user-select: none;
 }
 
 .picker-popup {

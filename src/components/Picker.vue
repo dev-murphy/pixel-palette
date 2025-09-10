@@ -39,9 +39,7 @@ async function pickWithEyeDropper() {
     if (result?.sRGBHex) {
       setColorFromString(result.sRGBHex);
     }
-  } catch (err) {
-    // Silently ignore (e.g., user cancels or not secure context)
-  }
+  } catch (err) {}
 }
 </script>
 
@@ -104,12 +102,12 @@ async function pickWithEyeDropper() {
 
 <style scoped>
 .color-picker__container {
-  width: 300px;
+  width: 100%;
   background-color: white;
 
   border-width: 0.125rem;
   border-style: solid;
-  border-radius: 0.125rem;
+  border-radius: 0.625rem;
 }
 
 .color-picker__title {
