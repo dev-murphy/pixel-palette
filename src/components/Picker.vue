@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { copyColor } from "../utils";
 import { useColors } from "../composables/useColors";
 
 import ColorSpace from "./ColorSpace.vue";
@@ -9,11 +8,9 @@ import AlphaSlider from "./AlphaSlider.vue";
 import ColorInput from "./ColorInput.vue";
 
 import Picker from "./icons/Picker.vue";
-import Copy from "./icons/Copy.vue";
 import Random from "./icons/Random.vue";
 import Switch from "./icons/Switch.vue";
 import ArrowDown from "./icons/ArrowDown.vue";
-import Tooltip from "./Tooltip.vue";
 
 const props = defineProps<{
   title?: string;
@@ -21,11 +18,10 @@ const props = defineProps<{
   openAlphaByDefault: boolean;
 }>();
 
-const { exportColor, colorMode, toggleMode, randomColor, setColorFromString } =
+const { colorMode, toggleMode, randomColor, setColorFromString } =
   useColors();
 
 const isEyeDropperSupported = ref(false);
-const showCopiedTooltip = ref(false);
 const showAlphaChannel = ref(false);
 
 const toogleShowAlpha = () => {
@@ -101,23 +97,6 @@ async function pickWithEyeDropper() {
       >
         <Random class="icon" />
       </button>
-
-      <Tooltip
-        :text="colorMode.toUpperCase()"
-        v-model="showCopiedTooltip"
-        class="color-picker-options__tooltip"
-      >
-        <button
-          class="color-picker-options__btn text-primary hover-secondary"
-          @click="
-            () => {
-              showCopiedTooltip = copyColor(exportColor);
-            }
-          "
-        >
-          <Copy class="icon" />
-        </button>
-      </Tooltip>
     </div>
   </div>
 </template>
