@@ -35,7 +35,7 @@ watch(
 
 .tooltip__text {
   position: absolute;
-  top: -120%;
+  top: -105%;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--neutral-900);
