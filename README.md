@@ -49,7 +49,8 @@ function handleColorChange(color) {
     title="Primary Color"
     :initial-color="'hsla(210, 100%, 50%, 0.8)'"
     color-mode="hex"
-    :show-alpha="true"
+    :enable-alpha="true"
+    :open-alpha-by-default="false"
     @set-color="updateColor"
   />
 </template>
@@ -67,12 +68,13 @@ const updateColor = (color) => {
 
 ## Props
 
-| Prop           | Type                    | Default               | Description                         |
-| -------------- | ----------------------- | --------------------- | ----------------------------------- |
-| `title`        | `string`                | -                     | Optional title displayed at the top |
-| `initialColor` | `string`                | `"hsl(0, 100%, 50%)"` | Initial color value                 |
-| `colorMode`    | `hex` or `rgb` or `hsl` | `hex`               | Initial color mode value            |
-| `showAlpha`    | `boolean`               | false                 | Option to show alpha channel        |
+| Prop                 | Type                    | Default               | Description                         |
+| -------------------- | ----------------------- | --------------------- | ----------------------------------- |
+| `title`              | `string`                | -                     | Optional title displayed at the top |
+| `initialColor`       | `string`                | `"hsl(0, 100%, 50%)"` | Initial color value                 |
+| `colorMode`          | `hex` or `rgb` or `hsl` | `hex`                 | Initial color mode value            |
+| `enableAlpha`        | `boolean`               | true                  | Option to enable alpha channel      |
+| `openAlphaByDefault` | `boolean`               | false                 | Option to show/hide alpha channel   |
 
 ## Events
 
