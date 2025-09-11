@@ -6,6 +6,13 @@
   "files": [
     "dist"
   ],
+  "keywords": [
+    "vue3",
+    "typescript",
+    "color-picker",
+    "color picker",
+    "colors"
+  ],
   "main": "./dist/pixel-palette.umd.cjs",
   "module": "./dist/pixel-palette.js",
   "types": "./dist/types/lib/index.d.ts",
