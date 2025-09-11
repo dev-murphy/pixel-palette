@@ -2,15 +2,17 @@
 import { ref, onMounted } from "vue";
 import { useColors } from "../composables/useColors";
 
-import ColorSpace from "./ColorSpace.vue";
-import HueSlider from "./HueSlider.vue";
-import AlphaSlider from "./AlphaSlider.vue";
-import ColorInput from "./ColorInput.vue";
+import ColorSpace from "./sliders/ColorSpace.vue";
+import HueSlider from "./sliders/HueSlider.vue";
+import AlphaSlider from "./sliders/AlphaSlider.vue";
+import ColorInput from "./inputs/ColorInput.vue";
+import ColorShades from "./ColorScale.vue";
 
 import Picker from "./icons/Picker.vue";
 import Random from "./icons/Random.vue";
 import Switch from "./icons/Switch.vue";
 import ArrowDown from "./icons/ArrowDown.vue";
+import Gradient from "./icons/Gradient.vue";
 
 const props = defineProps<{
   title?: string;
@@ -18,14 +20,18 @@ const props = defineProps<{
   openAlphaByDefault: boolean;
 }>();
 
-const { colorMode, toggleMode, randomColor, setColorFromString } =
-  useColors();
+const { colorMode, toggleMode, randomColor, setColorFromString } = useColors();
 
 const isEyeDropperSupported = ref(false);
 const showAlphaChannel = ref(false);
+const showColorShades = ref(false);
 
 const toogleShowAlpha = () => {
   showAlphaChannel.value = !showAlphaChannel.value;
+};
+
+const toogleShowColorShades = () => {
+  showColorShades.value = !showColorShades.value;
 };
 
 onMounted(() => {
@@ -55,7 +61,7 @@ async function pickWithEyeDropper() {
       {{ props.title }}
     </h2>
 
-    <div class="color-picker-colors__container">
+    <div v-if="!showColorShades" class="color-picker-colors__container">
       <ColorSpace />
       <ColorInput />
       <div class="hue-slider_and_alpha-toogle">
@@ -73,6 +79,8 @@ async function pickWithEyeDropper() {
       </div>
       <AlphaSlider v-if="showAlphaChannel && enableAlpha" />
     </div>
+
+    <ColorShades v-else />
 
     <div class="color-picker-options__container border-primary">
       <button
@@ -96,6 +104,16 @@ async function pickWithEyeDropper() {
         @click="randomColor()"
       >
         <Random class="icon" />
+      </button>
+
+      <button
+        class="color-picker-options__btn text-primary hover-secondary"
+        :class="{
+          active: showColorShades,
+        }"
+        @click="toogleShowColorShades()"
+      >
+        <Gradient class="icon" />
       </button>
     </div>
   </div>
@@ -184,7 +202,8 @@ async function pickWithEyeDropper() {
   transition: background-color 0.2s;
 }
 
-.color-picker-options__btn:hover {
+.color-picker-options__btn:hover,
+.color-picker-options__btn.active {
   background-color: var(--neutral-200);
 }
 

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import HEXInput from "./inputs/HEXInput.vue";
-import RGBInputs from "./inputs/RGBInputs.vue";
-import HSLInputs from "./inputs/HSLInputs.vue";
-import Color from "./Color.vue";
+import HEXInput from "./HEXInput.vue";
+import RGBInputs from "./RGBInputs.vue";
+import HSLInputs from "./HSLInputs.vue";
+import Color from "../Color.vue";
 
-import { useColors } from "../composables/useColors";
+import { useColors } from "../../composables/useColors";
 
 const { colorMode } = useColors();
 </script>
