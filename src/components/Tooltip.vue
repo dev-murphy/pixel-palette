@@ -1,50 +1,85 @@
 <script lang="ts" setup>
-import { watch } from "vue";
+import { ref } from "vue";
 
-const props = defineProps<{ text: string; modelValue: boolean }>();
-const emits = defineEmits<{ (e: "update:modelValue", val: boolean): void }>();
+type Position = "bottom" | "top";
 
-let copiedTooltipTimer: number | undefined;
-
-watch(
-  () => props.modelValue,
-  () => {
-    if (copiedTooltipTimer) window.clearTimeout(copiedTooltipTimer);
-    copiedTooltipTimer = window.setTimeout(() => {
-      emits("update:modelValue", false);
-    }, 1200);
+const props = withDefaults(
+  defineProps<{
+    text: string;
+    onHover?: boolean;
+    position?: Position;
+  }>(),
+  {
+    position: "top",
+    onHover: false,
   }
 );
+
+const isTooltipOpen = ref(false);
+let tooltipTimer: number | undefined;
+
+function showTooltip() {
+  if (tooltipTimer) clearTimeout(tooltipTimer);
+  isTooltipOpen.value = true;
+
+  if (!props.onHover) {
+    tooltipTimer = window.setTimeout(() => {
+      isTooltipOpen.value = false;
+    }, 1200);
+  }
+}
+
+function hideTooltip() {
+  if (props.onHover) {
+    isTooltipOpen.value = false;
+  }
+}
 </script>
 
 <template>
-  <div class="tooltip__container">
+  <div
+    class="tooltip__container"
+    @mouseenter="onHover && showTooltip()"
+    @mouseleave="onHover && hideTooltip()"
+  >
+    <!-- Trigger element -->
     <slot></slot>
 
-    <transition name="fade">
-      <div v-if="modelValue" class="tooltip__text">{{ text }} Copied!</div>
-    </transition>
+    <!-- Tooltip -->
+    <div v-if="isTooltipOpen" class="tooltip__text" :class="[position]">
+      {{ text }}
+    </div>
   </div>
 </template>
 
 <style scoped>
 .tooltip__container {
   position: relative;
+  flex: 1;
   cursor: pointer;
 }
 
 .tooltip__text {
   position: absolute;
-  top: -105%;
-  left: 50%;
   transform: translateX(-50%);
-  background-color: var(--neutral-900);
-  color: white;
-  font-weight: bold;
+  background-color: var(--neutral-900, #111);
+  color: #fff;
+  font-weight: 500;
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   white-space: nowrap;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  z-index: 50;
+}
+
+.tooltip__text.bottom {
+  top: 110%;
+  left: 50%;
+}
+
+.tooltip__text.top {
+  bottom: 110%;
+  left: 50%;
 }
 </style>

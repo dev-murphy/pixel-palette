@@ -93,10 +93,10 @@ onUnmounted(() => {
     <button ref="triggerRef" class="color-btn" @click="togglePicker">
       <Color class="color-icon" />
       <p class="color-text">{{ exportColor }}</p>
-      <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
+      <Tooltip :text="`${colorMode.toUpperCase()} Copied!`" position="top">
         <div
           class="picker-copy-btn"
-          @click.stop="
+          @click="
             () => {
               showCopiedTooltip = copyColor(exportColor);
             }

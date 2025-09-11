@@ -55,7 +55,7 @@ onUnmounted(() => {
         copied: color === colorCopied,
       }"
       :style="{ backgroundColor: color }"
-      @click="copy(color)"
+      @click.stop="copy(color)"
       @keyup.enter="copy(color)"
     >
       <p :style="{ color: getContrastColor(color) }">

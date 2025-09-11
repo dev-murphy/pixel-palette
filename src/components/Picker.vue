@@ -7,12 +7,13 @@ import HueSlider from "./sliders/HueSlider.vue";
 import AlphaSlider from "./sliders/AlphaSlider.vue";
 import ColorInput from "./inputs/ColorInput.vue";
 import ColorShades from "./ColorScale.vue";
-
+import ColorSelectCompare from "./ColorSelectCompare.vue";
 import Picker from "./icons/Picker.vue";
 import Random from "./icons/Random.vue";
 import Switch from "./icons/Switch.vue";
 import ArrowDown from "./icons/ArrowDown.vue";
 import Gradient from "./icons/Gradient.vue";
+import ColorFilter from "./icons/ColorFilter.vue";
 
 const props = defineProps<{
   title?: string;
@@ -31,6 +32,11 @@ function toggleShowAlpha() {
 const showColorShades = ref(false);
 function toggleShowColorShades() {
   showColorShades.value = !showColorShades.value;
+}
+
+const showColorComparisons = ref(false);
+function toggleShowColorComparison() {
+  showColorComparisons.value = !showColorComparisons.value;
 }
 
 async function pickWithEyeDropper() {
@@ -81,6 +87,8 @@ onMounted(() => {
 
     <ColorShades v-else />
 
+    <ColorSelectCompare v-if="showColorComparisons" />
+
     <div class="color-picker-options__container border-primary">
       <button
         class="color-picker-options__toggle-btn color-picker-options__btn text-primary"
@@ -113,6 +121,16 @@ onMounted(() => {
         @click="toggleShowColorShades()"
       >
         <Gradient class="icon" />
+      </button>
+
+      <button
+        class="color-picker-options__btn text-primary hover-secondary"
+        :class="{
+          active: showColorComparisons,
+        }"
+        @click="toggleShowColorComparison()"
+      >
+        <ColorFilter class="icon" />
       </button>
     </div>
   </div>
