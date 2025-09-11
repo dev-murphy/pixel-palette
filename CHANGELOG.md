@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.5.0](https://github.com/dev-murphy/pixel-palette/compare/v1.4.1...v1.5.0) (2025-09-11)
+
+
+### Features
+
+* add color select compare component for color comparisons ([6e208fc](https://github.com/dev-murphy/pixel-palette/commit/6e208fccb939f5f6b726e86f813d5a86fb4f160f))
+* add props and UI to hide and show alpha channel ([3754e83](https://github.com/dev-murphy/pixel-palette/commit/3754e83f21fb65ee40e22f400feadc7e72c84b44))
+* create color scale component ([e0446df](https://github.com/dev-murphy/pixel-palette/commit/e0446df105b01c4b5fcf463e632d21d2f647bfd3))
+
+
+### Bug Fixes
+
+* correct the toggle typo error ([408344b](https://github.com/dev-murphy/pixel-palette/commit/408344b233b93e25d5325cbe59c230c74371eced))
+
+
+### Miscellaneous
+
+* add fade in/out animation to color picker ([63882e2](https://github.com/dev-murphy/pixel-palette/commit/63882e23c5eb0eb3330609f2d991315703f43e70))
+* add keywords to package json ([3e9b8ad](https://github.com/dev-murphy/pixel-palette/commit/3e9b8ad6ee217f2cb1113de7d99c8ab00b1ba6b7))
+* made color picker pop up position itself based on viewport ([98e2b11](https://github.com/dev-murphy/pixel-palette/commit/98e2b11dcad8a53747b4de2506a3f3d4b25836f0))
+* remove @types/tinycolor2 deps ([454c7c8](https://github.com/dev-murphy/pixel-palette/commit/454c7c82deb1d8909658807f9d0560aa48309de0))
+* remove redundant copy button ([3656474](https://github.com/dev-murphy/pixel-palette/commit/365647466b38365a84a152e451354e4a39529036))
+* update project dev dependencies ([fb9d8a9](https://github.com/dev-murphy/pixel-palette/commit/fb9d8a981e458c6b1415d1117be88f2cc5110e58))
+
+
+### Documentation
+
+* add homepage to package.json ([8d0c571](https://github.com/dev-murphy/pixel-palette/commit/8d0c57199675a5c9e61b34a75e40dc38810c54e4))
+* update README with new props for color picker component ([e31a770](https://github.com/dev-murphy/pixel-palette/commit/e31a7705a92a2da6b12fe9b36965c4c3ced04371))
+
+
+### UI Updates
+
+* improve UI for color picker ([0a8c098](https://github.com/dev-murphy/pixel-palette/commit/0a8c098a6f7582b80d5b0d8eaa03f7681c4d17ac))
+* made popup full width ([10f635c](https://github.com/dev-murphy/pixel-palette/commit/10f635c35e0298a5a81451d7b16dad41a39e19e9))
+
 ## [1.4.1](https://github.com/dev-murphy/pixel-palette/compare/v1.4.0...v1.4.1) (2025-09-10)
 
 
