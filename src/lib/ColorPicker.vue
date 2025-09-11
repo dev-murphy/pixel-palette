@@ -1,5 +1,12 @@
 <script lang="ts" setup>
-import { onMounted, ref, useTemplateRef, watch } from "vue";
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+  useTemplateRef,
+  watch,
+  nextTick,
+} from "vue";
 import { copyColor } from "../utils";
 import { useClickOutside } from "../composables/useClickOutside";
 
@@ -24,20 +31,42 @@ const props = withDefaults(
     openAlphaByDefault: false,
   }
 );
-
-const { exportColor, colorMode, setColorFromString } = useColors();
 const emits = defineEmits<{ (e: "set-color", color: string): void }>();
 
+const { exportColor, colorMode, setColorFromString } = useColors();
 const showCopiedTooltip = ref(false);
 
 const isPickerOpen = ref(false);
-const togglePicker = () => {
+function togglePicker() {
   isPickerOpen.value = !isPickerOpen.value;
-};
+}
+
+const popupRef = useTemplateRef<HTMLElement>("popupRef");
+const triggerRef = useTemplateRef<HTMLElement>("triggerRef");
+const positionTop = ref(false);
+
+function calculatePosition() {
+  if (!popupRef.value || !triggerRef.value) return;
+
+  const triggerRect = triggerRef.value.getBoundingClientRect();
+  const popupRect = popupRef.value.getBoundingClientRect();
+  const viewpointHeight = window.innerHeight;
+
+  const spaceBelow = viewpointHeight - triggerRect.bottom;
+  const popHeight = popupRect.height || 250;
+
+  positionTop.value = spaceBelow < popHeight + 10;
+}
 
 const colorPicker = useTemplateRef<HTMLElement>("colorPicker");
 useClickOutside(colorPicker, () => {
   isPickerOpen.value = false;
+});
+
+watch(isPickerOpen, () => {
+  nextTick(() => {
+    calculatePosition();
+  });
 });
 
 watch(
@@ -50,12 +79,18 @@ watch(
 onMounted(() => {
   setColorFromString(props.initialColor);
   colorMode.value = props.colorMode;
+
+  window.addEventListener("scroll", calculatePosition);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", calculatePosition);
 });
 </script>
 
 <template>
   <div ref="colorPicker" class="pixel-palette color-picker">
-    <button class="color-btn" @click="togglePicker">
+    <button ref="triggerRef" class="color-btn" @click="togglePicker">
       <Color class="color-icon" />
       <p class="color-text">{{ exportColor }}</p>
       <Tooltip :text="colorMode.toUpperCase()" v-model="showCopiedTooltip">
@@ -72,15 +107,20 @@ onMounted(() => {
       </Tooltip>
     </button>
 
-    <Transition name="fade">
+    <div
+      v-if="isPickerOpen"
+      ref="popupRef"
+      class="picker-popup"
+      :class="{
+        top: positionTop,
+      }"
+    >
       <Picker
-        v-if="isPickerOpen"
         :title="title"
         :enable-alpha="enableAlpha"
         :open-alpha-by-default="openAlphaByDefault"
-        class="picker-popup"
       />
-    </Transition>
+    </div>
   </div>
 </template>
 
@@ -142,7 +182,12 @@ onMounted(() => {
   position: absolute;
   top: 100%;
   transform: translateY(0.5rem);
-  z-index: 10;
+  z-index: 999999;
+}
+
+.picker-popup.top {
+  top: -0.5rem;
+  transform: translateY(-100%);
 }
 
 .picker-copy-btn {

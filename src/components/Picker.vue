@@ -21,18 +21,17 @@ const props = defineProps<{
 }>();
 
 const { colorMode, toggleMode, randomColor, setColorFromString } = useColors();
-
 const isEyeDropperSupported = ref(false);
+
 const showAlphaChannel = ref(false);
-const showColorShades = ref(false);
-
-const toggleShowAlpha = () => {
+function toggleShowAlpha() {
   showAlphaChannel.value = !showAlphaChannel.value;
-};
+}
 
-const toggleShowColorShades = () => {
+const showColorShades = ref(false);
+function toggleShowColorShades() {
   showColorShades.value = !showColorShades.value;
-};
+}
 
 async function pickWithEyeDropper() {
   try {
