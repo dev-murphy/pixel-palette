@@ -26,20 +26,13 @@ const isEyeDropperSupported = ref(false);
 const showAlphaChannel = ref(false);
 const showColorShades = ref(false);
 
-const toogleShowAlpha = () => {
+const toggleShowAlpha = () => {
   showAlphaChannel.value = !showAlphaChannel.value;
 };
 
-const toogleShowColorShades = () => {
+const toggleShowColorShades = () => {
   showColorShades.value = !showColorShades.value;
 };
-
-onMounted(() => {
-  isEyeDropperSupported.value =
-    typeof (window as any).EyeDropper === "function";
-
-  showAlphaChannel.value = props.openAlphaByDefault;
-});
 
 async function pickWithEyeDropper() {
   try {
@@ -53,6 +46,13 @@ async function pickWithEyeDropper() {
     }
   } catch (err) {}
 }
+
+onMounted(() => {
+  isEyeDropperSupported.value =
+    typeof (window as any).EyeDropper === "function";
+
+  showAlphaChannel.value = props.openAlphaByDefault;
+});
 </script>
 
 <template>
@@ -64,15 +64,15 @@ async function pickWithEyeDropper() {
     <div v-if="!showColorShades" class="color-picker-colors__container">
       <ColorSpace />
       <ColorInput />
-      <div class="hue-slider_and_alpha-toogle">
+      <div class="hue-slider_and_alpha-toggle">
         <HueSlider />
         <button
           v-if="enableAlpha"
-          class="alpha-toogle border-primary"
+          class="alpha-toggle border-primary"
           :class="{
             rotate: showAlphaChannel,
           }"
-          @click="toogleShowAlpha"
+          @click="toggleShowAlpha"
         >
           <ArrowDown class="icon text-primary" />
         </button>
@@ -111,7 +111,7 @@ async function pickWithEyeDropper() {
         :class="{
           active: showColorShades,
         }"
-        @click="toogleShowColorShades()"
+        @click="toggleShowColorShades()"
       >
         <Gradient class="icon" />
       </button>
@@ -152,13 +152,13 @@ async function pickWithEyeDropper() {
   gap: 0.5rem;
 }
 
-.hue-slider_and_alpha-toogle {
+.hue-slider_and_alpha-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.alpha-toogle {
+.alpha-toggle {
   width: 1.85rem;
   height: 1.5rem;
 
@@ -171,12 +171,12 @@ async function pickWithEyeDropper() {
   border-radius: 0.5rem;
 }
 
-.alpha-toogle .icon {
+.alpha-toggle .icon {
   width: 1.25rem;
   height: 1.25rem;
 }
 
-.alpha-toogle.rotate .icon {
+.alpha-toggle.rotate .icon {
   transform: rotateX(180deg);
 }
 
