@@ -30,7 +30,6 @@ const { colorMode } = useColors();
 
 .color-box {
   width: 3.5rem;
-  height: 2.125rem;
   flex-shrink: 0;
   border-radius: 0.375rem;
 }

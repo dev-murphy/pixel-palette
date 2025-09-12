@@ -233,6 +233,7 @@
 .color_channel-input__wrapper {
   position: relative;
   width: 33.3333%;
+  height: 2.125rem;
   display: flex;
   align-items: center;
 }
