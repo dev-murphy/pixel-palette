@@ -1,19 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig(({ command }) => {
-  const config = {
-    plugins: [vue()],
-    build: {
-      outDir: "dist",
-      assetsDir: "assets",
-    },
-  };
-
-  if (command === "build") {
-    config.base =
-      process.env.NODE_ENV === "production" ? "/pixel-palette/" : "./";
-  }
-
-  return config;
+export default defineConfig({
+  plugins: [vue(), tailwindcss()],
 });

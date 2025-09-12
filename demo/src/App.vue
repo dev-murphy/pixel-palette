@@ -1,59 +1,230 @@
-<template>
-  <div class="app">
-    <h1>Pixel Palette Test</h1>
-    <div class="test-container">
-      <ColorPicker
-        title="Test Color Picker"
-        :initialColor="'hsl(210, 100%, 50%)'"
-        @set-color="handleColorChange"
-      />
-      <div class="color-display">
-        <h3>Selected Color:</h3>
-        <div
-          class="color-preview"
-          :style="{ backgroundColor: currentColor }"
-        ></div>
-        <p>{{ currentColor }}</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
 import { ColorPicker } from "pixel-palette";
 import "pixel-palette/style.css";
 
+import Yarn from "./components/icons/yarn.vue";
+import Npm from "./components/icons/npm.vue";
+import Pnpm from "./components/icons/pnpm.vue";
+import Bun from "./components/icons/bun.vue";
+import Switch from "./components/Switch.vue";
+import Copy from "./components/icons/Copy.vue";
+import CopyCheck from "./components/icons/CopyCheck.vue";
+
+const commands = ref([
+  {
+    packageManager: "npm",
+  },
+  {
+    packageManager: "yarn",
+  },
+  {
+    packageManager: "pnpm",
+  },
+  {
+    packageManager: "bun",
+  },
+]);
+
+const selectedPackage = ref("npm");
+
 const currentColor = ref("hsl(210, 100%, 50%)");
+const componentProps = ref({
+  title: "Test",
+  initialColor: "hsl(210, 100%, 50%)",
+  currentColor: "",
+  enableAlpha: true,
+  openAlphaByDefault: false,
+  initialColorMode: "hex",
+});
 
 function handleColorChange(color) {
   console.log("Color changed:", color);
   currentColor.value = color;
 }
+
+let timer: number | null = null;
+const copied = ref(false);
+async function copyText() {
+  try {
+    let command = "npm install pixel-palette";
+    if (selectedPackage.value === "yarn") {
+      command = "yarn add pixel-palette";
+    } else if (selectedPackage.value === "pnpm") {
+      command = "pnpm add pixel-palette";
+    } else if (selectedPackage.value === "bun") {
+      command = "bun add pixel-palette";
+    }
+
+    await navigator.clipboard.writeText(command);
+    copied.value = true;
+
+    if (timer) clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      copied.value = false;
+    }, 1200);
+  } catch (err) {
+    console.error("Failed to copy:", err);
+  }
+}
+
+function setColorMode(mode: string) {
+  componentProps.value.initialColorMode = mode;
+}
 </script>
 
-<style>
-.app {
-  padding: 2rem;
-  font-family: system-ui, sans-serif;
-}
+<template>
+  <div
+    class="w-screen h-screen flex items-center justify-center"
+    :style="{
+      backgroundColor: currentColor,
+    }"
+  >
+    <div
+      class="flex flex-col-reverse md:flex-row items-center md:items-start gap-3"
+    >
+      <ColorPicker
+        :title="componentProps.title"
+        :initial-color="componentProps.initialColor"
+        :enable-alpha="componentProps.enableAlpha"
+        :open-alpha-by-default="componentProps.openAlphaByDefault"
+        :initial-color-mode="co"
+        @set-color="handleColorChange"
+      />
 
-.test-container {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-}
+      <div class="flex flex-col gap-y-2">
+        <div class="bg-neutral-800 text-white rounded-md shadow-xl">
+          <div class="w-[400px] flex border-b-3 border-black px-4">
+            <button
+              v-for="command in commands"
+              :key="command.packageManager"
+              class="relative top-[3px] flex items-center gap-x-1.5 px-3 py-2"
+              :class="{
+                'border-b-3 border-blue-500':
+                  selectedPackage === command.packageManager,
+              }"
+              @click="
+                () => {
+                  selectedPackage = command.packageManager;
+                }
+              "
+            >
+              <Npm v-if="command.packageManager === 'npm'" class="w-5 h-5" />
+              <Yarn v-if="command.packageManager === 'yarn'" class="w-5 h-5" />
+              <Pnpm v-if="command.packageManager === 'pnpm'" class="w-5 h-5" />
+              <Bun v-if="command.packageManager === 'bun'" class="w-5 h-5" />
 
-.color-display {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
+              {{ command.packageManager }}
+            </button>
+          </div>
 
-.color-preview {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000;
-  margin: 1rem 0;
-}
-</style>
+          <div class="flex items-center justify-between px-4 font-mono">
+            <div class="text-[#90b9e7] py-4">
+              <span class="text-[#b392f0]">$</span>
+              <span v-if="selectedPackage === 'npm'"> npm install </span>
+              <span v-if="selectedPackage === 'pnpm'"> pnpm add </span>
+              <span v-if="selectedPackage === 'yarn'"> yarn add </span>
+              <span v-if="selectedPackage === 'bun'"> bun add </span>
+              pixel-palette
+            </div>
+            <button
+              class="flex bg-neutral-900 border-2 border-neutral-600 divide-x-2 divide-neutral-600 rounded-md overflow-hidden"
+              @click.stop="copyText"
+            >
+              <p v-if="copied" class="text-sm p-1">Copied</p>
+              <p class="p-1 bg-neutral-800">
+                <Copy v-if="!copied" class="w-5 h-5" />
+                <CopyCheck v-else class="w-5 h-5" />
+              </p>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="bg-neutral-800 flex flex-col gap-y-3 p-3 text-white rounded-lg shadow-xl"
+        >
+          <h2 class="text-xl font-bold pb-2 border-b-2 border-black">
+            Pixel Palette Props
+          </h2>
+          <div class="flex items-center gap-x-4">
+            <p class="w-[160px] text-sm font-bold">Title</p>
+            <input
+              type="text"
+              placeholder="Enter component title"
+              v-model="componentProps.title"
+            />
+          </div>
+
+          <div class="flex items-center gap-x-4">
+            <p class="w-[160px] text-sm font-bold">Initial Color</p>
+            <input
+              type="text"
+              placeholder="Enter component initial color"
+              v-model="componentProps.initialColor"
+              readonly
+              class="bg-neutral-700 text-neutral-400 px-2 rounded"
+            />
+          </div>
+
+          <div class="flex items-center gap-x-4">
+            <p class="w-[160px] text-sm font-bold">Enable Alpha?</p>
+            <Switch v-model="componentProps.enableAlpha" />
+          </div>
+
+          <div class="flex items-center gap-x-4">
+            <p class="w-[160px] text-sm font-bold">
+              Open Alpha Channel by default?
+            </p>
+            <Switch v-model="componentProps.openAlphaByDefault" />
+          </div>
+
+          <div class="flex items-center gap-x-4">
+            <p class="w-[160px] text-sm font-bold">Color Mode</p>
+            <div class="flex text-sm">
+              <button
+                class="flex items-center justify-center px-3 py-1 uppercase border rounded-l-md cursor-pointer"
+                :class="{
+                  'border-neutral-500':
+                    componentProps.initialColorMode !== 'hex',
+                  'border-blue-500 bg-blue-900':
+                    componentProps.initialColorMode === 'hex',
+                  'border-r-0': componentProps.initialColorMode === 'hsl',
+                }"
+                @click="setColorMode('hex')"
+              >
+                hex
+              </button>
+              <button
+                class="flex items-center justify-center px-3 py-1 uppercase border-y cursor-pointer"
+                :class="{
+                  'border-neutral-500':
+                    componentProps.initialColorMode !== 'hsl',
+                  'border-blue-500 bg-blue-900':
+                    componentProps.initialColorMode === 'hsl',
+                  'border-r border-l':
+                    componentProps.initialColorMode === 'hsl',
+                }"
+                @click="setColorMode('hsl')"
+              >
+                hsl
+              </button>
+              <button
+                class="flex items-center justify-center px-3 py-1 uppercase border rounded-r-md cursor-pointer"
+                :class="{
+                  'border-neutral-500':
+                    componentProps.initialColorMode !== 'rgb',
+                  'border-blue-500 bg-blue-900':
+                    componentProps.initialColorMode === 'rgb',
+                  'border-l-0': componentProps.initialColorMode === 'hsl',
+                }"
+                @click="setColorMode('rgb')"
+              >
+                rgb
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
