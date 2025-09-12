@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.6.0](https://github.com/dev-murphy/pixel-palette/compare/v1.5.0...v1.6.0) (2025-09-12)
+
+
+### Features
+
+* update the UI for demo site ([51ba97f](https://github.com/dev-murphy/pixel-palette/commit/51ba97fde5e280d773cc64e2922f45fa137d7fff))
+
+
+### Bug Fixes
+
+* ensure copy color does not toggle the picker pop up ([944717f](https://github.com/dev-murphy/pixel-palette/commit/944717fe912bbfff10bc708c7e0cc20cfe3190c8))
+* more ts stuff from demo app ([672a3fe](https://github.com/dev-murphy/pixel-palette/commit/672a3fee619caf855145f76eb8a94b5c38497734))
+
+
+### Miscellaneous
+
+* add base to vite config ([e1a232e](https://github.com/dev-murphy/pixel-palette/commit/e1a232e193896e5b27dddcf5fa00e64203851301))
+
+
+### UI Updates
+
+* fix minor style issues ([f78b5d9](https://github.com/dev-murphy/pixel-palette/commit/f78b5d92728a56f6ee76d1b9ba9923a4c677f9d7))
+
 ## [1.5.0](https://github.com/dev-murphy/pixel-palette/compare/v1.4.1...v1.5.0) (2025-09-11)
 
 
