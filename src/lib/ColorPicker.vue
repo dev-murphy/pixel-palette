@@ -96,7 +96,7 @@ onUnmounted(() => {
       <Tooltip :text="`${colorMode.toUpperCase()} Copied!`" position="top">
         <div
           class="picker-copy-btn"
-          @click="
+          @click.stop="
             () => {
               showCopiedTooltip = copyColor(exportColor);
             }
