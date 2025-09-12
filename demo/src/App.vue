@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { ref } from "vue";
 import { ColorPicker } from "pixel-palette";
 import "pixel-palette/style.css";
@@ -43,7 +43,7 @@ function handleColorChange(color) {
   currentColor.value = color;
 }
 
-let timer: number | null = null;
+let timer = null;
 const copied = ref(false);
 async function copyText() {
   try {
@@ -68,7 +68,7 @@ async function copyText() {
   }
 }
 
-function setColorMode(mode: string) {
+function setColorMode(mode) {
   componentProps.value.initialColorMode = mode;
 }
 </script>
