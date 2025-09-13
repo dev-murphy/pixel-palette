@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.2](https://github.com/dev-murphy/pixel-palette/compare/v1.6.1...v1.6.2) (2025-09-13)
+
+
+### Bug Fixes
+
+* refactor switch component to remove errors ([abb9821](https://github.com/dev-murphy/pixel-palette/commit/abb9821571abb27b360ce0f5cb5db317ce9ffec3))
+* remove withDefaults from switch component ([ea3ac09](https://github.com/dev-murphy/pixel-palette/commit/ea3ac0946d250eab5a37d80726b6d5296ecd62ba))
+
 ## [1.6.1](https://github.com/dev-murphy/pixel-palette/compare/v1.6.0...v1.6.1) (2025-09-13)
 
 
