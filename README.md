@@ -2,6 +2,10 @@
 
 A modern, customizable color picker component for Vue 3.
 
+## Live Demo
+
+You can view a [live demo](https://dev-murphy.github.io/pixel-palette/) of the color picker.
+
 ## Features
 
 - 🎨 Interactive color space and hue slider
