@@ -1,12 +1,16 @@
 <script setup>
 import { computed } from "vue";
 
-const props = withDefaults(defineProps(), {
-  modelValue: false,
-  disabled: false,
-  size: "md",
-  labelPosition: "right",
-});
+const props = withDefaults(
+  defineProps({
+    modelValue: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    size: { type: String, default: "md" }, // sm, md, lg
+    labelPosition: { type: String, default: "right" }, // left, right
+    label: { type: String, default: "" }, // <-- added this
+  }),
+  {}
+);
 
 const emit = defineEmits(["update:modelValue"]);
 
