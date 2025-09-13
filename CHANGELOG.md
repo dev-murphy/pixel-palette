@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.1](https://github.com/dev-murphy/pixel-palette/compare/v1.6.0...v1.6.1) (2025-09-13)
+
+
+### Miscellaneous
+
+* update pixel palette in demo app ([679e503](https://github.com/dev-murphy/pixel-palette/commit/679e503a4449847a0fc2894cce5f671ac852c6a7))
+
+
+### Documentation
+
+* add demo site to README ([c476900](https://github.com/dev-murphy/pixel-palette/commit/c476900b9caadc1537fad592748a376adc4a541a))
+
 ## [1.6.0](https://github.com/dev-murphy/pixel-palette/compare/v1.5.0...v1.6.0) (2025-09-12)
 
 
