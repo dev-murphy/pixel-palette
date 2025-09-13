@@ -1,16 +1,13 @@
 <script setup>
 import { computed } from "vue";
 
-const props = withDefaults(
-  defineProps({
-    modelValue: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    size: { type: String, default: "md" }, // sm, md, lg
-    labelPosition: { type: String, default: "right" }, // left, right
-    label: { type: String, default: "" }, // <-- added this
-  }),
-  {}
-);
+const props = defineProps({
+  modelValue: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
+  size: { type: String, default: "md" }, // sm, md, lg
+  labelPosition: { type: String, default: "right" }, // left, right
+  label: { type: String, default: "" }, // <-- now correctly defined
+});
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -32,7 +29,7 @@ const sizeClasses = computed(() => {
       translate: "translate-x-7",
     },
   };
-  return sizes[props.size];
+  return sizes[props.size] || sizes.md; // fallback to md
 });
 
 const toggle = () => {
