@@ -4,28 +4,14 @@ import { ColorPicker } from "pixel-palette";
 import "pixel-palette/style.css";
 
 import Yarn from "./components/icons/yarn.vue";
-import Npm from "./components/icons/npm.vue";
+import npm from "./components/icons/npm.vue";
 import Pnpm from "./components/icons/pnpm.vue";
 import Bun from "./components/icons/bun.vue";
 import Switch from "./components/Switch.vue";
 import Copy from "./components/icons/Copy.vue";
 import CopyCheck from "./components/icons/CopyCheck.vue";
 
-const commands = ref([
-  {
-    packageManager: "npm",
-  },
-  {
-    packageManager: "yarn",
-  },
-  {
-    packageManager: "pnpm",
-  },
-  {
-    packageManager: "bun",
-  },
-]);
-
+const commands = ref(["npm", "yarn", "pnpm", "bun"]);
 const selectedPackage = ref("npm");
 
 const currentColor = ref("hsl(210, 100%, 50%)");
@@ -93,33 +79,40 @@ function setColorMode(mode) {
       />
 
       <div class="flex flex-col gap-y-2">
-        <div class="bg-neutral-800 text-white rounded-md shadow-xl">
-          <div class="w-[400px] flex border-b-3 border-black px-4">
+        <div class="bg-neutral-800 text-white rounded-xl shadow-xl">
+          <div class="w-full flex border-b-2 border-neutral-900 px-4">
             <button
               v-for="command in commands"
               :key="command.packageManager"
-              class="relative top-[3px] flex items-center gap-x-1.5 px-3 py-2"
+              class="group text-sm relative top-[3px] flex items-center justify-center gap-x-1.5 px-3 py-2 cursor-pointer"
               :class="{
-                'border-b-3 border-blue-500':
-                  selectedPackage === command.packageManager,
+                pkg: selectedPackage === command,
               }"
               @click="
                 () => {
-                  selectedPackage = command.packageManager;
+                  selectedPackage = command;
                 }
               "
             >
-              <Npm v-if="command.packageManager === 'npm'" class="w-5 h-5" />
-              <Yarn v-if="command.packageManager === 'yarn'" class="w-5 h-5" />
-              <Pnpm v-if="command.packageManager === 'pnpm'" class="w-5 h-5" />
-              <Bun v-if="command.packageManager === 'bun'" class="w-5 h-5" />
-
-              {{ command.packageManager }}
+              <npm v-if="command === 'npm'" class="w-5 h-5" />
+              <Yarn v-if="command === 'yarn'" class="w-5 h-5" />
+              <Pnpm v-if="command === 'pnpm'" class="w-5 h-5" />
+              <Bun v-if="command === 'bun'" class="w-5 h-5" />
+              <p
+                class="pb-0.5 font-semibold uppercase"
+                :class="[
+                  selectedPackage === command
+                    ? 'text-white'
+                    : 'group-hover:text-white text-neutral-500',
+                ]"
+              >
+                {{ command }}
+              </p>
             </button>
           </div>
 
           <div class="flex items-center justify-between px-4 font-mono">
-            <div class="text-[#90b9e7] py-4">
+            <div class="text-sm text-[#90b9e7] py-4">
               <span class="text-[#b392f0]">$</span>
               <span v-if="selectedPackage === 'npm'"> npm install </span>
               <span v-if="selectedPackage === 'pnpm'"> pnpm add </span>
@@ -228,3 +221,12 @@ function setColorMode(mode) {
     </div>
   </div>
 </template>
+
+<style scoped>
+@import "tailwindcss";
+
+.pkg::before {
+  content: "";
+  @apply absolute top-full left-1/2 -translate-y-1 -translate-x-1/2 w-3/5 h-1 bg-blue-500 rounded;
+}
+</style>
