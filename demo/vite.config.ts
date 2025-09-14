@@ -13,4 +13,5 @@ export default defineConfig({
       dts: "./auto-imports.d.ts",
     }),
   ],
+  base: "/pixel-palette/",
 });
