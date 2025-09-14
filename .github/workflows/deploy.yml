@@ -1,18 +1,16 @@
-name: Build and Deploy Vue 3 to GitHub Pages
+name: Build and Deploy Vue 3 Demo to GitHub Pages
 
 on:
   push:
-    branches: [main] # Change to your default branch if different
+    branches: [main]
   pull_request:
     branches: [main]
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -35,11 +33,21 @@ jobs:
         with:
           version: latest
 
-      - name: Install dependencies
+      # Install root deps (for the library)
+      - name: Install library dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Build the library first
+      # - name: Build library
+      #   run: pnpm run build
+
+      # Install demo deps (pulls in the built lib via file:../)
+      - name: Install demo dependencies
         run: pnpm install --frozen-lockfile
         working-directory: ./demo
 
-      - name: Build project
+      # Build the demo app
+      - name: Build demo project
         run: pnpm run build
         working-directory: ./demo
 

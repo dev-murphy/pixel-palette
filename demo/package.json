@@ -1,7 +1,5 @@
 {
-  "name": "test",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +8,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
-    "pixel-palette": "^1.7.0",
+    "pixel-palette": "file:../",
     "tailwindcss": "^4.1.13",
     "vue": "^3.5.18"
   },

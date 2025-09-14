@@ -12,8 +12,8 @@ importers:
         specifier: ^4.1.13
         version: 4.1.13(vite@7.1.5(jiti@2.5.1)(lightningcss@1.30.1))
       pixel-palette:
-        specifier: ^1.7.0
-        version: 1.7.0(vue@3.5.21(typescript@5.8.3))
+        specifier: file:../
+        version: file:..(vue@3.5.21(typescript@5.8.3))
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.13
@@ -693,8 +693,8 @@ packages:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
 
-  pixel-palette@1.7.0:
-    resolution: {integrity: sha512-2nazceqOGl9IebaYck0s5t1+qMqobvo0kjkurqj4fgTEQdj7gRkAgVHPkQD/I9B9llgTCekuu5JNle4eUuwGSQ==}
+  pixel-palette@file:..:
+    resolution: {directory: .., type: directory}
     peerDependencies:
       vue: ^3.0.0
 
@@ -1349,7 +1349,7 @@ snapshots:
 
   picomatch@4.0.3: {}
 
-  pixel-palette@1.7.0(vue@3.5.21(typescript@5.8.3)):
+  pixel-palette@file:..(vue@3.5.21(typescript@5.8.3)):
     dependencies:
       vue: 3.5.21(typescript@5.8.3)
 
