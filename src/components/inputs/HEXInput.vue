@@ -34,7 +34,7 @@ function handleInput(event: Event) {
 .hex_input__wrapper {
   display: flex;
   align-items: center;
-  padding: 0.5rem 0;
+  height: 2.125rem;
   margin-left: 0.5rem;
 }
 
