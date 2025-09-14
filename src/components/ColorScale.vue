@@ -70,7 +70,7 @@ onUnmounted(() => {
 .color__container {
   display: flex;
   flex-direction: column;
-  height: 275px;
+  height: 291.63px;
 }
 
 .color {
