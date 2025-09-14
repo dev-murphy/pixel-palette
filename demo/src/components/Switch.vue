@@ -1,15 +1,21 @@
-<script setup>
-import { computed } from "vue";
+<script lang="ts" setup>
+interface Props {
+  modelValue: boolean;
+  disabled?: boolean;
+  size?: "sm" | "md" | "lg";
+  labelPosition?: "right" | "left";
+  label?: string;
+}
 
-const props = defineProps({
-  modelValue: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  size: { type: String, default: "md" }, // sm, md, lg
-  labelPosition: { type: String, default: "right" }, // left, right
-  label: { type: String, default: "" }, // <-- now correctly defined
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: false,
+  disabled: false,
+  size: "md",
+  labelPosition: "right",
+  label: "",
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{ (e: "update:modelValue", val: boolean): void }>();
 
 const sizeClasses = computed(() => {
   const sizes = {

@@ -1,9 +1,12 @@
-<script setup>
-import { ref, computed } from "vue";
+<script lang="ts" setup>
 import ArrowDown from "./icons/ArrowDown.vue";
+import type { MANAGER_TYPE } from "../types";
 
-const props = defineProps(["modelValue", "commands"]);
-defineEmits(["update:modelValue"]);
+const props = defineProps<{
+  modelValue: MANAGER_TYPE;
+  commands: MANAGER_TYPE[];
+}>();
+defineEmits<{ (e: "update:modelValue", val: MANAGER_TYPE): void }>();
 
 const isMenuOpen = ref(false);
 function toggleMenu() {

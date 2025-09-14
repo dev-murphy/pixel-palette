@@ -140,7 +140,6 @@ onUnmounted(() => {
 
 .color-btn {
   width: 300px;
-  box-sizing: border-box;
   background-color: white;
 
   display: flex;
