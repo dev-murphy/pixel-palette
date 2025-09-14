@@ -1,5 +1,41 @@
 # Changelog
 
+## [1.7.0](https://github.com/dev-murphy/pixel-palette/compare/v1.6.1...v1.7.0) (2025-09-14)
+
+
+### Features
+
+* add color swatch to color picker ([9c3cc0f](https://github.com/dev-murphy/pixel-palette/commit/9c3cc0f63c8b6c07ccea27e210ee148eea7d1fbc))
+* make the color picker work with touchscreen devices ([5764437](https://github.com/dev-murphy/pixel-palette/commit/5764437e3453993d59fe6ff68a0ca4548b6af856))
+
+
+### Bug Fixes
+
+* refactor app component to remove ts props ([85f017e](https://github.com/dev-murphy/pixel-palette/commit/85f017e9332069ab1849bb9ed9b08c22b4a0c611))
+* refactor switch component to remove errors ([abb9821](https://github.com/dev-murphy/pixel-palette/commit/abb9821571abb27b360ce0f5cb5db317ce9ffec3))
+* remove withDefaults from switch component ([ea3ac09](https://github.com/dev-murphy/pixel-palette/commit/ea3ac0946d250eab5a37d80726b6d5296ecd62ba))
+
+
+### Miscellaneous
+
+* add arrow down and color swatch icons ([fa493db](https://github.com/dev-murphy/pixel-palette/commit/fa493dbd317ce180db3506a90abb8025e5d7fdb4))
+* add custom select component and update UI for demo app ([73af597](https://github.com/dev-murphy/pixel-palette/commit/73af597796681bf124fb77a0687ef74b52508219))
+* add initial color mode and colors for color swatch ([8274c81](https://github.com/dev-murphy/pixel-palette/commit/8274c81075a301c8b08bacf7277b574b81c01379))
+* update pixel-palette deps in package json ([0ff29d1](https://github.com/dev-murphy/pixel-palette/commit/0ff29d1204f4b019c2e846e0c007e1b0e6fcc959))
+
+
+### Code Refactors
+
+* remove unused css ([9a921bc](https://github.com/dev-murphy/pixel-palette/commit/9a921bc807b84ac251a8509bf744017bf2ad939b))
+* update tooltip to show up when clicked ([004df05](https://github.com/dev-murphy/pixel-palette/commit/004df0501fba285cb504d6f35381ac53a264b079))
+
+
+### UI Updates
+
+* improve UI for install section ([f833a08](https://github.com/dev-murphy/pixel-palette/commit/f833a089775ab9d57a981c01ae2dcaa23f67b7e6))
+* increase the height of color scale component ([20318f6](https://github.com/dev-murphy/pixel-palette/commit/20318f64162011323eb6d66edc777ed488640d35))
+* make the height for color input consistent ([e29de71](https://github.com/dev-murphy/pixel-palette/commit/e29de711507a3b04b82042c19aa3549bcdd6802f))
+
 ## [1.6.1](https://github.com/dev-murphy/pixel-palette/compare/v1.6.0...v1.6.1) (2025-09-13)
 
 
