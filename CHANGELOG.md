@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.7.1](https://github.com/dev-murphy/pixel-palette/compare/v1.7.0...v1.7.1) (2025-09-14)
+
+
+### Bug Fixes
+
+* ensure library is built first in pipeline ([1c244e9](https://github.com/dev-murphy/pixel-palette/commit/1c244e9055e5f383c8d777366025e34f82381c2d))
+* re-add base repo name to vite config ([9512027](https://github.com/dev-murphy/pixel-palette/commit/951202724f0ee8aba6d1ce68bb2149be642e8f75))
+
+
+### Miscellaneous
+
+* reinstall pixel palette ([18a2f02](https://github.com/dev-murphy/pixel-palette/commit/18a2f0277e1849bf6f7269106c53f8bcf299edd5))
+
+
+### Code Refactors
+
+* made the demo app a typesecript vue app ([0dedeba](https://github.com/dev-murphy/pixel-palette/commit/0dedebac86e387c3a1347a587cfc2e0a8cec3a75))
+
+
+### CI/CD
+
+* add local packge deps for demo app ([d6ea3ff](https://github.com/dev-murphy/pixel-palette/commit/d6ea3ff13201b9aadce747d0e45fa960431daf59))
+
 ## [1.7.0](https://github.com/dev-murphy/pixel-palette/compare/v1.6.1...v1.7.0) (2025-09-14)
 
 
