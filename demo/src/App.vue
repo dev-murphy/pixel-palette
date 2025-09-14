@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, markRaw, computed, reactive } from "vue";
 import { ColorPicker } from "pixel-palette";
 import "pixel-palette/style.css";
@@ -13,16 +13,8 @@ import CopyIcon from "./components/icons/Copy.vue";
 import CopyCheckIcon from "./components/icons/CopyCheck.vue";
 import XSelect from "./components/XSelect.vue";
 
-// Types
-interface PackageManager {
-  pkg: string;
-  icon: any;
-}
-
-type ColorMode = "hex" | "hsl" | "rgb";
-
 // Package managers configuration
-const PACKAGE_MANAGERS: PackageManager[] = [
+const PACKAGE_MANAGERS = [
   { pkg: "npm", icon: markRaw(NpmIcon) },
   { pkg: "yarn", icon: markRaw(YarnIcon) },
   { pkg: "pnpm", icon: markRaw(PnpmIcon) },
@@ -46,10 +38,10 @@ const DEFAULT_COLOR_SWATCH = [
 
 // State
 const currentColor = ref("hsl(210, 100%, 50%)");
-const selectedPackageManager = ref<PackageManager>(PACKAGE_MANAGERS[0]);
+const selectedPackageManager = ref(PACKAGE_MANAGERS[0]);
 const copyState = reactive({
   copied: false,
-  timer: null as number | null,
+  timer: null,
 });
 
 // Component props state
@@ -58,14 +50,14 @@ const componentProps = reactive({
   initialColor: "hsl(210, 100%, 50%)",
   enableAlpha: true,
   openAlphaByDefault: false,
-  initialColorMode: "hex" as ColorMode,
+  initialColorMode: "hex",
   colorSwatch: DEFAULT_COLOR_SWATCH,
 });
 
 // Computed
 const installCommand = computed(() => {
   const { pkg } = selectedPackageManager.value;
-  const commandMap: Record<string, string> = {
+  const commandMap = {
     npm: "npm install pixel-palette",
     yarn: "yarn add pixel-palette",
     pnpm: "pnpm add pixel-palette",
@@ -81,19 +73,19 @@ const commandDisplay = computed(() => {
 });
 
 // Methods
-const handleColorChange = (color: string): void => {
+const handleColorChange = (color) => {
   currentColor.value = color;
 };
 
-const selectPackageManager = (manager: PackageManager): void => {
+const selectPackageManager = (manager) => {
   selectedPackageManager.value = manager;
 };
 
-const setColorMode = (mode: ColorMode): void => {
+const setColorMode = (mode) => {
   componentProps.initialColorMode = mode;
 };
 
-const copyInstallCommand = async (): Promise<void> => {
+const copyInstallCommand = async () => {
   try {
     await navigator.clipboard.writeText(installCommand.value);
     copyState.copied = true;
@@ -115,12 +107,12 @@ const copyInstallCommand = async (): Promise<void> => {
 
 // Color mode button configuration
 const colorModeButtons = [
-  { mode: "hex" as ColorMode, label: "HEX" },
-  { mode: "hsl" as ColorMode, label: "HSL" },
-  { mode: "rgb" as ColorMode, label: "RGB" },
+  { mode: "hex", label: "HEX" },
+  { mode: "hsl", label: "HSL" },
+  { mode: "rgb", label: "RGB" },
 ];
 
-const getColorModeButtonClasses = (mode: ColorMode, index: number) => {
+const getColorModeButtonClasses = (mode, index) => {
   const isActive = componentProps.initialColorMode === mode;
   const isFirst = index === 0;
   const isLast = index === colorModeButtons.length - 1;
@@ -137,7 +129,7 @@ const getColorModeButtonClasses = (mode: ColorMode, index: number) => {
   ];
 };
 
-const getPackageManagerButtonClasses = (pkg: string) => [
+const getPackageManagerButtonClasses = (pkg) => [
   "hidden sm:flex group text-sm relative top-[3px] items-center justify-center gap-x-1.5 px-3 py-2 cursor-pointer",
   {
     "pkg text-white": selectedPackageManager.value.pkg === pkg,
