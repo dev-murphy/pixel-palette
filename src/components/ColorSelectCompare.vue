@@ -73,6 +73,7 @@ onMounted(() => {
         v-for="(color, index) in harmonies[selectedHarmony]"
         :key="`${color}_${index}`"
         :text="`${isCopying ? 'Copied!' : color.toUpperCase()}`"
+        class="color-compare-tooltip"
         on-hover
       >
         <div
@@ -166,85 +167,7 @@ onMounted(() => {
   border-bottom-right-radius: 0.5rem;
 }
 
-/* Tooltip */
-.tooltip {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 8px;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 0.4rem 0.6rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.color-swatch:hover .tooltip {
-  opacity: 1;
-  transform: translate(-50%, -4px);
-}
-
-/* Inline feedback */
-.checkmark {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
-  font-weight: bold;
-  animation: pulse 0.4s ease;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.6);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Toast */
-.toast {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  background: #16a34a;
-  color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: fadeIn 0.2s ease, slideIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+.color-compare-tooltip {
+  flex: 1;
 }
 </style>
