@@ -14,7 +14,7 @@ const elementSize = computed(() => {
   return width || knob.value.offsetWidth || knob.value.clientWidth || 20;
 });
 
-const { startDrag, position, setPosition } = useDraggable(knob, {
+const { startDrag, position, setPosition, isDragging } = useDraggable(knob, {
   elementSize,
 });
 
@@ -34,6 +34,13 @@ const finalSize = computed(() => {
 });
 
 const { color, setColor } = useColors();
+
+/**
+ * Handle both mouse and touch events
+ */
+const handlePointerStart = (event: MouseEvent | TouchEvent) => {
+  startDrag(event);
+};
 
 const getColorFromPosition = (x: number, y: number) => {
   const xPercentage = x / finalSize.value.width;
@@ -69,7 +76,7 @@ onMounted(async () => {
 watch(
   () => position.value,
   ({ x, y }) => {
-    if (!isInternalUpdate.value) {
+    if (!isInternalUpdate.value && isDragging.value) {
       getColorFromPosition(x, y);
     }
   },
@@ -81,18 +88,25 @@ watch(
   ([s, v]) => {
     if (!isReady.value || s === undefined || v === undefined) return;
 
-    isInternalUpdate.value = true;
-    setPositionFromSV(s, v); // Fixed: use direct values
-    nextTick(() => {
-      isInternalUpdate.value = false;
-    });
+    if (!isDragging.value) {
+      isInternalUpdate.value = true;
+      setPositionFromSV(s, v); // Fixed: use direct values
+      nextTick(() => {
+        isInternalUpdate.value = false;
+      });
+    }
   },
   { immediate: false } // Fixed: changed to false to avoid issues during setup
 );
 </script>
 
 <template>
-  <div ref="container" class="current-hue-gradient" @mousedown="startDrag">
+  <div
+    ref="container"
+    class="current-hue-gradient"
+    @mousedown="handlePointerStart"
+    @touchstart="handlePointerStart"
+  >
     <div
       ref="space-knob"
       class="space-knob border-primary shadow-lg"

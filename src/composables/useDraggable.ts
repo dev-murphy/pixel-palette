@@ -23,9 +23,9 @@ interface DraggableOptions {
   offset?: MaybeRef<number>;
   initialPosition?: Position;
   constrainToParent?: boolean;
-  onDragStart?: (event: MouseEvent, position: Position) => void;
-  onDrag?: (event: MouseEvent, position: Position) => void;
-  onDragEnd?: (event: MouseEvent, position: Position) => void;
+  onDragStart?: (event: MouseEvent | TouchEvent, position: Position) => void;
+  onDrag?: (event: MouseEvent | TouchEvent, position: Position) => void;
+  onDragEnd?: (event: MouseEvent | TouchEvent, position: Position) => void;
 }
 
 export const useDraggable = (
@@ -99,7 +99,21 @@ export const useDraggable = (
     position.value = constrainPosition(updated);
   };
 
-  const startDrag = (event: MouseEvent) => {
+  // Helper function to get coordinates from mouse or touch event
+  const getEventCoordinates = (event: MouseEvent | TouchEvent) => {
+    if ('touches' in event && event.touches.length > 0) {
+      return {
+        clientX: event.touches[0].clientX,
+        clientY: event.touches[0].clientY,
+      };
+    }
+    return {
+      clientX: (event as MouseEvent).clientX,
+      clientY: (event as MouseEvent).clientY,
+    };
+  };
+
+  const startDrag = (event: MouseEvent | TouchEvent) => {
     event.preventDefault();
     isDragging.value = true;
 
@@ -108,34 +122,51 @@ export const useDraggable = (
 
     updatePosition(event);
 
-    // Add global event listeners
-    document.addEventListener("mousemove", handleMouseMove);
+    // Add global event listeners for both mouse and touch
+    document.addEventListener("mousemove", handleMouseMove, { passive: false });
     document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchend", handleTouchEnd);
   };
 
   const handleMouseMove = (event: MouseEvent) => {
     if (!isDragging.value) return;
-
+    event.preventDefault();
     updatePosition(event);
+    onDrag?.(event, position.value);
+  };
 
-    // Call onDrag callback if provided
+  const handleTouchMove = (event: TouchEvent) => {
+    if (!isDragging.value) return;
+    event.preventDefault();
+    updatePosition(event);
     onDrag?.(event, position.value);
   };
 
   const handleMouseUp = (event: MouseEvent) => {
     if (!isDragging.value) return;
+    endDrag(event);
+  };
 
+  const handleTouchEnd = (event: TouchEvent) => {
+    if (!isDragging.value) return;
+    endDrag(event);
+  };
+
+  const endDrag = (event: MouseEvent | TouchEvent) => {
     isDragging.value = false;
 
     // Call onDragEnd callback if provided
     onDragEnd?.(event, position.value);
 
-    // Remove global event listeners
+    // Remove all event listeners
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
   };
 
-  const updatePosition = (event: MouseEvent) => {
+  const updatePosition = (event: MouseEvent | TouchEvent) => {
     if (!elementRef.value) return;
 
     let parentElement: HTMLElement | null = null;
@@ -154,12 +185,13 @@ export const useDraggable = (
 
     if (!parentElement || !bounds) return;
 
+    // Get coordinates from either mouse or touch event
+    const { clientX, clientY } = getEventCoordinates(event);
+
     // Calculate position relative to parent
     const rect = parentElement.getBoundingClientRect();
-    const x =
-      event.clientX - rect.left - currentElementSize / 2 + offset.value / 2;
-    const y =
-      event.clientY - rect.top - currentElementSize / 2 + offset.value / 2;
+    const x = clientX - rect.left - currentElementSize / 2 + offset.value / 2;
+    const y = clientY - rect.top - currentElementSize / 2 + offset.value / 2;
 
     // Constrain to bounds if provided
     position.value = {
@@ -178,6 +210,8 @@ export const useDraggable = (
   onUnmounted(() => {
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+    document.removeEventListener("touchmove", handleTouchMove);
+    document.removeEventListener("touchend", handleTouchEnd);
   });
 
   return {

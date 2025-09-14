@@ -37,6 +37,13 @@ const updatePositionFromAlpha = (newAlpha: number) => {
 };
 
 /**
+ * Handle both mouse and touch events
+ */
+const handlePointerStart = (event: MouseEvent | TouchEvent) => {
+  startDrag(event);
+};
+
+/**
  * When alpha changes, update knob position
  */
 watch(
@@ -69,7 +76,11 @@ onMounted(async () => {
 
 <template>
   <div class="slider__container border-primary">
-    <div class="checker" @mousedown="startDrag">
+    <div
+      class="checker"
+      @mousedown="handlePointerStart"
+      @touchstart="handlePointerStart"
+    >
       <div
         ref="knob"
         class="hue-slider-knob current-hue border-primary"

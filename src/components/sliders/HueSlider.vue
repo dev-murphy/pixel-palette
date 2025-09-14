@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, nextTick } from "vue";
 import { useDraggable } from "../../composables/useDraggable";
 import { useColors } from "../../composables/useColors";
 
@@ -31,6 +31,13 @@ const { startDrag, position, setPosition, isDragging } = useDraggable(knob, {
   offset,
 });
 
+/**
+ * Handle both mouse and touch events
+ */
+const handlePointerStart = (event: MouseEvent | TouchEvent) => {
+  startDrag(event);
+};
+
 // sync hue -> position and emit
 function updatePositionFromHue(newHue: number) {
   if (!knob.value?.parentElement || finalWidth.value <= 0) return;
@@ -52,19 +59,26 @@ watch(
   () => hue.value,
   (newHue) => {
     document.body.style.setProperty("--hue", newHue.toString());
-    updatePositionFromHue(newHue);
+    if (!isDragging.value) {
+      updatePositionFromHue(newHue);
+    }
   },
   { immediate: true }
 );
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick();
   updatePositionFromHue(hue.value);
 });
 </script>
 
 <template>
   <div class="slider__container border-primary">
-    <div class="hue-slider" @mousedown="startDrag">
+    <div
+      class="hue-slider"
+      @mousedown="handlePointerStart"
+      @touchstart="handlePointerStart"
+    >
       <div
         ref="knob"
         class="hue-slider-knob current-hue border-primary"
