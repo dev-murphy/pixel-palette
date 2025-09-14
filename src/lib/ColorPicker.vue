@@ -20,13 +20,14 @@ const props = withDefaults(
   defineProps<{
     title?: string;
     initialColor?: string;
-    colorMode?: "hex" | "rgb" | "hsl";
+    initialColorMode?: "hex" | "rgb" | "hsl";
     enableAlpha?: boolean;
     openAlphaByDefault: boolean;
+    colorSwatch?: string[];
   }>(),
   {
     initialColor: "#ff0000",
-    colorMode: "hex",
+    initialColorMode: "hex",
     enableAlpha: true,
     openAlphaByDefault: false,
   }
@@ -76,10 +77,16 @@ watch(
   }
 );
 
+watch(
+  () => props.initialColorMode,
+  (newColorMode) => {
+    colorMode.value = newColorMode;
+  }
+);
+
 onMounted(() => {
   setColorFromString(props.initialColor);
-  colorMode.value = props.colorMode;
-
+  colorMode.value = props.initialColorMode;
   window.addEventListener("scroll", calculatePosition);
 });
 
@@ -96,7 +103,7 @@ onUnmounted(() => {
       <Tooltip :text="`${colorMode.toUpperCase()} Copied!`" position="top">
         <div
           class="picker-copy-btn"
-          @click.stop="
+          @click="
             () => {
               showCopiedTooltip = copyColor(exportColor);
             }
@@ -119,6 +126,7 @@ onUnmounted(() => {
         :title="title"
         :enable-alpha="enableAlpha"
         :open-alpha-by-default="openAlphaByDefault"
+        :colors="colorSwatch"
       />
     </div>
   </div>
@@ -131,7 +139,7 @@ onUnmounted(() => {
 }
 
 .color-btn {
-  width: 320px;
+  width: 300px;
   box-sizing: border-box;
   background-color: white;
 
@@ -167,11 +175,11 @@ onUnmounted(() => {
 }
 
 .color-text {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  flex-grow: 1;
+  margin: auto;
+  vertical-align: middle;
 
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   text-align: center;
@@ -196,15 +204,19 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.25rem;
+
+  width: min-content;
   height: 1.75rem;
+
+  padding: 0 0.25rem;
   border-radius: 0.375rem;
+
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .picker-copy-btn:hover {
-  background-color: #cccccc;
+  background-color: #e5e5e5;
 }
 </style>
