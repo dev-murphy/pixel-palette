@@ -8,6 +8,8 @@ import AlphaSlider from "./sliders/AlphaSlider.vue";
 import ColorInput from "./inputs/ColorInput.vue";
 import ColorShades from "./ColorScale.vue";
 import ColorSelectCompare from "./ColorSelectCompare.vue";
+import Colors from "./Colors.vue";
+
 import Picker from "./icons/Picker.vue";
 import Random from "./icons/Random.vue";
 import Switch from "./icons/Switch.vue";
@@ -19,10 +21,12 @@ const props = defineProps<{
   title?: string;
   enableAlpha: boolean;
   openAlphaByDefault: boolean;
+  colors?: string[];
 }>();
 
 const { colorMode, toggleMode, randomColor, setColorFromString } = useColors();
 const isEyeDropperSupported = ref(false);
+const showSwatch = ref(false);
 
 const showAlphaChannel = ref(false);
 function toggleShowAlpha() {
@@ -68,21 +72,24 @@ onMounted(() => {
 
     <div v-if="!showColorShades" class="color-picker-colors__container">
       <ColorSpace />
-      <ColorInput />
-      <div class="hue-slider_and_alpha-toggle">
-        <HueSlider />
-        <button
-          v-if="enableAlpha"
-          class="alpha-toggle border-primary"
-          :class="{
-            rotate: showAlphaChannel,
-          }"
-          @click="toggleShowAlpha"
-        >
-          <ArrowDown class="icon text-primary" />
-        </button>
+      <ColorInput v-model="showSwatch" />
+      <div v-if="!showSwatch">
+        <div class="hue-slider_and_alpha-toggle">
+          <HueSlider />
+          <button
+            v-if="enableAlpha"
+            class="alpha-toggle border-primary"
+            :class="{
+              rotate: showAlphaChannel,
+            }"
+            @click="toggleShowAlpha"
+          >
+            <ArrowDown class="icon text-primary" />
+          </button>
+        </div>
+        <AlphaSlider v-if="showAlphaChannel && enableAlpha" />
       </div>
-      <AlphaSlider v-if="showAlphaChannel && enableAlpha" />
+      <Colors v-if="colors && showSwatch" :colors="colors" />
     </div>
 
     <ColorShades v-else />
@@ -147,6 +154,11 @@ onMounted(() => {
 }
 
 .color-picker__title {
+  width: 100%;
+  overflow: hidden;
+  white-space: no-wrap;
+  text-overflow: ellipsis;
+
   padding: 0.25rem 1rem 0 1rem;
   border-bottom-width: 0.125rem;
   border-bottom-style: solid;
@@ -173,11 +185,12 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .alpha-toggle {
-  width: 1.85rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 1.7rem;
 
   display: flex;
   align-items: center;
