@@ -19,8 +19,8 @@ const isTooltipOpen = ref(false);
 let tooltipTimer: number | undefined;
 
 function showTooltip() {
-  if (tooltipTimer) clearTimeout(tooltipTimer);
   isTooltipOpen.value = true;
+  if (tooltipTimer) clearTimeout(tooltipTimer);
 
   if (!props.onHover) {
     tooltipTimer = window.setTimeout(() => {
@@ -41,6 +41,7 @@ function hideTooltip() {
     class="tooltip__container"
     @mouseenter="onHover && showTooltip()"
     @mouseleave="onHover && hideTooltip()"
+    @click.stop="!onHover && showTooltip()"
   >
     <!-- Trigger element -->
     <slot></slot>
@@ -55,7 +56,6 @@ function hideTooltip() {
 <style scoped>
 .tooltip__container {
   position: relative;
-  flex: 1;
   cursor: pointer;
 }
 
