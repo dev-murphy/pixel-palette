@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# For demo app
+/demo/pnpm-workspace.yaml
