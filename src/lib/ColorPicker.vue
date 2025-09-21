@@ -25,12 +25,14 @@ const props = withDefaults(
     enableAlpha?: boolean;
     openAlphaByDefault: boolean;
     colorSwatch?: string[];
+    darkMode?: boolean;
   }>(),
   {
     initialColor: "#ff0000",
     initialColorMode: "hex",
     enableAlpha: true,
     openAlphaByDefault: false,
+    darkMode: false,
   }
 );
 const emits = defineEmits<{ (e: "set-color", color: string): void }>();
@@ -97,7 +99,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="colorPicker" class="pixel-palette color-picker">
+  <div
+    ref="colorPicker"
+    class="pixel-palette color-picker"
+    :class="{
+      dark: darkMode,
+    }"
+  >
     <button ref="triggerRef" class="color-btn" @click="togglePicker">
       <Color class="color-icon" />
       <p

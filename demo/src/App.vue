@@ -55,6 +55,7 @@ const componentProps = reactive<COMPONENT_PROPS>({
   initialColor: "hsl(210, 100%, 50%)",
   enableAlpha: true,
   openAlphaByDefault: false,
+  darkMode: false,
   initialColorMode: "hex",
   colorSwatch: DEFAULT_COLOR_SWATCH,
 });
@@ -159,6 +160,7 @@ const getPackageManagerButtonClasses = (pkg: MANAGER_NAMES) => [
         :open-alpha-by-default="componentProps.openAlphaByDefault"
         :initial-color-mode="componentProps.initialColorMode"
         :color-swatch="componentProps.colorSwatch"
+        :dark-mode="componentProps.darkMode"
         @set-color="handleColorChange"
       />
 
@@ -250,6 +252,12 @@ const getPackageManagerButtonClasses = (pkg: MANAGER_NAMES) => [
               </label>
               <Switch v-model="componentProps.openAlphaByDefault" />
             </div>
+          </div>
+
+          <!-- Dark Mode Toggle -->
+          <div class="toggle-row">
+            <label class="toggle-label">Dark Mode?</label>
+            <Switch v-model="componentProps.darkMode" />
           </div>
 
           <!-- Color Mode Selection -->

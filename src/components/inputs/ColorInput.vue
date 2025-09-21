@@ -28,7 +28,10 @@ function rotateAnimation() {
 
 <template>
   <div class="color-input border-primary">
-    <button class="color-mode-btn btn-hoverable" @click="rotateAnimation">
+    <button
+      class="color-mode-btn btn-hoverable text-primary"
+      @click="rotateAnimation"
+    >
       {{ colorMode.toUpperCase() }}
       <Switch
         class="color-mode-icon"

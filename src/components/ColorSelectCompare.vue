@@ -70,7 +70,7 @@ onMounted(() => {
       </Tooltip>
     </div>
 
-    <div class="compare-switch">
+    <div class="compare-switch text-primary">
       <p>
         {{ harmonyLabels[selectedHarmonyIndex] }}
       </p>

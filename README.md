@@ -15,6 +15,7 @@ You can view a [live demo](https://dev-murphy.github.io/pixel-palette/) of the c
 - 📋 Copy to clipboard with tooltip feedback
 - 🎛️ Alpha channel support
 - 📱 Responsive design
+- 🌗 Dark/Light Mode
 
 ## Installation
 
@@ -54,6 +55,7 @@ function handleColorChange(color) {
     color-mode="hex"
     :enable-alpha="true"
     :open-alpha-by-default="false"
+    :dark-mode="false"
     @set-color="updateColor"
   />
 </template>
@@ -77,6 +79,7 @@ const updateColor = (color) => {
 | `colorMode`          | `hex` or `rgb` or `hsl` | `hex`                 | Initial color mode value            |
 | `enableAlpha`        | `boolean`               | true                  | Option to enable alpha channel      |
 | `openAlphaByDefault` | `boolean`               | false                 | Option to show/hide alpha channel   |
+| `darkMode`           | `boolean`               | false                 | Option to show dark mode            |
 
 ## Events
 

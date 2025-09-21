@@ -14,5 +14,6 @@ export interface COMPONENT_PROPS {
   initialColorMode: COLOR_MODES;
   enableAlpha: boolean;
   openAlphaByDefault: boolean;
+  darkMode: boolean;
   colorSwatch: string[];
 }

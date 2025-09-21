@@ -58,7 +58,10 @@ onMounted(() => {
 
 <template>
   <div class="color-picker__container border-primary">
-    <h2 v-if="props.title" class="color-picker__title border-primary">
+    <h2
+      v-if="props.title"
+      class="color-picker__title border-primary text-primary"
+    >
       {{ props.title }}
     </h2>
 
