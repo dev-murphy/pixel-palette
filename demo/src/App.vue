@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ColorPicker } from "pixel-palette";
-// import "pixel-palette/style.css";
 import type {
   MANAGER_TYPE,
   MANAGER_NAMES,
