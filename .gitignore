@@ -25,3 +25,6 @@ dist-ssr
 
 # For demo app
 /demo/pnpm-workspace.yaml
+
+# Coverage
+coverage

@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { copyColor } from ".";
 import { vi, expect, it } from "vitest";
 
