@@ -74,6 +74,10 @@
   border-radius: 0.5rem;
   padding: 0.25rem;
 }
+
+.pixel-palette .slider__container:last-child {
+  margin-bottom: 2px;
+}
 .pixel-palette .current-hue {
   background-color: hsl(var(--hue), 100%, 50%);
 }
@@ -449,7 +453,6 @@
   background-color: #fff;
   border-width: 0.125rem;
   border-style: solid;
-  border-radius: 0.625rem;
 }
 .color-picker__container .color-picker__title {
   width: 100%;
@@ -583,6 +586,15 @@
   user-select: none;
   z-index: 2;
 }
+.color-picker .color-text.black {
+  text-shadow: white 0px 0px 10px, white 0px 0px 10px, white 0px 0px 10px,
+    white 0px 0px 10px, white 0px 0px 10px;
+}
+
+.color-picker .color-text.white {
+  text-shadow: black 0px 0px 10px, black 0px 0px 10px, black 0px 0px 10px;
+}
+
 .color-picker .picker-popup {
   position: absolute;
   top: 100%;
