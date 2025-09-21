@@ -377,7 +377,7 @@ export const useColors = () => {
       if (color.value.a === 1) {
         return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
       } else {
-        return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`;
+        return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a.toFixed(2)})`;
       }
     } else if (colorMode.value === "hsl") {
       if (color.value.a === 1) {
@@ -387,7 +387,7 @@ export const useColors = () => {
       } else {
         return `hsla(${Math.round(hsl.h)}, ${Math.round(
           hsl.s * 100
-        )}%, ${Math.round(hsl.l * 100)}%, ${hsl.a})`;
+        )}%, ${Math.round(hsl.l * 100)}%, ${hsl.a.toFixed(2)})`;
       }
     }
 
