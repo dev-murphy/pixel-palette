@@ -39,30 +39,3 @@ onMounted(() => {
     />
   </div>
 </template>
-
-<style scoped>
-.swatch-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  max-width: 100%;
-}
-
-.swatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: none;
-}
-
-.swatch:hover {
-  transform: scale(1.1);
-}
-
-.swatch.selected {
-  border: 2px solid var(--border-color, black);
-  box-shadow: 0 0 6px 0px var(--glow-color, rgba(0, 0, 0, 0.4));
-}
-</style>

@@ -17,8 +17,8 @@ function handleInput(event: Event) {
 </script>
 
 <template>
-  <div class="hex_input__wrapper text-primary">
-    <label for="code">hex <span>#</span></label>
+  <div class="hex_input__wrapper highlight text-primary">
+    <label for="code">#</label>
     <input
       type="text"
       id="code"
@@ -29,29 +29,3 @@ function handleInput(event: Event) {
     />
   </div>
 </template>
-
-<style scoped>
-.hex_input__wrapper {
-  display: flex;
-  align-items: center;
-  height: 2.125rem;
-  margin-left: 0.5rem;
-}
-
-.hex_input__wrapper label {
-  flex-shrink: 0;
-  font-weight: 700;
-  text-transform: uppercase;
-  user-select: none;
-  padding-right: 0.125rem;
-}
-
-.hex_input__wrapper label span {
-  color: #737373;
-}
-
-.hex_input__wrapper input {
-  width: 100%;
-  text-transform: uppercase;
-}
-</style>

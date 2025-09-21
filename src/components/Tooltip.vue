@@ -52,34 +52,3 @@ function hideTooltip() {
     </div>
   </div>
 </template>
-
-<style scoped>
-.tooltip__container {
-  position: relative;
-  cursor: pointer;
-}
-
-.tooltip__text {
-  position: absolute;
-  transform: translateX(-50%);
-  background-color: var(--neutral-900, #111);
-  color: #fff;
-  font-weight: 500;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.375rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  white-space: nowrap;
-  font-size: 0.75rem;
-  z-index: 50;
-}
-
-.tooltip__text.bottom {
-  top: 110%;
-  left: 50%;
-}
-
-.tooltip__text.top {
-  bottom: 110%;
-  left: 50%;
-}
-</style>
