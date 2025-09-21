@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.7.1](https://github.com/dev-murphy/pixel-palette/compare/v1.7.0...v1.7.1) (2025-09-21)
+
+
+### Bug Fixes
+
+* ensure library is built first in pipeline ([1c244e9](https://github.com/dev-murphy/pixel-palette/commit/1c244e9055e5f383c8d777366025e34f82381c2d))
+* re-add base repo name to vite config ([9512027](https://github.com/dev-murphy/pixel-palette/commit/951202724f0ee8aba6d1ce68bb2149be642e8f75))
+
+
+### Miscellaneous
+
+* add libCssInject to vite config ([6f24c03](https://github.com/dev-murphy/pixel-palette/commit/6f24c03e41288d2479bccf904b15112d2737edb1))
+* make alpha only 2 digits ([505906c](https://github.com/dev-murphy/pixel-palette/commit/505906cae9edc615e7a64a8eb95f7065d3dd5f83))
+* reinstall pixel palette ([18a2f02](https://github.com/dev-murphy/pixel-palette/commit/18a2f0277e1849bf6f7269106c53f8bcf299edd5))
+* remove css import from README and demo app ([d0c1804](https://github.com/dev-murphy/pixel-palette/commit/d0c1804fb3573dbfdd2b6b7b7cf5e44a579450d4))
+* remove imported styles as it not necessary ([65726e1](https://github.com/dev-murphy/pixel-palette/commit/65726e13f9d130322cdd4ea756b6c0b43056fed1))
+* remove unused component ([e539a56](https://github.com/dev-murphy/pixel-palette/commit/e539a56fd768fcd0e2c5567208747cb28eac75b2))
+* update color input related components ([8a30b56](https://github.com/dev-murphy/pixel-palette/commit/8a30b56c5ea6db442bdd8132c7b2fdac4c0a92b5))
+
+
+### Documentation
+
+* ignore pnpm-workspace for demo app ([e1b700b](https://github.com/dev-murphy/pixel-palette/commit/e1b700b2b3e9385441e25351a2b7cb3d02d5880b))
+
+
+### Code Refactors
+
+* install vite-plugin-lib-inject-css and remove css values from package json ([c81c47d](https://github.com/dev-murphy/pixel-palette/commit/c81c47dbf94d4b0c011942f96abc21a38f075192))
+* made the demo app a typesecript vue app ([0dedeba](https://github.com/dev-murphy/pixel-palette/commit/0dedebac86e387c3a1347a587cfc2e0a8cec3a75))
+* remove color shades util functions ([0adb4c6](https://github.com/dev-murphy/pixel-palette/commit/0adb4c6b2945790171f20d4ec2a454aef1a00382))
+* remove scoped css and placed them in global css file ([5c9219f](https://github.com/dev-murphy/pixel-palette/commit/5c9219f8c6a22b2df4c7676cc3621e48f5ae1fa5))
+* remove select component and replace with toggle section ([ce0cce5](https://github.com/dev-murphy/pixel-palette/commit/ce0cce54d23dbb45a261125a45f58d089dfa224b))
+* update generated type-defs with unplugin-dts ([8e4efaf](https://github.com/dev-murphy/pixel-palette/commit/8e4efaf94e392cf28405a73368d870b9265333f9))
+* update slider and color space components by removing comments and styles ([e4b9eb4](https://github.com/dev-murphy/pixel-palette/commit/e4b9eb450930287fded1bed81d82a5e79dd10e3c))
+
+
+### CI/CD
+
+* add local packge deps for demo app ([d6ea3ff](https://github.com/dev-murphy/pixel-palette/commit/d6ea3ff13201b9aadce747d0e45fa960431daf59))
+
+
+### UI Updates
+
+* add dark mode styles to color picker ([44028e3](https://github.com/dev-murphy/pixel-palette/commit/44028e3d541c9f5944a32cadf5c6f119c188ccf8))
+* add text shadow and remove some border radius ([cf07e15](https://github.com/dev-murphy/pixel-palette/commit/cf07e15b04b0caf24bb5f0470ce186484d0937c5))
+
 ## [1.7.0](https://github.com/dev-murphy/pixel-palette/compare/v1.6.1...v1.7.0) (2025-09-14)
 
 
