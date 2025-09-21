@@ -1,4 +1,3 @@
-// Import your existing utility functions
 function hexToHsl(hex: string): [number, number, number] {
   hex = hex.replace(/^#/, "");
   if (hex.length === 3) {
@@ -96,76 +95,10 @@ function formatColor(
 }
 
 export interface ColorHarmony {
-  mono: string[];
+  monochromatic: string[];
   complementary: string[];
   triadic: string[];
   analogous: string[];
-}
-
-export function generateColorScale(
-  color: string,
-  format: "hex" | "hsl" | "rgb" = "hex"
-): string[] {
-  let h: number, s: number, l: number;
-  let originalHex: string;
-
-  if (color.startsWith("#")) {
-    [h, s, l] = hexToHsl(color);
-    originalHex = color;
-  } else if (color.startsWith("rgb")) {
-    const [r, g, b] = color.match(/\d+/g)!.map(Number);
-    originalHex =
-      "#" +
-      ((1 << 24) + (r << 16) + (g << 8) + b)
-        .toString(16)
-        .slice(1)
-        .padStart(6, "0");
-    [h, s, l] = hexToHsl(originalHex);
-  } else if (color.startsWith("hsl")) {
-    [h, s, l] = color.match(/[\d.]+/g)!.map(Number);
-    originalHex = hslToHex(h, s, l);
-  } else {
-    throw new Error("Unsupported color format");
-  }
-
-  // Avoid pure white/black → keep within 5%–95%
-  const minL = 5;
-  const maxL = 95;
-  const steps = 9; // leave room to insert original color later
-
-  const range: { hex: string; l: number }[] = [];
-  for (let i = 0; i < steps; i++) {
-    let newL = minL + (i / (steps - 1)) * (maxL - minL);
-    const hex = hslToHex(h, s, newL);
-    range.push({ hex, l: newL });
-  }
-
-  // Add exact original color
-  range.push({ hex: originalHex, l });
-
-  // Sort lightest → darkest
-  range.sort((a, b) => a.l - b.l);
-
-  // Ensure we only return 10 total colors
-  const unique = Array.from(new Map(range.map((c) => [c.hex, c])).values());
-  const finalRange = unique.slice(0, 10);
-
-  if (format === "hex") {
-    return finalRange.map((c) => c.hex);
-  } else if (format === "hsl") {
-    return finalRange.map(
-      (c) => `hsl(${h.toFixed(0)}, ${s.toFixed(0)}%, ${c.l.toFixed(0)}%)`
-    );
-  } else {
-    // hex → rgb
-    return finalRange.map((c) => {
-      const hex = c.hex.replace(/^#/, "");
-      const r = parseInt(hex.slice(0, 2), 16);
-      const g = parseInt(hex.slice(2, 4), 16);
-      const b = parseInt(hex.slice(4, 6), 16);
-      return `rgb(${r}, ${g}, ${b})`;
-    });
-  }
 }
 
 export function getContrastColor(hex: string): string {
@@ -320,7 +253,7 @@ export function generateColorHarmonies(
   const [h, s, l] = parseColorToHSL(color);
 
   return {
-    mono: generateMonochromatic(h, s, l, format),
+    monochromatic: generateMonochromatic(h, s, l, format),
     complementary: generateComplementary(h, s, l, format),
     triadic: generateTriadic(h, s, l, format),
     analogous: generateAnalogous(h, s, l, format),
