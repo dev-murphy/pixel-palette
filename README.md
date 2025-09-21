@@ -1,5 +1,7 @@
 # Pixel Palette
 
+[![codecov](https://codecov.io/github/dev-murphy/pixel-palette/graph/badge.svg?token=2AYYX2K3KD)](https://codecov.io/github/dev-murphy/pixel-palette) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![npm version](https://badge.fury.io/js/pixel-palette.svg)](https://badge.fury.io/js/pixel-palette)
+
 A modern, customizable color picker component for Vue 3.
 
 ## Live Demo
