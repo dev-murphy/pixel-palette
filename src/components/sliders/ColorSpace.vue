@@ -33,11 +33,8 @@ const finalSize = computed(() => {
   };
 });
 
-const { color, setColor } = useColors();
+const { color, setColor, exportColor } = useColors();
 
-/**
- * Handle both mouse and touch events
- */
 const handlePointerStart = (event: MouseEvent | TouchEvent) => {
   startDrag(event);
 };
@@ -59,8 +56,8 @@ const getColorFromPosition = (x: number, y: number) => {
 };
 
 function setPositionFromSV(s: number, v: number) {
-  const x = s * finalSize.value.width; // Fixed: removed /100 multiplication
-  const y = (1 - v) * finalSize.value.height; // Fixed: use (1 - v) and removed /100
+  const x = s * finalSize.value.width;
+  const y = (1 - v) * finalSize.value.height;
   setPosition({ x, y });
 }
 
@@ -68,8 +65,8 @@ const isReady = ref(false);
 const isInternalUpdate = ref(false);
 
 onMounted(async () => {
-  await nextTick(); // Ensure DOM is ready
-  setPositionFromSV(color.value.s, color.value.v); // Fixed: use direct values
+  await nextTick();
+  setPositionFromSV(color.value.s, color.value.v); 
   isReady.value = true;
 });
 
@@ -90,13 +87,13 @@ watch(
 
     if (!isDragging.value) {
       isInternalUpdate.value = true;
-      setPositionFromSV(s, v); // Fixed: use direct values
+      setPositionFromSV(s, v);
       nextTick(() => {
         isInternalUpdate.value = false;
       });
     }
   },
-  { immediate: false } // Fixed: changed to false to avoid issues during setup
+  { immediate: false }
 );
 </script>
 
@@ -109,27 +106,11 @@ watch(
   >
     <div
       ref="space-knob"
-      class="space-knob border-primary shadow-lg"
+      class="color-space-knob shadow-lg"
       :style="{
         transform: `translate(${position.x}px, ${position.y}px)`,
+        background: exportColor,
       }"
     ></div>
   </div>
 </template>
-
-<style scoped>
-.space-knob {
-  width: 1.25rem;
-  height: 1.25rem;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: white;
-
-  border-radius: 999px;
-  border-width: 0.125rem;
-  border-style: solid;
-  pointer-events: none;
-}
-</style>

@@ -27,25 +27,16 @@ const { startDrag, position, setPosition, isDragging } = useDraggable(knob, {
 
 const { alpha, setAlpha } = useColors();
 
-/**
- * Sync knob position to alpha
- */
 const updatePositionFromAlpha = (newAlpha: number) => {
   if (!knob.value?.parentElement || finalWidth.value <= 0) return;
   const x = Math.max(0, Math.min(1, newAlpha)) * finalWidth.value;
   setPosition({ x });
 };
 
-/**
- * Handle both mouse and touch events
- */
 const handlePointerStart = (event: MouseEvent | TouchEvent) => {
   startDrag(event);
 };
 
-/**
- * When alpha changes, update knob position
- */
 watch(
   () => alpha.value,
   (newAlpha) => {
@@ -56,9 +47,6 @@ watch(
   { immediate: true }
 );
 
-/**
- * When dragging, update alpha
- */
 watch(
   () => position.value.x,
   (x) => {

@@ -73,7 +73,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="slider__container border-primary">
+  <div class="slider__container">
     <div
       class="hue-slider"
       @mousedown="handlePointerStart"
