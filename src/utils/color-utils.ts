@@ -1,4 +1,4 @@
-function hexToHsl(hex: string): [number, number, number] {
+export function hexToHsl(hex: string): [number, number, number] {
   hex = hex.replace(/^#/, "");
   if (hex.length === 3) {
     hex = hex
@@ -35,7 +35,7 @@ function hexToHsl(hex: string): [number, number, number] {
   return [h * 360, s * 100, l * 100];
 }
 
-function hslToHex(h: number, s: number, l: number): string {
+export function hslToHex(h: number, s: number, l: number): string {
   s /= 100;
   l /= 100;
   const k = (n: number) => (n + h / 30) % 12;
@@ -50,12 +50,12 @@ function hslToHex(h: number, s: number, l: number): string {
 }
 
 // Helper function to normalize hue to 0-360 range
-function normalizeHue(hue: number): number {
+export function normalizeHue(hue: number): number {
   return ((hue % 360) + 360) % 360;
 }
 
 // Helper function to parse any color format to HSL
-function parseColorToHSL(color: string): [number, number, number] {
+export function parseColorToHSL(color: string): [number, number, number] {
   if (color.startsWith("#")) {
     return hexToHsl(color);
   } else if (color.startsWith("rgb")) {
@@ -75,7 +75,7 @@ function parseColorToHSL(color: string): [number, number, number] {
 }
 
 // Helper function to format color output
-function formatColor(
+export function formatColor(
   h: number,
   s: number,
   l: number,
@@ -286,47 +286,4 @@ export function generateColorHarmony(
     default:
       throw new Error("Invalid harmony type");
   }
-}
-
-/**
- * Generate a color palette with a primary color and supporting harmonies
- * @param color - Input color in hex, hsl, or rgb format
- * @param format - Output format (hex, hsl, or rgb)
- * @returns Curated palette with primary, secondary, and accent colors
- */
-export function generateColorPalette(
-  color: string,
-  format: "hex" | "hsl" | "rgb" = "hex"
-): {
-  primary: string[];
-  secondary: string[];
-  accents: string[];
-} {
-  const [h, s, l] = parseColorToHSL(color);
-
-  // Primary: monochromatic variations of the main color
-  const primary = [
-    formatColor(h, Math.max(20, s - 15), Math.min(90, l + 20), format), // Light
-    formatColor(h, s, l, format), // Original
-    formatColor(h, Math.min(100, s + 10), Math.max(20, l - 20), format), // Dark
-  ];
-
-  // Secondary: analogous colors
-  const secondary = [
-    formatColor(normalizeHue(h - 30), Math.max(30, s - 10), l, format),
-    formatColor(normalizeHue(h + 30), Math.max(30, s - 10), l, format),
-  ];
-
-  // Accents: complementary and triadic
-  const accents = [
-    formatColor(normalizeHue(h + 180), s, l, format), // Complementary
-    formatColor(normalizeHue(h + 120), Math.max(40, s - 5), l, format), // Triadic 1
-    formatColor(normalizeHue(h + 240), Math.max(40, s - 5), l, format), // Triadic 2
-  ];
-
-  return {
-    primary,
-    secondary,
-    accents,
-  };
 }
