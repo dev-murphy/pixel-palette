@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.7.2](https://github.com/dev-murphy/pixel-palette/compare/v1.7.1...v1.7.2) (2025-09-21)
+
+
+### Bug Fixes
+
+* resolve coverage issue ([e7ae890](https://github.com/dev-murphy/pixel-palette/commit/e7ae89077f53e406d3dc82633eb6b7f043f0ef65))
+
+
+### Miscellaneous
+
+* add unit tests for composables and util functions ([a268121](https://github.com/dev-murphy/pixel-palette/commit/a268121c8b83c311a748ca97f9ad240ad88f4426))
+* update vitest config and remove node part from test action ([23e2fdc](https://github.com/dev-murphy/pixel-palette/commit/23e2fdc4842e083cf45e731e5f05ebc86272c6fc))
+
+
+### Documentation
+
+* add badges to README ([b652d42](https://github.com/dev-murphy/pixel-palette/commit/b652d42b04eca65ec93a7c34e357be11484ef24a))
+* add build badge to README ([e34826c](https://github.com/dev-murphy/pixel-palette/commit/e34826c3d23a75bbb51f6a8b726236cefd598a01))
+* add warning and migration guide ([1170695](https://github.com/dev-murphy/pixel-palette/commit/11706953e2a319448862317a02d76932a9d78120))
+* correct typo error in README ([d7f6e6c](https://github.com/dev-murphy/pixel-palette/commit/d7f6e6ca8f4a0daa324204a41e38a4ee5d5f9577))
+* refactor build badge ([9994ba0](https://github.com/dev-murphy/pixel-palette/commit/9994ba0ae94eed5f8396f5c82d9a3d4b4250dd36))
+
+
+### CI/CD
+
+* add test action ([d303c0e](https://github.com/dev-murphy/pixel-palette/commit/d303c0e5a69c369508fb3537bf7b53385ed0f36a))
+
+
+### UI Updates
+
+* use AI to reduce the css code ([3a79560](https://github.com/dev-murphy/pixel-palette/commit/3a79560e87c4296317583ff6e7f3565f6362f980))
+
 ## [1.7.1](https://github.com/dev-murphy/pixel-palette/compare/v1.7.0...v1.7.1) (2025-09-21)
 
 
