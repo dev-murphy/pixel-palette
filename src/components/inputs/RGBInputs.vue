@@ -96,7 +96,7 @@ updateInputsFromChannels();
 
 <template>
   <div class="color_channel-input__container border-primary">
-    <div class="color_channel-input__wrapper">
+    <div class="color_channel-input__wrapper highlight">
       <label for="r" class="text-primary">R</label>
       <input
         type="text"
@@ -110,7 +110,7 @@ updateInputsFromChannels();
       />
     </div>
 
-    <div class="color_channel-input__wrapper">
+    <div class="color_channel-input__wrapper highlight">
       <label for="g" class="text-primary">G</label>
       <input
         type="text"
@@ -124,7 +124,7 @@ updateInputsFromChannels();
       />
     </div>
 
-    <div class="color_channel-input__wrapper">
+    <div class="color_channel-input__wrapper highlight">
       <label for="b" class="text-primary">B</label>
       <input
         type="text"
