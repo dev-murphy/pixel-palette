@@ -4,6 +4,9 @@
 
 A modern, customizable color picker component for Vue 3.
 
+> ⚠️ **Warning**  
+> All versions below v1.7.x are incomplete and should not be used. If you are on an older version, please upgrade to a newer release. Refer to the [migration guide](#migration-guide) for details. Older versions will be deprecated or unpublished over time.
+
 ## Live Demo
 
 You can view a [live demo](https://dev-murphy.github.io/pixel-palette/) of the color picker.
@@ -64,6 +67,29 @@ function handleColorChange(color) {
 
 <script setup>
 import { ColorPicker } from "pixel-palette";
+
+const updateColor = (color) => {
+  // color will be in the current format (HEX, RGB, or HSL)
+  console.log("New color:", color);
+};
+</script>
+```
+
+### Migration Guide
+
+First, you need to run the upgrade package command in your package manager of choice
+
+```sh
+pnpm update pixel-palette
+```
+
+Then remove the style imports from the project.
+
+```vue
+<script setup>
+import { ColorPicker } from "pixel-palette";
+// import "pixel-palette/style.css"; <- if you have this, remove this line
+// import "pixel-palette/style"; <- if you have this, remove this line
 
 const updateColor = (color) => {
   // color will be in the current format (HEX, RGB, or HSL)
