@@ -12,12 +12,34 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
           package-name: ${{ secrets.PACKAGE_NAME }}
           changelog-types: '[{ "type": "feat", "section": "Features", "hidden": false }, { "type": "fix", "section": "Bug Fixes", "hidden": false }, { "type": "chore", "section": "Miscellaneous", "hidden": false }, { "type": "docs", "section": "Documentation", "hidden": false }, { "type": "refactor", "section": "Code Refactors", "hidden": false }, { "type": "test", "section": "Tests", "hidden": false }, { "type": "ci", "section": "CI/CD", "hidden":false },{ "type": "revert", "section": "Reverts", "hidden": false }, { "type": "style", "section": "UI Updates", "hidden": false }, { "type": "build", "section": "Build System", "hidden": false }, { "type": "perf", "section": "Performance Improvements", "hidden": false }, { "type": "improvement", "section": "Improvements", "hidden": false }]'
+        # Only publish if a new release was created
+      - name: Checkout
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install deps
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm ci
+
+      - name: Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run build --if-present
+
+      - name: Publish to npm
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
