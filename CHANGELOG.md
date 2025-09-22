@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.7.3](https://github.com/dev-murphy/pixel-palette/compare/v1.7.2...v1.7.3) (2025-09-22)
+
+
+### Bug Fixes
+
+* add pattern to ignore playwright test for vitest ([6b2402c](https://github.com/dev-murphy/pixel-palette/commit/6b2402c86833cda95bcd53dbf8cd97d22c73e4e8))
+* add production url for e2e tests ([9c2ae27](https://github.com/dev-murphy/pixel-palette/commit/9c2ae2735d810ac251472e456560af139f29aa53))
+
+
+### Miscellaneous
+
+* add playwright test and configs to app ([4597aa1](https://github.com/dev-murphy/pixel-palette/commit/4597aa1e822136cf762d86fdbdc79a44d0d129a5))
+* add props for playwright tests ([6c89d52](https://github.com/dev-murphy/pixel-palette/commit/6c89d5216853acbf9e043e73d0efd5daaa7fbac7))
+
+
+### Documentation
+
+* update npm badge on README ([6fcdde2](https://github.com/dev-murphy/pixel-palette/commit/6fcdde21581cf177f7c7422736fafaf774a0f730))
+
+
+### Code Refactors
+
+* remove comments from playwright config ([61ff319](https://github.com/dev-murphy/pixel-palette/commit/61ff319143e0bbd206e0c8efe3ca5b7c72252c98))
+
+
+### CI/CD
+
+* create github action to release package on release creation ([bac19b7](https://github.com/dev-murphy/pixel-palette/commit/bac19b7821733c1414cae187330fe9fdd508132c))
+
+
+### UI Updates
+
+* fix global styles to fix issues ([6ca6429](https://github.com/dev-murphy/pixel-palette/commit/6ca6429f0a4f488881f8b6807796805060ab1668))
+
 ## [1.7.2](https://github.com/dev-murphy/pixel-palette/compare/v1.7.1...v1.7.2) (2025-09-21)
 
 
