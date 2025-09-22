@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.6](https://github.com/dev-murphy/pixel-palette/compare/v1.7.5...v1.7.6) (2025-09-22)
+
+
+### Miscellaneous
+
+* add outputs to release action ([7e20ac4](https://github.com/dev-murphy/pixel-palette/commit/7e20ac4b3e2563a3adf1344e4c29064b00fb97a4))
+
 ## [1.7.5](https://github.com/dev-murphy/pixel-palette/compare/v1.7.4...v1.7.5) (2025-09-22)
 
 
