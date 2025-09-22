@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.4](https://github.com/dev-murphy/pixel-palette/compare/v1.7.3...v1.7.4) (2025-09-22)
+
+
+### Bug Fixes
+
+* change event trigger for publish action ([b65554f](https://github.com/dev-murphy/pixel-palette/commit/b65554f74bf88c1cfed1af41f3ac59f4c7b3bfeb))
+
 ## [1.7.3](https://github.com/dev-murphy/pixel-palette/compare/v1.7.2...v1.7.3) (2025-09-22)
 
 
