@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.7](https://github.com/dev-murphy/pixel-palette/compare/v1.7.6...v1.7.7) (2025-09-22)
+
+
+### Miscellaneous
+
+* change npm badge in README ([7fd1217](https://github.com/dev-murphy/pixel-palette/commit/7fd1217f9d65a79b9fe4162befa30d9d757e4387))
+* re-add publish action and remove publish npm job from release action ([216e1dc](https://github.com/dev-murphy/pixel-palette/commit/216e1dc4710e1e74cf45596856a9ee16e161cd5f))
+
 ## [1.7.6](https://github.com/dev-murphy/pixel-palette/compare/v1.7.5...v1.7.6) (2025-09-22)
 
 
