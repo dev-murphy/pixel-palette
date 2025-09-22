@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:5173/pixel-palette/");
+  await page.goto("https://dev-murphy.github.io/pixel-palette/");
   const colorPickerBtn = page.getByTestId("color-picker-btn");
   await colorPickerBtn.click();
 });
