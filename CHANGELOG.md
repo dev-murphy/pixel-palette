@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.5](https://github.com/dev-murphy/pixel-palette/compare/v1.7.4...v1.7.5) (2025-09-22)
+
+
+### Miscellaneous
+
+* add fetch-depth to publish action ([19674f7](https://github.com/dev-murphy/pixel-palette/commit/19674f722582af2ab04d97327de4edde91f07e09))
+* add publish to npm to release action and delete publish action ([3b1e7c8](https://github.com/dev-murphy/pixel-palette/commit/3b1e7c89bbe1953e8f70f2492a442cf34a814ebb))
+
 ## [1.7.4](https://github.com/dev-murphy/pixel-palette/compare/v1.7.3...v1.7.4) (2025-09-22)
 
 
