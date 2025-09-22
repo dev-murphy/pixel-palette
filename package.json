@@ -1,7 +1,7 @@
 {
   "name": "pixel-palette",
   "private": false,
-  "version": "1.7.9",
+  "version": "1.7.10",
   "type": "module",
   "files": [
     "dist"

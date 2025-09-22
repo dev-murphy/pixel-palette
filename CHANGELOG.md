@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.10](https://github.com/dev-murphy/pixel-palette/compare/v1.7.9...v1.7.10) (2025-09-22)
+
+
+### Miscellaneous
+
+* slowing going insane about github action for publishing ([671ad7c](https://github.com/dev-murphy/pixel-palette/commit/671ad7c98da487bf18dcbca421b2ae2c36e03871))
+
 ## [1.7.9](https://github.com/dev-murphy/pixel-palette/compare/v1.7.8...v1.7.9) (2025-09-22)
 
 
