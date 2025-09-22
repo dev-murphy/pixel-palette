@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.8](https://github.com/dev-murphy/pixel-palette/compare/v1.7.7...v1.7.8) (2025-09-22)
+
+
+### Miscellaneous
+
+* final attempt of automating npm release ([9c2f4dc](https://github.com/dev-murphy/pixel-palette/commit/9c2f4dc453a2a84ece57a57cb94ab1517732c874))
+
 ## [1.7.7](https://github.com/dev-murphy/pixel-palette/compare/v1.7.6...v1.7.7) (2025-09-22)
 
 
