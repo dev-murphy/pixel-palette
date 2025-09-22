@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.7.9](https://github.com/dev-murphy/pixel-palette/compare/v1.7.8...v1.7.9) (2025-09-22)
+
+
+### Bug Fixes
+
+* correct syntax error in publish action ([536dd7e](https://github.com/dev-murphy/pixel-palette/commit/536dd7e14e1f225e48deedd3177d0c89aed6961d))
+
+
+### Miscellaneous
+
+* final config for publish action ([cc10aed](https://github.com/dev-murphy/pixel-palette/commit/cc10aed39e17078f9eabae638300e81edc142793))
+
+
+### CI/CD
+
+* move if check to final step in publish action ([cb9d7f0](https://github.com/dev-murphy/pixel-palette/commit/cb9d7f00f1cea19497cd6379e70eb10bb6c597a6))
+
 ## [1.7.8](https://github.com/dev-murphy/pixel-palette/compare/v1.7.7...v1.7.8) (2025-09-22)
 
 
