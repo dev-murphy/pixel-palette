@@ -2,26 +2,32 @@ name: Publish to NPM
 
 on:
   push:
-    tags:
-      - "v*"
+    # Trigger on any push to main
+    branches:
+      - main
+    # Optional: only trigger if a release-please PR was merged
+    # This works if release-please uses a conventional commit like "chore(main): release x.y.z"
+    # We will filter this in the job using `if`.
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Only run if the push includes a commit with a release-please message
+    if: contains(github.event.head_commit.message, 'chore(main): release')
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm install -g pnpm && pnpm install
+        run: npm ci
 
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
