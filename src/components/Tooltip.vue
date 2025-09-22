@@ -47,7 +47,12 @@ function hideTooltip() {
     <slot></slot>
 
     <!-- Tooltip -->
-    <div v-if="isTooltipOpen" class="tooltip__text" :class="[position]">
+    <div
+      v-if="isTooltipOpen"
+      class="tooltip__text"
+      data-pw="cp-tooltip"
+      :class="[position]"
+    >
       {{ text }}
     </div>
   </div>

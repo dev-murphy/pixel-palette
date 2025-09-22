@@ -18,14 +18,14 @@ function handleInput(event: Event) {
 
 <template>
   <div class="hex_input__wrapper highlight text-primary">
-    <label for="code">#</label>
+    <label>#</label>
     <input
       type="text"
-      id="code"
-      :value="hex"
-      @change="handleInput"
       maxlength="7"
       placeholder="000000"
+      data-pw="cp-hex-input"
+      :value="hex"
+      @change="handleInput"
     />
   </div>
 </template>

@@ -52,7 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="color-picker-container border-primary">
+  <div class="color-picker-container border-primary" data-pw="cp-clr-campare">
     <!-- Colors -->
     <div v-if="harmonies && harmonies[selectedHarmony]" class="swatch-row">
       <Tooltip

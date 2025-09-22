@@ -72,6 +72,7 @@ onMounted(async () => {
       <div
         ref="knob"
         class="hue-slider-knob current-hue border-primary"
+        data-pw="cp-alpha-knob"
         :style="{ left: `${position.x}px` }"
       ></div>
     </div>

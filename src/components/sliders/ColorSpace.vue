@@ -66,7 +66,7 @@ const isInternalUpdate = ref(false);
 
 onMounted(async () => {
   await nextTick();
-  setPositionFromSV(color.value.s, color.value.v); 
+  setPositionFromSV(color.value.s, color.value.v);
   isReady.value = true;
 });
 
@@ -107,6 +107,7 @@ watch(
     <div
       ref="space-knob"
       class="color-space-knob shadow-lg"
+      data-pw="cp-clr-space-knob"
       :style="{
         transform: `translate(${position.x}px, ${position.y}px)`,
         background: exportColor,

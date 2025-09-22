@@ -96,45 +96,45 @@ updateInputsFromChannels();
 
 <template>
   <div class="color_channel-input__container border-primary">
-    <div class="color_channel-input__wrapper highlight">
-      <label for="r" class="text-primary">R</label>
+    <div class="color_channel-input__wrapper highlight text-primary">
+      <label for="r">R</label>
       <input
         type="text"
         id="r"
+        data-pw="cp-red-input"
         v-model="rValue"
         @input="(e) => handleInput('r', e)"
         @keydown="(e) => handleKeydown('r', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
 
-    <div class="color_channel-input__wrapper highlight">
-      <label for="g" class="text-primary">G</label>
+    <div class="color_channel-input__wrapper highlight text-primary">
+      <label for="g">G</label>
       <input
         type="text"
         id="g"
+        data-pw="cp-green-input"
         v-model="gValue"
         @input="(e) => handleInput('g', e)"
         @keydown="(e) => handleKeydown('g', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
 
-    <div class="color_channel-input__wrapper highlight">
-      <label for="b" class="text-primary">B</label>
+    <div class="color_channel-input__wrapper highlight text-primary">
+      <label for="b">B</label>
       <input
         type="text"
         id="b"
+        data-pw="cp-blue-input"
         v-model="bValue"
         @input="(e) => handleInput('b', e)"
         @keydown="(e) => handleKeydown('b', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
   </div>

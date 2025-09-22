@@ -100,6 +100,7 @@ onMounted(() => {
 
       <button
         class="color-picker-options__btn text-primary hover-secondary"
+        data-pw="cp-rand-clr-btn"
         @click="randomColor()"
       >
         <Random class="icon" />
@@ -107,6 +108,7 @@ onMounted(() => {
 
       <button
         class="color-picker-options__btn text-primary hover-secondary"
+        data-pw="cp-show-clr-compare-btn"
         :class="{
           active: showColorComparisons,
         }"

@@ -103,12 +103,13 @@ updateInputsFromChannels();
       <input
         type="text"
         id="h"
+        class="text-primary"
+        data-pw="cp-hue-input"
         v-model="hValue"
         @input="(e) => handleInput('h', e)"
         @keydown="(e) => handleKeydown('h', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
 
@@ -117,12 +118,13 @@ updateInputsFromChannels();
       <input
         type="text"
         id="s"
+        class="text-primary"
+        data-pw="cp-sat-input"
         v-model="sValue"
         @input="(e) => handleInput('s', e)"
         @keydown="(e) => handleKeydown('s', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
 
@@ -131,12 +133,13 @@ updateInputsFromChannels();
       <input
         type="text"
         id="l"
+        class="text-primary"
+        data-pw="cp-lig-input"
         v-model="lValue"
         @input="(e) => handleInput('l', e)"
         @keydown="(e) => handleKeydown('l', e)"
         @blur="handleBlur"
         @keypress.enter="handleBlur"
-        class="text-primary"
       />
     </div>
   </div>

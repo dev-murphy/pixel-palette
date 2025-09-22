@@ -106,9 +106,15 @@ onUnmounted(() => {
       dark: darkMode,
     }"
   >
-    <button ref="triggerRef" class="color-btn" @click="togglePicker">
+    <button
+      ref="triggerRef"
+      data-pw="color-picker-btn"
+      class="color-btn"
+      @click="togglePicker"
+    >
       <Color class="color-icon" />
       <p
+        data-pw="cp-clr-text"
         :class="[
           'color-text',
           {
@@ -140,6 +146,7 @@ onUnmounted(() => {
       v-if="isPickerOpen"
       ref="popupRef"
       class="picker-popup"
+      data-pw="color-picker-popup"
       :class="{
         top: positionTop,
       }"
