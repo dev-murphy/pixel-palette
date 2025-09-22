@@ -21,34 +21,3 @@ jobs:
           release-type: node
           package-name: ${{ secrets.PACKAGE_NAME }}
           changelog-types: '[{ "type": "feat", "section": "Features", "hidden": false }, { "type": "fix", "section": "Bug Fixes", "hidden": false }, { "type": "chore", "section": "Miscellaneous", "hidden": false }, { "type": "docs", "section": "Documentation", "hidden": false }, { "type": "refactor", "section": "Code Refactors", "hidden": false }, { "type": "test", "section": "Tests", "hidden": false }, { "type": "ci", "section": "CI/CD", "hidden":false },{ "type": "revert", "section": "Reverts", "hidden": false }, { "type": "style", "section": "UI Updates", "hidden": false }, { "type": "build", "section": "Build System", "hidden": false }, { "type": "perf", "section": "Performance Improvements", "hidden": false }, { "type": "improvement", "section": "Improvements", "hidden": false }]'
-  publish-npm:
-    runs-on: ubuntu-latest
-    needs: release-please
-    if: needs.release-please.outputs.release_created
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
-          cache: "npm"
-
-      - name: Install PNPM
-        run: npm install -g pnpm && pnpm install
-
-      - name: Build package
-        run: pnpm build
-
-      - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create GitHub Release Assets
-        if: success()
-        run: |
-          echo "Package published successfully to npm!" >> release-notes.md
-          echo "Version: ${{ needs.release-please.outputs.tag_name }}" >> release-notes.md
